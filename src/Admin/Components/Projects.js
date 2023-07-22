@@ -18,14 +18,17 @@ const Projects = ( {title, cssClass, projects, handleProjectDelete}) => {
             <tbody>
             {projects.length > 0 ? projects.map(project => (
                 <tr key={project.id}>
-                <td className='align-middle fw-bold'>{project.id}</td>
-                <td className='align-middle'>{project.projectName} <span className={`badge text-dark bg-${project.cagetory === "ongoing" ? "warning" : project.cagetory === "future" ? "info " : project.cagetory === "completed" ? "success text-white" : ""}`}>{project.status}</span></td>
-                <td className='align-middle'><Link to="/addproject"><i className="fa fa-pencil fs-3 text-secondary" aria-hidden="true"></i></Link></td>
-                <td className='align-middle'><Link to="" onClick={() => handleProjectDelete(project)}><i className="fa fa-trash-o fs-3 text-danger" aria-hidden="true"></i></Link></td>
-            </tr>
+                  <td className='align-middle fw-bold'>{project.id}</td>
+                  <td className='align-middle'>{project.projectName} <span className={`badge text-dark bg-${project.cagetory === "ongoing" ? "warning" : project.cagetory === "future" ? "info " : project.cagetory === "completed" ? "success text-white" : ""}`}>{project.status}</span></td>
+                  <td className='align-middle'><Link to="/addproject"><i className="fa fa-pencil fs-3 text-secondary" aria-hidden="true"></i></Link></td>
+                  <td className='align-middle'><Link to="" onClick={() => handleProjectDelete(project)}><i className="fa fa-trash-o fs-3 text-danger" aria-hidden="true"></i></Link></td>
+              </tr>
             ))  
-            : "No projects found" }
-                
+            : 
+            <tr >
+              <td colSpan={4}><p className='text-center text-dark fw-bold'>No projects found, Add a new project</p></td>
+            </tr>
+             }
             </tbody>
         </table>
     </>

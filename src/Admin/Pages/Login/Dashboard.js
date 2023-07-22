@@ -14,10 +14,17 @@ const Dashboard = () => {
     const [futureProjects, setFutureProjects] = useState([])
     const [onCompletedProjects, setCompletedProjects] = useState([])
     const handleProjectDelete = (project) => {
-        if(project.category ==="ongoing")
+        if(project.category ==="ongoing") {
+            const filteredData = ongoingProject.filter(obj => obj.id !== project.id);
+            setOngoingProject(filteredData)
         }
+    }
+
+    
 
     useEffect(() => {
+        // const projects = Object.keys(ProjectsJSON);
+        // console.log(ProjectsJSON[projects[2]])
         setOngoingProject(ProjectsJSON.ongoingProjectsObj);
         setFutureProjects(ProjectsJSON.futureProjectsObj);
         setCompletedProjects(ProjectsJSON.completedProjectsObj)
