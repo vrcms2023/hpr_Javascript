@@ -5,12 +5,13 @@
     ],
     
     "futureProjectsObj": [
-        {"id": 1, "category":"future", "projectName": "HPR Infra Hitech", "status": "To start"},
-        {"id": 2, "category":"future", "projectName": "HPR Infra Gachibouli", "status": "In Progress"}
+        {"id": 3, "category":"future", "projectName": "HPR Infra Hitech", "status": "To start"},
+        {"id": 4, "category":"future", "projectName": "HPR Infra Gachibouli", "status": "In Progress"},
+        {"id": 5, "category":"future", "projectName": "HPR Infra Gachibouli", "status": "In Progress"}
     ],
     
     "completedProjectsObj": [
-        {"id": 1, "category":"completed", "projectName": "HPR Infra Airport", "status": "Completed"},
-        {"id": 2, "category":"completed", "projectName": "HPR Infra Housing", "status": "Completed"}
+        {"id": 6, "category":"completed", "projectName": "HPR Infra Airport", "status": "Completed"},
+        {"id": 7, "category":"completed", "projectName": "HPR Infra Housing", "status": "Completed"}
     ]
 }

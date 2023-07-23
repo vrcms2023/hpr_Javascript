@@ -6,28 +6,42 @@ import { useNavigate } from 'react-router-dom';
 
 import ProjectsJSON from '../../../Data/Projects.json'
 
-
 const Dashboard = () => {
 
     const navigate = useNavigate();
-    const [ongoingProject, setOngoingProject] =useState([]);
-    const [futureProjects, setFutureProjects] = useState([])
-    const [onCompletedProjects, setCompletedProjects] = useState([])
-    const handleProjectDelete = (project) => {
-        if(project.category ==="ongoing") {
-            const filteredData = ongoingProject.filter(obj => obj.id !== project.id);
-            setOngoingProject(filteredData)
-        }
+    const [projects, setProjects] = useState([])
+
+    const handleProjectDelete = (id) => {
+        // for(let i=0; i<projects.length; i++){
+        //     for(let j=0; j<projects[i].length; j++) {
+        //         const filtered = projects[i].filter(project => project.id !== id)
+        //         setProjects(filtered)
+        //     }
+        // }
+
+        let Obj = []
+        // projects.map(projArr => projArr.map(proj => console.log(proj)))
+        const arrObj = projects.map(projArr => projArr)
+            for(let i=0; i<arrObj.length; i++){
+                const arrs = arrObj[i]
+                const filterObj = arrs.map(obj => obj)
+                const finalObj = filterObj.filter(obj => obj.id !== id)
+                Obj.push(finalObj)
+            }
+            setProjects(Obj)
     }
-
     
-
     useEffect(() => {
-        // const projects = Object.keys(ProjectsJSON);
-        // console.log(ProjectsJSON[projects[2]])
-        setOngoingProject(ProjectsJSON.ongoingProjectsObj);
-        setFutureProjects(ProjectsJSON.futureProjectsObj);
-        setCompletedProjects(ProjectsJSON.completedProjectsObj)
+        let obj = []
+        const objectKeys = Object.keys(ProjectsJSON)
+        for(let i=0; i<objectKeys.length; i++) {
+            obj.push(ProjectsJSON[objectKeys[i]])
+                setProjects(obj)
+            // for(let j=0; j<ProjectsJSON[objectKeys[i]].length; j++){
+            //     obj.push(ProjectsJSON[objectKeys[i]][j])
+            //     setProjects(obj)
+            // }
+        }
     }, [])
 
   return (
@@ -39,16 +53,13 @@ const Dashboard = () => {
             </div>
         </div>
         <hr />
+       
         <div className='row bg-light p-5 pt-0'>
-            <div className='col-md-4'>
-                <Projects title="Ongoing Projects" cssClass="text-success" projects={ongoingProject} handleProjectDelete={handleProjectDelete} />
-            </div>
-            <div className='col-md-4'>
-                <Projects title="Future Projects" projects={futureProjects} handleProjectDelete={handleProjectDelete} />
-            </div>
-            <div className='col-md-4'>
-                <Projects title="Completed Projects" projects={onCompletedProjects} handleProjectDelete={handleProjectDelete} />
-            </div>
+        { projects && projects.map(project => (
+             <div className='col-md-4' key={project.id}>
+             <Projects title="Ongoing Projects" cssClass="text-success" projects={project} handleProjectDelete={handleProjectDelete} />
+         </div>
+        )) }
         </div>
     </div>
   )

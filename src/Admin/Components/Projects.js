@@ -3,6 +3,7 @@ import Title from '../../Common/Title'
 import { Link } from 'react-router-dom'
 
 const Projects = ( {title, cssClass, projects, handleProjectDelete}) => {
+  // console.log(projects)
   return (
     <>
         
@@ -21,7 +22,7 @@ const Projects = ( {title, cssClass, projects, handleProjectDelete}) => {
                   <td className='align-middle fw-bold'>{project.id}</td>
                   <td className='align-middle'>{project.projectName} <span className={`badge text-dark bg-${project.cagetory === "ongoing" ? "warning" : project.cagetory === "future" ? "info " : project.cagetory === "completed" ? "success text-white" : ""}`}>{project.status}</span></td>
                   <td className='align-middle'><Link to="/addproject"><i className="fa fa-pencil fs-3 text-secondary" aria-hidden="true"></i></Link></td>
-                  <td className='align-middle'><Link to="" onClick={() => handleProjectDelete(project)}><i className="fa fa-trash-o fs-3 text-danger" aria-hidden="true"></i></Link></td>
+                  <td className='align-middle'><Link to="" onClick={() => handleProjectDelete(project.id)}><i className="fa fa-trash-o fs-3 text-danger" aria-hidden="true"></i></Link></td>
               </tr>
             ))  
             : 
