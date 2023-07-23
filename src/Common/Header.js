@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 
 
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [cookies,removeCookie] = useCookies(["token","userName"]);
+  const [userName, setUserName] = useState('')
+  const [loginState, setLoginState] = useState(false);
+
+  useEffect(()=>{
+    let token = cookies.token;
+    setUserName(cookies.userName);
+
+    if(token && userName) {
+      setLoginState(true)
+    }
+  });
+
+  function logOutHandler(){
+    removeCookie("token");
+    removeCookie("userName");
+    setLoginState(false)
+    navigate("/login");
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-4">
           <div className="container">
@@ -47,7 +68,12 @@ const Header = () => {
                   <Link  to="/dashboard" className="nav-Link ">Dashboard</Link >
                 </li> */}
                 <li className="nav-item">
-                  <Button type="submit" cssClass="btn btn-warning" label="Login" handlerChange={() => navigate("/login")} />
+                  {loginState ? (
+                    <Button type="submit" cssClass="btn btn-warning" label="Logout" handlerChange={logOutHandler} />
+                  ) : (
+                    <Button type="submit" cssClass="btn btn-warning" label="Login" handlerChange={() => navigate("/login")} />
+                  )}
+                  
                 </li>
                 
               </ul>
