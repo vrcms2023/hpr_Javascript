@@ -3,6 +3,7 @@ import Title from '../../../Common/Title'
 import Button from '../../../Common/Button'
 import Projects from '../../Components/Projects';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 
 import ProjectsJSON from '../../../Data/Projects.json'
 
@@ -10,6 +11,12 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
     const [projects, setProjects] = useState([])
+    const [cookies] = useCookies(["userName"]);
+    const [userName, setUserName] = useState('')
+
+    useEffect(() =>{
+        setUserName(cookies.userName);
+    })
 
     const handleProjectDelete = (id) => {
         // for(let i=0; i<projects.length; i++){
@@ -46,6 +53,9 @@ const Dashboard = () => {
 
   return (
     <div className='bg-light pt-5' style={{marginTop: "90px"}}>
+    <div className='row bg-light px-5'>
+        {userName ? (`userName = ${userName}`):""}
+    </div>
         <div className='row bg-light px-5'>
             <div className='text-end d-flex justify-content-between'>
                 <Title title="Dashboard" cssClass="text-center fs-3"/>
@@ -55,9 +65,9 @@ const Dashboard = () => {
         <hr />
        
         <div className='row bg-light p-5 pt-0'>
-        { projects && projects.map(project => (
+        { projects && projects.map((project, index) => (
              <div className='col-md-4' key={project.id}>
-             <Projects title="Ongoing Projects" cssClass="text-success" projects={project} handleProjectDelete={handleProjectDelete} />
+             <Projects key={project.id} title="Ongoing Projects" cssClass="text-success" projects={project} handleProjectDelete={handleProjectDelete} />
          </div>
         )) }
         </div>

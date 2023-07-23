@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import Title from '../../../Common/Title'
 import Button from '../../../Common/Button'
 import { useNavigate } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 
 const Login = () => {
   const [cookies, setCookie,removeCookie] = useCookies(["token"]);
-  const [userName , setUserName] = useState('')
+ 
 
   const [registrationState, setRegistrationState] = useState({
     userName: "",
@@ -66,11 +66,11 @@ async function handleLogin(event) {
           body: JSON.stringify(loginState)
       })
       const data = await res.json()
-      if(data.token){
-        localStorage.setItem("token", data.token)
+      if(data.token){       
         setCookie("token", data.token)
-        setErrorMessage(data.message)
-        setUserName(data.userName);        
+        setCookie("userName", data.userName)
+        setErrorMessage(data.message)              
+        navigate("/dashboard")
       } else{
         removeCookie("token")
         setErrorMessage(data.message)
@@ -122,11 +122,7 @@ async function handleLogin(event) {
 
               <div className='col-lg-6 bg-light d-flex justify-content-center align-items-center'>
                 <form className='border1 p-5 rounded shadow-lg' onSubmit={handleLogin}>
-                  <Title title="Admin login" cssClass="text-start text-dark mb-4 fs-4"/>
-                  <div className='mb-3'>
-                  <div>{errorMessage}</div>
-                  <div>{userName}</div>
-                </div>
+                  <Title title="Admin login" cssClass="text-start text-dark mb-4 fs-4"/>                 
                   <div className="mb-3">
                       <label htmlFor="userName" className="form-label">User name</label>
                       <input type="text" value={loginState.email} onChange={handleloginChange} name="email"  className="form-control bg-light border border-secondary" id="userName" aria-describedby="emailHelp" />
