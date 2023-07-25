@@ -4,6 +4,8 @@ const cors = require('cors')
 const mongoose = require("mongoose")
 require('dotenv').config()
 const authRoutes = require("./routes/authRoutes")
+const projectTypes = require("./routes/projectTypes")
+const realEstateProject = require("./routes/realEstateProject")
 
 const app = express()
 
@@ -12,14 +14,10 @@ app.use(cors())
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(bodyParser.json(), urlencodedParser)
 
-app.get("/home", (req, res) => {
-    res.json({
-        name: "rama",
-        age:42
-    })
-})
 
 app.use("/", authRoutes)
+app.use("/", projectTypes)
+app.use("/", realEstateProject)
 
 // connects to mongoDB database
 mongoose.connect(process.env.dbURI, { useNewUrlParser:true, useUnifiedTopology:true })

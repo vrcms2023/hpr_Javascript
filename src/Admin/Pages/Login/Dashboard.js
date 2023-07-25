@@ -16,7 +16,7 @@ const Dashboard = () => {
 
     useEffect(() =>{
         setUserName(cookies.userName);
-    })
+    },[cookies.userName])
 
     const handleProjectDelete = (id) => {
         // for(let i=0; i<projects.length; i++){

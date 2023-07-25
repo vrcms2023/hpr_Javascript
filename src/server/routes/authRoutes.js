@@ -17,9 +17,10 @@ router.post("/register", async (req, res) => {
     if (validationError) {
         return res.json({message: validationError.details[0].message})
     } else if (takenUserEmail) {
-        return res.json({message: "User has already registerd"})
+        return res.json({message: "User has already registered"})
     } else {
         user.password = await bcrypt.hash(req.body.password, 10)
+        user.confirmPassword = await bcrypt.hash(req.body.confirmPassword, 10)
 
         const dbUser = new User({
             userName: user.userName.toLowerCase(),
@@ -62,7 +63,7 @@ router.post("/login", (req, res) => {
                         process.env.PASSPORTSECRET,
                         {expiresIn: 86400},
                         (err, token) => {
-                            return res.json({message: "Success", token: "Bearer " + token, userName: dbUser.userName })
+                            return res.json({message: "Success", token: "Bearer " + token, userName: dbUser.userName, id: dbUser._id })
                         }
                     )
                 } else {

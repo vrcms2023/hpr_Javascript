@@ -69,6 +69,7 @@ async function handleLogin(event) {
       if(data.token){       
         setCookie("token", data.token)
         setCookie("userName", data.userName)
+        setCookie("userId", data.id)
         setErrorMessage(data.message)              
         navigate("/dashboard")
       } else{
