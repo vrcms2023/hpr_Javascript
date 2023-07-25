@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FileUpload from '../../Components/FileUpload';
 import Specifications from '../../Components/Specifications';
 import Amenities from '../../Components/Amenities';
+import { useCookies } from "react-cookie";
 
 import GalleryJSON from '../../../Data/Gallery.json'
 import CatageoryImgC from '../../../Common/CatageoryImgC';
@@ -15,34 +16,94 @@ const AddProject = () => {
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false)
-    const [projectType, setProjectType] = useState('')
-    const [projectName, setProjectName] = useState("")
+    const [projectType, setProjectType] = useState({})
+    const [projectName, setProjectName] = useState('')
     const [gallery, setGallery ] = useState(GalleryJSON)
     const [onGoingImgs, setOngoingImgs] = useState([])
     const [onFutureImgs, setFutureImgs] = useState([])
     const [onCompletedImgs, setCompletedImgs] = useState([])
 
-    console.log("projectName", projectName)
+    const [defaultProjectType, setDefaultProjectType] = useState([]);
+    const [cookies] = useCookies(["token","userName"]);
+    const [errorMessage, setErrorMessage] = useState("")
 
+    /**
+     * Get project type object
+     */
+    useEffect(() => {
+        fetch("/projectTypes",{
+            headers: {"x-access-token": cookies.token}
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.length > 0) {
+                setDefaultProjectType(data);
+            } else { 
+                navigate("/login"); 
+            }  
+        })
+        .catch(err => console.log(err))
+    }, []);
+
+    /**
+     * Select Porject type handler
+     */
     const handleChange = (e) => {
-        const value = e.target.value.toLowerCase();
-        setProjectType(value)
-        if(value === "ongoing" || value === "future" || value === "completed") {
-            document.getElementById('projectTitle').classList.remove('d-none')
-            document.getElementById('projectTitle').classList.add('d-block')
-            // setShow(!show)
+        const value = e.target.value.toLowerCase()    
+        const obj = defaultProjectType.filter(obj => {return (obj.value == value)});
+        setProjectType(obj)
+    }
+
+    /**
+     *  Add project input handler
+     */
+    const titleInputHandleChange = (e) => {
+        const title = e.target.value;
+        setProjectName(title);
+    }
+
+    async function saveProject(event) {
+        event.preventDefault();
+        const project = {
+            projectTypeID : projectType[0]._id,
+            projectTypeName :  projectType[0].value,
+            projectTitle : projectName,
+            userName : cookies.userName,
+            userID : cookies.userId,
+            status : true
+        }
+        console.log("project", project)
+        try {
+            const res = await fetch("/addProject", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    "x-access-token": cookies.token
+                },
+                body: JSON.stringify(project)
+            })
+            const data = await res.json()
+            setErrorMessage(data.message)
+        } catch (err) {
+            setErrorMessage(err)
         }
     }
+
+    // const handleChange = (e) => {
+    //     const value = e.target.value.toLowerCase();
+    //     setProjectType(value)
+    //     if(value === "ongoing" || value === "future" || value === "completed") {
+    //         document.getElementById('projectTitle').classList.remove('d-none')
+    //         document.getElementById('projectTitle').classList.add('d-block')
+    //         // setShow(!show)
+    //     }
+    // }
     const thumbDelete = (id) => {
         const filteredArr = onGoingImgs.filter(obj => obj.id !== id);
         setOngoingImgs(filteredArr)
     }
 
-    const titleInputHandleChange = (e) => {
-        const title = e.target.value;
-        setProjectName(title);
-        document.getElementById('projectValidation').classList.add('d-none')
-    }
+
 
     const addTitle = (e) => {
         if( projectName === "" ) {
@@ -73,31 +134,33 @@ const AddProject = () => {
         {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
         
         
-        <select className="form-select mb-3 shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
-        onChange={(e) => handleChange(e)}
-        >
+        <select  className="form-select mb-3 shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
+        onChange={(e) => handleChange(e)} >
             <option>Select Status</option>
-            <option value="ongoing">ONGOING PROJECTS</option>
-            <option value="future">FUTURE PROJECT</option>
-            <option value="completed">COMPLETED PROJECTS</option>
+            {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
+                return <option key={option._id} value={option.value}>
+                    {option.label}
+                </option>
+            })) : ('')}      
         </select>
-
-    <div className='row d-none' id="projectTitle">
-        <div className="col-md-4 offset-md-4 mb-3">
+{projectType.length > 0 ? (
+    <div className='row' id="projectTitle">
+        <div> {errorMessage} </div>
+        <div className="col-md-8  mb-3">
             <label htmlFor="projectName" className="form-label text-center d-block">Enter Project Name</label>
-            
                 <div className='d-flex'>
                     <input type="text" className="form-control" 
                     name="projectName" 
                     value={projectName}     
                     onChange={titleInputHandleChange}
                     id="projectName" placeholder="Add Project Name" />
-                    <Button label="Save" cssClass="btn btn-success" handlerChange={addTitle} />
+                    <Button label="Save" cssClass="btn btn-success" handlerChange={saveProject} />
                 </div>
                 <small id="projectValidation" className="d-none error">Project name should not be empty.</small>
         </div>
         
     </div>
+    ) : ''}
 
 
     {show ? 
@@ -166,9 +229,6 @@ const AddProject = () => {
         </div>
         </div>
     </div>
-    </>
-    : <h5 className='text-center my-5 py-5 fw-bold'>Please select project type from the dropdown</h5>
-    }
     <div className='row'>
         <div className='col-lg-12 text-center py-3'>
             <Button type="submit" cssClass="btn btn btn-outline-secondary" label="Cancel" handlerChange={() => navigate("/dashboard")} />
@@ -176,6 +236,10 @@ const AddProject = () => {
             <Button type="submit" cssClass="btn  btn-success" label="Add Project" handlerChange={() => navigate("/dashboard")}/>
         </div>
     </div>
+    </>
+    : ""
+    }
+  
     </div>
   )
 }

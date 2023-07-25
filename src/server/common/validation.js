@@ -20,13 +20,17 @@ const loginValidation = (data => {
     return loginSchema.validate(data);
 })
 
-const groupSchema = Joi.object({
-    groupName: Joi.string().required().min(3).max(100),
-    courses: Joi.array().items(Joi.string().uri()).unique()
+const projectSchema = Joi.object({
+    projectTypeID: Joi.string().required(),
+    projectTypeName: Joi.string().required(),
+    projectTitle : Joi.string().required().messages({"string.empty": `Project name must contain value`,}),
+    userName: Joi.string().required(),
+    userID: Joi.string().required(),
+    status : Joi.boolean().required()
 })
 
-const groupValidation = data => {
-    return groupSchema.validate(data)
+const porjectValidation = data => {
+    return projectSchema.validate(data)
 }
 
 
@@ -35,5 +39,5 @@ const groupValidation = data => {
 module.exports = {
     registrationValidation: registrationValidation,
     loginValidation: loginValidation,
-    groupValidation: groupValidation
+    porjectValidation: porjectValidation
 }
