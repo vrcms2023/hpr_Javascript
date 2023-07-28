@@ -1,36 +1,60 @@
-import React, {useState} from 'react'
+import React, { useEffect} from 'react'
 import Title from '../../Common/Title'
 import Button from '../../Common/Button'
+import { useCookies } from "react-cookie";
 
-const Specifications = ({title}) => {
-    const [data, setData]=useState([{title:"",feature:""}])
+const Specifications = ({title, project, specifications, setSpecifications }) => {
+    const [cookies] = useCookies(["token"]);
 
     const handleClick=()=>{
-        setData([...data,{title:"",feature:""}])
+        setSpecifications([...specifications,{title:"",feature:""}])
     }
 
     const handleChange=(e,i)=>{
         const {name,value}=e.target
-        const onchangeVal = [...data]
+        const onchangeVal = [...specifications]
         onchangeVal[i][name]=value
-        setData(onchangeVal)
+        setSpecifications(onchangeVal)
     }
 
     const handleDelete=(i)=>{
-        const deleteVal = [...data]
+        const deleteVal = [...specifications]
         deleteVal.splice(i,1)
-        setData(deleteVal)
+        setSpecifications(deleteVal)
     }
+
+    /**
+     * get selected Specification for edit
+     */
+    useEffect(() => {
+        const getSelectedSpecification = () => {
+                fetch(`/getSpecificationsById/${project._id}`,{
+                    headers: {"x-access-token": cookies.token}
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.specification !== 'undefined') {
+                        setSpecifications(data.specification.specifications)
+                    }
+                })
+                .catch(err => console.log(err))
+            }
+            if(project?._id) {
+                getSelectedSpecification()    
+              }
+               
+        },[])
+
   return (
     <div>
         <Title title={title} cssClass="fs-5 fw-bold"/>
                 <div className="border border-3 p-5 py-3 shadow-lg">
-                    {data.length > 0 && <Button type="submit" cssClass="btn float-end btn-success mb-2" label="ADD" handlerChange={handleClick}/>}
+                    {specifications.length > 0 && <Button type="submit" cssClass="btn float-end btn-success mb-2" label="ADD" handlerChange={handleClick}/>}
                     
                     <table className="table m-0">
                         <tbody>
-                            {data.length > 0 ? 
-                                data.map((val, i) =>
+                            {specifications.length > 0 ? 
+                                specifications.map((val, i) =>
                                 <tr key={i}>
                                 <td className='border border-1 p-4 bg-transparent'>
                                     <input type="text"  className="form-control mb-2" id="specificationName" placeholder="Feature title" 
@@ -56,6 +80,7 @@ const Specifications = ({title}) => {
                             
                         </tbody>
                     </table>
+                   
                 </div>
                 {/* <p>{JSON.stringify(data)}</p> */}
     </div>

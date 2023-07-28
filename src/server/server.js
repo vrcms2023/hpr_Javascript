@@ -4,8 +4,10 @@ const cors = require('cors')
 const mongoose = require("mongoose")
 require('dotenv').config()
 const authRoutes = require("./routes/authRoutes")
-const projectTypes = require("./routes/projectTypes")
+const projectCategories = require("./routes/projectCategories")
 const realEstateProject = require("./routes/realEstateProject")
+const specification = require("./routes/specification")
+const amenitie = require("./routes/amenitie")
 
 const app = express()
 
@@ -16,8 +18,10 @@ app.use(bodyParser.json(), urlencodedParser)
 
 
 app.use("/", authRoutes)
-app.use("/", projectTypes)
+app.use("/", projectCategories)
 app.use("/", realEstateProject)
+app.use("/", specification)
+app.use("/", amenitie)
 
 // connects to mongoDB database
 mongoose.connect(process.env.dbURI, { useNewUrlParser:true, useUnifiedTopology:true })

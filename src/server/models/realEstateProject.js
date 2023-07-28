@@ -1,11 +1,15 @@
 const mongoose = require("mongoose")
 
 const realEstateProjectSchema = mongoose.Schema({
-    projectTypeID: {
+    projectCategoryID: {
         type: String,
         required: true,
     },
-    projectTypeName: {
+    projectCategoryName: {
+        type: String,
+        required: true,
+    },
+    projectCategoryValue: {
         type: String,
         required: true,
     },
@@ -13,17 +17,26 @@ const realEstateProjectSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    userName: {
-        type: String,
-        required: true,
+    createdBy: {
+        type: String       
+    },
+    updatedBy: {
+        type: String
     },
     userID: {
         type: String,
         required: true,
     },
     status: {
-        type: Boolean,
+        type: String,
         required: true,
+    },
+    description: {
+        type: String
+    },
+    isActive : {
+        type: Boolean,
+        required : true
     }
    
   

@@ -27,13 +27,10 @@ function App() {
               <Route exact  path='/projects' element={ <Projects /> } />
               <Route exact  path='/gallery' element={ <Gallery /> } />
               <Route exact  path='/contact' element={ <Contact /> } />
-              <Route exact path='/login' element={ <Login/> } />
-              <Route exact path='/addproject' element={ <AddProject/> } />      
-              <Route exact path='/dashboard'element={
-                <ProtectedRoute>
-                    <Dashboard />
-                </ProtectedRoute>
-            } />
+              <Route exact path='/login' element={ <Login/> } />    
+              <Route exact path='/addproject' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
+              <Route exact path='/editproject/:id' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
+              <Route exact path='/dashboard' element={ <ProtectedRoute><Dashboard /> </ProtectedRoute>} />
             </Routes>
             </BrowserRouter>
           <Footer />

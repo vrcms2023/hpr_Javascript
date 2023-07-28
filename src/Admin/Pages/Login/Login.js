@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import Title from '../../../Common/Title'
 import Button from '../../../Common/Button'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,11 @@ import { useCookies } from "react-cookie";
 const Login = () => {
   const [cookies, setCookie,removeCookie] = useCookies(["token"]);
  
+  useEffect(()=>{
+    removeCookie("token");
+    removeCookie("userName")
+    removeCookie("userId")
+  })
 
   const [registrationState, setRegistrationState] = useState({
     userName: "",
