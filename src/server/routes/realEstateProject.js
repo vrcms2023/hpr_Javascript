@@ -5,6 +5,13 @@ const {porjectValidation } = require("../common/validation.js")
 
 const router = express.Router()
 
+const getDashboardProject = async (req, res) => {
+    const dashBoardFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle status isActive';
+    const data = await RealEstateProject.find({isActive : true}).select(dashBoardFields);
+    return res.json({message: data.length > 0 ? "Success" :  "Record not found" , project: data}) 
+}
+
+
 
 router.post("/addProject", verifyJWT, async (req, res, next) => {
     
@@ -61,10 +68,12 @@ router.post("/updateProject", verifyJWT, async (req, res, next) => {
 * get Dashboard project
 */
 
-router.get("/getDashboardProject", verifyJWT, (req, res, next) => {   
-    RealEstateProject.find({}).select('projectCategoryID projectCategoryName projectCategoryValue projectTitle status isActive')
-    .then(data => res.json(data))
-    .catch(err => console.log(err))
+router.get("/getDashboardProject", verifyJWT, async(req, res, next) => {   
+    getDashboardProject(req, res);
+
+    // const data = await RealEstateProject.find({isActive : true}).select(dashBoardFields);
+    // return res.json({message: data.length > 0 ? "Success" :  "Record not found" , project: data}) 
+
 })
 
 router.get("/findById/:id", verifyJWT, async (req, res, next) => {   
@@ -72,6 +81,20 @@ router.get("/findById/:id", verifyJWT, async (req, res, next) => {
     const data = await RealEstateProject.findById(req.params.id).exec();
     return res.json({message: "Success", project: data})
 })
+
+router.get("/deleteDashboardProject/:id", verifyJWT, async (req, res, next) => {   
+  
+    const query = { "_id": req.params.id };
+    const update = { "$set": { "isActive": false}};
+    const options = { returnNewDocument: true };
+
+    RealEstateProject.findOneAndUpdate(query, update, options)
+        .then(updatedDocument => {return updatedDocument})
+        .catch(err => console.error(`Failed to find and update document: ${err}`))
+   
+        getDashboardProject(req, res);
+})
+
 
 
 

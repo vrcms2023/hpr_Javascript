@@ -5,9 +5,6 @@ import Projects from '../../Components/Projects';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 
-
-import ProjectsJSON from '../../../Data/Projects.json'
-
 const Dashboard = () => {
 
     const navigate = useNavigate();
@@ -16,7 +13,7 @@ const Dashboard = () => {
     const [userName, setUserName] = useState('');
     
     /**
-     * get user name
+     * set user name
      */
     useEffect(() =>{
         setUserName(cookies.userName);
@@ -32,8 +29,8 @@ const Dashboard = () => {
         })
         .then(res => res.json())
         .then(data => {
-            if(data.length > 0) {
-                const finalObj = formatData(data);
+            if(data?.project?.length > 0) {
+                const finalObj = formatData(data.project);
                 setProjects(finalObj);
             }
         }).catch(err => console.log(err))
@@ -60,41 +57,21 @@ const Dashboard = () => {
      * @param {project id} id 
      */
     const handleProjectDelete = (id) => {
-        console.log("delete id", id)
+       
+        fetch(`/deleteDashboardProject/${id}`,{
+            headers: {"x-access-token": cookies.token}
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data?.project?.length > 0) {
+                const finalObj = formatData(data.project);
+                setProjects(finalObj);
+            }else {
+                setProjects([]);
+            }
+        }).catch(err => console.log(err))
     }
 
-    // const handleProjectDelete = (id) => {
-    //     // for(let i=0; i<projects.length; i++){
-    //     //     for(let j=0; j<projects[i].length; j++) {
-    //     //         const filtered = projects[i].filter(project => project.id !== id)
-    //     //         setProjects(filtered)
-    //     //     }
-    //     // }
-
-    //     let Obj = []
-    //     // projects.map(projArr => projArr.map(proj => console.log(proj)))
-    //     const arrObj = projects.map(projArr => projArr)
-    //         for(let i=0; i<arrObj.length; i++){
-    //             const arrs = arrObj[i]
-    //             const filterObj = arrs.map(obj => obj)
-    //             const finalObj = filterObj.filter(obj => obj.id !== id)
-    //             Obj.push(finalObj)
-    //         }
-    //         setProjects(Obj)
-    // }
-    
-    // useEffect(() => {
-    //     let obj = []
-    //     const objectKeys = Object.keys(ProjectsJSON)
-    //     for(let i=0; i<objectKeys.length; i++) {
-    //         obj.push(ProjectsJSON[objectKeys[i]])
-    //             setProjects(obj)
-    //         // for(let j=0; j<ProjectsJSON[objectKeys[i]].length; j++){
-    //         //     obj.push(ProjectsJSON[objectKeys[i]][j])
-    //         //     setProjects(obj)
-    //         // }
-    //     }
-    // }, [])
 
   return (
     <div className='bg-light pt-5' style={{marginTop: "90px"}}>
