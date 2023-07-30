@@ -70,10 +70,6 @@ router.post("/updateProject", verifyJWT, async (req, res, next) => {
 
 router.get("/getDashboardProject", verifyJWT, async(req, res, next) => {   
     getDashboardProject(req, res);
-
-    // const data = await RealEstateProject.find({isActive : true}).select(dashBoardFields);
-    // return res.json({message: data.length > 0 ? "Success" :  "Record not found" , project: data}) 
-
 })
 
 router.get("/findById/:id", verifyJWT, async (req, res, next) => {   
