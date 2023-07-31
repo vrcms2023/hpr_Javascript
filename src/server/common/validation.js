@@ -21,12 +21,16 @@ const loginValidation = (data => {
 })
 
 const projectSchema = Joi.object({
-    projectTypeID: Joi.string().required(),
-    projectTypeName: Joi.string().required(),
+    projectCategoryID: Joi.string().required(),
+    projectCategoryName: Joi.string().required(),
+    projectCategoryValue : Joi.string().required(),
     projectTitle : Joi.string().required().messages({"string.empty": `Project name must contain value`,}),
-    userName: Joi.string().required(),
+    createdBy: Joi.string(),
+    updatedBy: Joi.string(),
+    description :Joi.string(),
     userID: Joi.string().required(),
-    status : Joi.boolean().required()
+    status : Joi.string().required(),
+    isActive : Joi.boolean().required()
 })
 
 const porjectValidation = data => {

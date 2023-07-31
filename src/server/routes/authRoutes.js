@@ -7,7 +7,7 @@ const {registrationValidation, loginValidation } = require("../common/validation
 const router = express.Router()
 
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
     const user = req.body;
 
     const takenUserEmail = await User.findOne({email: user.email.toLowerCase()})
@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
 })
 
 
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
     
     const userLoggingIn = req.body;
 
