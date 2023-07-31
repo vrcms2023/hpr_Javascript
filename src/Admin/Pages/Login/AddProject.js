@@ -249,10 +249,11 @@ const AddProject = () => {
     //         // setShow(!show)
     //     }
     // }
-    const thumbDelete = (id) => {
-        const filteredArr = onGoingImgs.filter(obj => obj.id !== id);
-        setOngoingImgs(filteredArr)
-    }
+    // const thumbDelete = (id) => {
+    //     console.log("id", id)
+    //     const filteredArr = onGoingImgs.filter(obj => obj.id !== id);
+    //     setOngoingImgs(filteredArr)
+    // }
 
 
 
@@ -359,9 +360,9 @@ const AddProject = () => {
             {/* DOCUMENTS */}
             <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <FileUpload title="Add PDF's" project={newProject} updatedBy={cookies.userName} category="PDF" gallerysetState={setPdfObject} galleryState={pdfObject} validTypes="application/pdf" />
-                <CatageoryImgC title={`${readOnlyTitle} PDF's`} thumbDelete={thumbDelete} catategoryImgs={pdfObject} catategoryImgState={setPdfObject} project={newProject} category="PDF" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <CatageoryImgC title={`${readOnlyTitle} PDF's`} catategoryImgs={pdfObject} catategoryImgState={setPdfObject} project={newProject} category="PDF" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
                 <FileUpload title="Add Plan" project={newProject} updatedBy={cookies.userName} category="Plans" gallerysetState={setPlanObject} galleryState={planObject} validTypes="image/png,image/jpeg" />
-                <CatageoryImgC title={`${readOnlyTitle} Plans`}  thumbDelete={thumbDelete} catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <CatageoryImgC title={`${readOnlyTitle} Plans`}   catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
                 {/* Add GOOGLE MAP  */}
                 <Amenities title="Google Map"/>
             </div>
@@ -376,7 +377,7 @@ const AddProject = () => {
 
             <div className="tab-pane fade" id="v-pills-gallery" role="tabpanel" aria-labelledby="v-pills-gallery-tab">
                 <FileUpload title="Add Images" project={newProject} updatedBy={cookies.userName} category="images" gallerysetState={setImgGallery} galleryState={imgGallery} validTypes="image/png,image/jpeg" />
-                <CatageoryImgC title={`${readOnlyTitle} Image Gallery`} thumbDelete={thumbDelete} catategoryImgs={imgGallery} catategoryImgState={setImgGallery} project={newProject} category="images" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <CatageoryImgC title={`${readOnlyTitle} Image Gallery`}  catategoryImgs={imgGallery} catategoryImgState={setImgGallery} project={newProject} category="images" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
                 {/* <CatageoryImgC title="Future Projects" thumbDelete={thumbDelete}catategoryImgs={onFutureImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-success rounded-5" /> */}
                 {/* <CatageoryImgC title="Completed Projects" thumbDelete={thumbDelete} catategoryImgs={onCompletedImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-secondary rounded-5" /> */}
             </div>

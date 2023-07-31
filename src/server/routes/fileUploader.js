@@ -3,6 +3,9 @@ const multer = require("multer");
 const verifyJWT = require("../common/verifyJWT.js");
 const imagesModel = require("../models/imagesModel.js");
 const fs = require("fs");
+const { promisify } = require('util')
+const unlinkAsync = promisify(fs.unlink)
+
 
 const router = express.Router();
 
@@ -21,9 +24,8 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage }).single("file");
 
 router.post("/fileUploader/:id/:name/:category", (req, res, next) => {
-    console.log("fileUploader",req.params.id)
-    
-  upload(req, res, function (err) {
+
+    upload(req, res, function (err) {
     if (err) {
       res.json({ error_code: 1, err_desc: err });
       return;
@@ -51,6 +53,15 @@ router.get("/getSelectedImagesById/:id/:category", verifyJWT, async (req, res, n
     const query = { "projectID": req.params.id,"category":req.params.category };
     const data = await imagesModel.find(query);   
     return res.json({message: data.length > 0 ? "Success" :  "Record not found" ,  fileData: data})
+})
+
+router.delete('/deleteImageById/:id', upload, verifyJWT,  async (req, res, next) => {
+    
+    const data = await imagesModel.find({_id :req.params.id}).findOneAndDelete(); 
+
+    await unlinkAsync("public/"+data.path)
+
+    return res.json({ message: "Success", imageModel: data });
    
 })
 

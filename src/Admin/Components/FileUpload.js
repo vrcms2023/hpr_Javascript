@@ -26,9 +26,9 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
       const response = JSON.parse(file.serverId)
       const imageResponse = response.imageModel;
       const img = {
-        id : imageResponse._id,
+        _id : imageResponse._id,
         originalname : imageResponse.originalname,
-        src : imageResponse.path,
+        path : imageResponse.path,
         contentType : imageResponse.contentType,
         originalname : imageResponse.originalname
       }

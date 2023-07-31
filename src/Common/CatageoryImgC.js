@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import Title from './Title'
 import { useCookies } from "react-cookie";
 
-const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass, thumbDelete,  project, category }) => {
+const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  project, category }) => {
   const [cookies] = useCookies(["token"]);
 
   /**
@@ -25,6 +25,22 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass, thu
     
   }, []);
 
+  const thumbDelete = (id) => {
+    fetch(`/deleteImageById/${id}`, {
+      method: "DELETE",
+      headers: { "x-access-token": cookies.token },
+    })
+      .then(response => response.json())
+      .then((data) => {
+        if(data?.imageModel?._id) {
+          catategoryImgState(values => {
+            return values.filter(item => item._id !== data.imageModel._id)
+          })
+        }
+        
+      })
+  }
+
   return (
     <div className=''>
       { catategoryImgs.length > 0 ? (     
@@ -34,11 +50,11 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass, thu
                 {
                   catategoryImgs.map((item) => { 
                         return item.contentType === "pdf" ? (
-                        <div className='categoryContainer' key={item.id} onClick={() => thumbDelete(item.id)}>
+                        <div className='categoryContainer' key={item._id} onClick={() => thumbDelete(item._id)}>
                           <li><a target='_blank' href={`${window.location.origin}/${item.path}`}>{item.originalname}</a></li>
                         </div>
                       ) : (
-                        <div className='categoryContainer' key={item.id} onClick={() => thumbDelete(item.id)}>
+                        <div className='categoryContainer' key={item._id} onClick={() => thumbDelete(item._id)}>
                             <img className={cssClass} src={`${window.location.origin}/${item.path}`} alt=" " />
                         </div>
                       )
