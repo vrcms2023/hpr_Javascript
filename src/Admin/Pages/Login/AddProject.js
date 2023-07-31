@@ -31,9 +31,10 @@ const AddProject = () => {
     const [readOnlyTitle, setreadOnlyTitle] = useState('');
     const [description, setdescription] = useState('');
     const specificationKeys = {title:"",feature:""};
-    const amenitieKeys = {amenitie:"",feature:""};
+    const amenitieKeys = {amenitie:"",feature:"", googleMap:""};
     const [specifications, setSpecifications]=useState([specificationKeys])
     const [amenities, setAmenities] = useState(amenitieKeys)
+    const [googleMap, setGoogleMap] = useState("")
     const [pdfObject, setPdfObject] = useState([]);
     const [planObject, setPlanObject] = useState([]);
     const [imgGallery, setImgGallery] = useState([])
@@ -364,7 +365,7 @@ const AddProject = () => {
                 <FileUpload title="Add Plan" project={newProject} updatedBy={cookies.userName} category="Plans" gallerysetState={setPlanObject} galleryState={planObject} validTypes="image/png,image/jpeg" />
                 <CatageoryImgC title={`${readOnlyTitle} Plans`}   catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
                 {/* Add GOOGLE MAP  */}
-                <Amenities title="Google Map"/>
+                <Amenities title="Google Map" value={amenities?.googleMap}  amenities={amenities} setAmenities={setAmenities} name="googleMap"/>
             </div>
             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                 {/* Add SPECIFICATIONS */}

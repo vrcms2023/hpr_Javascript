@@ -33,7 +33,7 @@ const Specifications = ({title, project, specifications, setSpecifications }) =>
                 })
                 .then(res => res.json())
                 .then(data => {
-                    if(data.specification !== 'undefined') {
+                    if(data?.specification !== undefined) {
                         setSpecifications(data.specification.specifications)
                     }
                 })

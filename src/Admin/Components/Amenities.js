@@ -19,7 +19,7 @@ export const AmenitiesList = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.amenities !== "undefined") {
+          if (data.amenitie !== undefined) {
             setAmenities(data.amenitie);
           }
         })

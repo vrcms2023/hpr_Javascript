@@ -17,7 +17,6 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
   useEffect(() => {
     let extArr = validTypes.split(",");
     setExtTypes(extArr)
-    console.log("validTypes", validTypes)
   },[])
 
   
@@ -53,11 +52,12 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
               onprocessfile ={onprocessfile}
               onupdatefiles={setFiles}
               allowMultiple={true} 
-              maxFiles={3} 
+              maxFiles={2} 
               credits={false}
               acceptedFileTypes={extTypes}
               server={`/fileUploader/${project?._id}/${updatedBy}/${category}`}
               labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+              labelInvalidField="invalid files"
               />
         </div>
     </>

@@ -22,7 +22,8 @@ router.post("/addAndUpdateAmenities", verifyJWT, async (req, res, next) => {
             "projectID": project.projectID,
             "updatedBy": project.updatedBy,
             "amenitie": project.amenitieslist.amenitie,
-            "feature": project.amenitieslist.feature
+            "feature": project.amenitieslist.feature,
+            "googleMap" :project.amenitieslist.googleMap
         }
       };
     const options = { returnNewDocument: true };    
@@ -38,7 +39,8 @@ router.post("/addAndUpdateAmenities", verifyJWT, async (req, res, next) => {
             projectID: project.projectID,
             updatedBy: project.updatedBy,
             amenitie: project.amenitieslist.amenitie,
-            feature: project.amenitieslist.feature
+            feature: project.amenitieslist.feature,
+            googleMap :project.amenitieslist.googleMap
         })
         dbAmenitie.save();
        
