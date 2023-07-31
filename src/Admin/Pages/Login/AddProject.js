@@ -9,7 +9,6 @@ import { Amenities ,AmenitiesList} from '../../Components/Amenities';
 import { useCookies } from "react-cookie";
 import { useParams } from 'react-router-dom';
 
-import GalleryJSON from '../../../Data/Gallery.json'
 import CatageoryImgC from '../../../Common/CatageoryImgC';
 
 
@@ -19,11 +18,6 @@ const AddProject = () => {
     const [show, setShow] = useState(false)
     const [projectType, setProjectType] = useState({})
     const [projectName, setProjectName] = useState('')
-    const [gallery, setGallery ] = useState(GalleryJSON)
-    const [onGoingImgs, setOngoingImgs] = useState([])
-    const [onFutureImgs, setFutureImgs] = useState([])
-    const [onCompletedImgs, setCompletedImgs] = useState([])
-
     const [defaultProjectType, setDefaultProjectType] = useState([]);
     const [cookies] = useCookies(["token","userName"]);
     const [errorMessage, setErrorMessage] = useState("")
@@ -34,7 +28,6 @@ const AddProject = () => {
     const amenitieKeys = {amenitie:"",feature:"", googleMap:""};
     const [specifications, setSpecifications]=useState([specificationKeys])
     const [amenities, setAmenities] = useState(amenitieKeys)
-    const [googleMap, setGoogleMap] = useState("")
     const [pdfObject, setPdfObject] = useState([]);
     const [planObject, setPlanObject] = useState([]);
     const [imgGallery, setImgGallery] = useState([])
@@ -62,14 +55,14 @@ const AddProject = () => {
         
        getPorjectCategory()
        
-    }, []);
+    }, [cookies]);
 
     /**
      * Select Porject type handler
      */
     const handleChange = (e) => {
         const value = e.target.value.toLowerCase()    
-        const obj = defaultProjectType.filter(obj => {return (obj.value == value)});
+        const obj = defaultProjectType.filter(obj => {return (obj.value === value)});
         setProjectType(obj)
     }
 
@@ -145,7 +138,7 @@ const AddProject = () => {
        if(id){
         getSelectedProject()
        }
-    },[])
+    },[cookies,id])
 
     
     function saveProject() {
@@ -177,7 +170,6 @@ const AddProject = () => {
                 },
                 body: JSON.stringify(projectProps)
             })
-            const data = await res.json();
             setProjectName('');
             setdescription('');
         } catch (err) {
@@ -241,39 +233,7 @@ const AddProject = () => {
         }
     }
 
-    // const handleChange = (e) => {
-    //     const value = e.target.value.toLowerCase();
-    //     setProjectType(value)
-    //     if(value === "ongoing" || value === "future" || value === "completed") {
-    //         document.getElementById('projectTitle').classList.remove('d-none')
-    //         document.getElementById('projectTitle').classList.add('d-block')
-    //         // setShow(!show)
-    //     }
-    // }
-    // const thumbDelete = (id) => {
-    //     console.log("id", id)
-    //     const filteredArr = onGoingImgs.filter(obj => obj.id !== id);
-    //     setOngoingImgs(filteredArr)
-    // }
 
-
-
-    const addTitle = (e) => {
-        if( projectName === "" ) {
-            document.getElementById('projectValidation').classList.remove('d-none')
-        } else {
-            setShow(!show)
-            document.getElementById('projectTitle').classList.remove('d-block')
-            document.getElementById('projectTitle').classList.add('d-none')
-            document.getElementById('projectStatus').classList.add('d-none')
-        } 
-    }
-
-    useEffect(() => {
-        setOngoingImgs(gallery.ongoing);
-        setFutureImgs(gallery.future);
-        setCompletedImgs(gallery.completed);
-    }, [])
 
   return (
     <div className='bg-light pt-5' style={{marginTop: "90px"}}>

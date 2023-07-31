@@ -17,7 +17,7 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
   useEffect(() => {
     let extArr = validTypes.split(",");
     setExtTypes(extArr)
-  },[])
+  },[validTypes])
 
   
   const onprocessfile = (error, file)=> {
@@ -28,8 +28,7 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
         _id : imageResponse._id,
         originalname : imageResponse.originalname,
         path : imageResponse.path,
-        contentType : imageResponse.contentType,
-        originalname : imageResponse.originalname
+        contentType : imageResponse.contentType
       }
       gallerysetState([
         ...galleryState,
