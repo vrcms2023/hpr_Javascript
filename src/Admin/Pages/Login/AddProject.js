@@ -23,7 +23,8 @@ const AddProject = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const [newProject, setNewProject] = useState({})
     const [readOnlyTitle, setreadOnlyTitle] = useState('');
-    const [description, setdescription] = useState('');
+    const infoObj = {description:'',status:''}
+    const [infoDetails, setInfoDetails]= useState(infoObj)
     const specificationKeys = {title:"",feature:""};
     const amenitieKeys = {amenitie:"",feature:"", googleMap:""};
     const [specifications, setSpecifications]=useState([specificationKeys])
@@ -75,8 +76,9 @@ const AddProject = () => {
     }
 
     const changeHandler =(e)=>{
-        setdescription(e.target.value)
-        newProject['description'] = e.target.value;
+        const {name,value}=e.target
+        setInfoDetails((prevFormData) => ({ ...prevFormData, [name]: value }));
+        newProject[name] = value;
         setNewProject(newProject)
     }
 
@@ -129,7 +131,8 @@ const AddProject = () => {
                     const title = data.project.projectTitle;
                     setreadOnlyTitle(title);
                     setProjectName(title);
-                    setdescription(data.project.description);
+                    const info = {description :data.project.description, status :data.project.status }
+                    setInfoDetails(info)
                     setShow(true)
                     setErrorMessage(data.message)
                 })
@@ -171,7 +174,7 @@ const AddProject = () => {
                 body: JSON.stringify(projectProps)
             })
             setProjectName('');
-            setdescription('');
+            setInfoDetails(infoObj)
         } catch (err) {
             setErrorMessage(err)
         }
@@ -301,19 +304,14 @@ const AddProject = () => {
                     <label htmlFor="projectName" className="form-label  ">Project Name</label>
                     <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
                 </div> 
-               {/*  <div className="mb-3">
+                <div className="mb-3">
                     <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                    <select className="form-select" aria-label="Default select example" id="projectStatus">
-                        <option>Select Status</option>
-                        <option value="1">Ongoing</option>
-                        <option value="2">Future</option>
-                        <option value="3">Completed</option>
-                    </select>
-                </div>*/}
+                    <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
+                </div>
                 
                 <div className="mb-3">
                     <label htmlFor="projectDescription" className="form-label  ">Description</label>
-                    <textarea className="form-control" name="description" value={description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
+                    <textarea className="form-control" name="description" value={infoDetails.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
                 </div>
             </div>
             </div>

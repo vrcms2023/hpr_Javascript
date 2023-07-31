@@ -54,7 +54,8 @@ router.post("/updateProject", verifyJWT, async (req, res, next) => {
         "$set": {
             "projectTitle": project.projectTitle, 
             "updatedBy": project.updatedBy, 
-            "description": project.description
+            "description": project.description,
+            "status": project.status
         }
       };
     const options = { returnNewDocument: true };
