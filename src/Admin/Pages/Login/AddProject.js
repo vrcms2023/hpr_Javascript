@@ -31,6 +31,8 @@ const AddProject = () => {
     const [amenities, setAmenities] = useState(amenitieKeys)
     const [pdfObject, setPdfObject] = useState([]);
     const [planObject, setPlanObject] = useState([]);
+    const [availabileObject, setAvailabileObject] = useState([]);
+    const [priceObject, setPriceObject] = useState([]);
     const [imgGallery, setImgGallery] = useState([])
     const { id } = useParams();
 
@@ -94,7 +96,7 @@ const AddProject = () => {
             projectTitle : projectName,
             createdBy : cookies.userName,
             userID : cookies.userId,
-            status : "0% complete",
+            status : "0%",
             isActive : true
         }
      
@@ -322,6 +324,11 @@ const AddProject = () => {
                 <CatageoryImgC title={`${readOnlyTitle} PDF's`} catategoryImgs={pdfObject} catategoryImgState={setPdfObject} project={newProject} category="PDF" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
                 <FileUpload title="Add Plan" project={newProject} updatedBy={cookies.userName} category="Plans" gallerysetState={setPlanObject} galleryState={planObject} validTypes="image/png,image/jpeg" />
                 <CatageoryImgC title={`${readOnlyTitle} Plans`}   catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <FileUpload title="Add Availability" project={newProject} updatedBy={cookies.userName} category="availability" gallerysetState={setAvailabileObject} galleryState={availabileObject} validTypes="image/png,image/jpeg,application/pdf" />
+                <CatageoryImgC title={`${readOnlyTitle} Availibility`}   catategoryImgs={availabileObject} catategoryImgState={setAvailabileObject} project={newProject} category="availability"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <FileUpload title="Add Price" project={newProject} updatedBy={cookies.userName} category="price" gallerysetState={setPriceObject} galleryState={priceObject} validTypes="image/png,image/jpeg,application/pdf" />
+                <CatageoryImgC title={`${readOnlyTitle} Price`}   catategoryImgs={priceObject} catategoryImgState={setPriceObject} project={newProject} category="price"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+
                 {/* Add GOOGLE MAP  */}
                 <Amenities title="Google Map" value={amenities?.googleMap}  amenities={amenities} setAmenities={setAmenities} name="googleMap"/>
             </div>

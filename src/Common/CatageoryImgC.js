@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react'
 import Title from './Title'
 import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom'
 
 const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  project, category }) => {
-  const [cookies] = useCookies(["token"]);
+  const [cookies,setCookie,removeCookie] = useCookies(["token","clientInformation"]);
+  const navigate = useNavigate()
 
   /**
    * get selected Images for edit
@@ -41,6 +43,16 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  pr
       })
   }
 
+  const downloadPDF = (url) =>{
+    if(cookies.clientInformation !== undefined){
+      window.open(url, '_blank', 'location=yes,height=800,width=600 ,scrollbars=yes,status=yes');
+    }else {
+      removeCookie("previousPath")
+      setCookie("previousPath", window.location.pathname)
+      navigate(`/contact`)
+    }
+  }
+
   return (
     <div className=''>
       { catategoryImgs.length > 0 ? (     
@@ -50,8 +62,10 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  pr
                 {
                   catategoryImgs.map((item) => { 
                         return item.contentType === "pdf" ? (
-                        <div className='categoryContainer' key={item._id} onClick={() => thumbDelete(item._id)}>
-                          <li><a target='_blank' href={`${window.location.origin}/${item.path}`}>{item.originalname}</a></li>
+                        <div className='categoryContainer' key={item._id} >
+                          <li><a href="javascript:void(0)" onClick={() => downloadPDF(`${window.location.origin}/${item.path}`)}>{item.originalname}</a>
+                          <p onClick={() => thumbDelete(item._id)}>delete</p>
+                          </li>
                         </div>
                       ) : (
                         <div className='categoryContainer' key={item._id} onClick={() => thumbDelete(item._id)}>

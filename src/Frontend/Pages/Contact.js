@@ -1,15 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Title from '../../Common/Title'
+import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom'
 
 const Contact = () => {
   const formObject = {firstName: "",lastName:"", email: "",phone:"",message: ""};
   const [formData, setFormData] = useState(formObject);
-
+  const [cookies, setCookie, removeCookie] = useCookies(["clientInformation"]);
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+
 
   /**
    * contactus form submit
@@ -26,7 +30,13 @@ const Contact = () => {
     })
     .then((res) => res.json())
     .then((data) => {
+      removeCookie("clientInformation")
+      setCookie("clientInformation", data.contactus.email, {maxAge: 86400})
       setFormData(formObject)
+      if(cookies.previousPath !== undefined) {
+        navigate(`/${cookies.previousPath}`)
+      }
+      
     })
     .catch((err) => console.log(err));
   }
