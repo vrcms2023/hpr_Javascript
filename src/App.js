@@ -1,7 +1,7 @@
 
 import './App.css';
-import Footer from './Common/Footer';
-import Header from './Common/Header';
+import Footer from './Common/Footer/Footer';
+import Header from './Common/Header/Header';
 
 import Home from './Frontend/Pages/Home';
 import About from './Frontend/Pages/About'
@@ -30,17 +30,8 @@ function App() {
               <Route exact path='/addproject' element={ <AddProject/> } />
               <Route exact path='/dashboard' element={ <Dashboard/> } />
             </Routes>
-            </BrowserRouter>
           <Footer />
-          {/* 
-          <Home />
-          <Gallery /> 
-          <Contact />
-          <Projects /> */}
-          {/* 
-          <Login />
-          <Dashboard /> 
-          <AddProject />  */} 
+          </BrowserRouter>
         </>
   );
 }

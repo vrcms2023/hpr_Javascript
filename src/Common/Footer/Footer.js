@@ -1,6 +1,8 @@
 import React from 'react'
-import Title from './Title'
-import { Link } from 'react-router-dom'
+import Title from '../Title'
+import { Link } from "react-router-dom";
+
+import './Styles.css'
 
 const Footer = () => {
   return (
@@ -41,16 +43,43 @@ const Footer = () => {
             </div>
       </div>
       </div>
-     
     </footer>
-    <footer className='text-center text-secondary bg-dark py-4 '>
-      <div className='container d-flex justify-content-between align-items-center'>
-        <div>Copyright 2015 HPR Infra    |   All Rights Reserved</div>
-        <div>Privacy Policy | News & Updates</div>
+    <footer className='text-center text-white py-4 footerLinks'>
+      <div className='container d-flex justify-content-between align-items-center flex-row flex-md-column flex-sm-column'>
+        <ul className='d-flex justify-content-between align-items-center list-unstyled m-0'>
+            <li >
+              <Link to="/" className='ms-0'>Home</Link >
+            </li>
+            <li >
+              <Link  to="/about" >About Us</Link >
+            </li>
+            <li >
+            <Link  to="/projects" >Projects</Link >
+            </li>
+            <li >
+              <Link  to="/gallery" >Gallery</Link >
+            </li>
+            <li >
+              <Link  to="/gallery" >News & Updates</Link >
+            </li>
+            <li >
+              <Link  to="/contact" >Contact Us</Link >
+            </li>
+        </ul>
+        <ul className='d-flex justify-content-between align-items-center list-unstyled m-0'>
+          <li >
+            <Link to="/">Privacy Policy</Link >
+          </li>
+          <li >
+            <Link  to="/" > News & Updates</Link >
+          </li>
+        </ul>
       </div>
+    </footer>
+    <footer className='text-center text-white py-4 footerCopyRights'>
+      Copyrights 2023 - All rights reserved
     </footer>
     </>
   )
 }
-
 export default Footer

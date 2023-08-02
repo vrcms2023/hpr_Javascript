@@ -1,0 +1,21 @@
+.footerCopyRights {
+    background-color: #787878;
+    font-size: .9rem;
+}
+
+.footerLinks {
+    background-color: #E6E6E6;
+    font-size: .9rem;
+}
+
+.footerLinks a {
+    color: #666;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: medium;
+}
+
+.footerLinks a:hover {
+    color: #165D3D;
+    font-weight: 600;
+}
