@@ -63,7 +63,7 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  pr
                   catategoryImgs.map((item) => { 
                         return item.contentType === "pdf" ? (
                         <div className='categoryContainer' key={item._id} >
-                          <li><a href="javascript:void(0)" onClick={() => downloadPDF(`${window.location.origin}/${item.path}`)}>{item.originalname}</a>
+                          <li><a href="#!" onClick={() => downloadPDF(`${window.location.origin}/${item.path}`)}>{item.originalname}</a>
                           <p onClick={() => thumbDelete(item._id)}>delete</p>
                           </li>
                         </div>

@@ -23,8 +23,7 @@ const AddProject = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const [newProject, setNewProject] = useState({})
     const [readOnlyTitle, setreadOnlyTitle] = useState('');
-    const infoObj = {description:'',status:''}
-    const [infoDetails, setInfoDetails]= useState(infoObj)
+    const [description, setDescription]= useState('')
     const specificationKeys = {title:"",feature:""};
     const amenitieKeys = {amenitie:"",feature:"", googleMap:""};
     const [specifications, setSpecifications]=useState([specificationKeys])
@@ -34,6 +33,7 @@ const AddProject = () => {
     const [availabileObject, setAvailabileObject] = useState([]);
     const [priceObject, setPriceObject] = useState([]);
     const [imgGallery, setImgGallery] = useState([])
+    const [projectStatus, setProjectStatus] =useState('');
     const { id } = useParams();
 
 
@@ -55,8 +55,7 @@ const AddProject = () => {
             })
             .catch(err => console.log(err))
         }
-        
-       getPorjectCategory()
+         getPorjectCategory()
        
     }, [cookies]);
 
@@ -78,10 +77,22 @@ const AddProject = () => {
     }
 
     const changeHandler =(e)=>{
-        const {name,value}=e.target
-        setInfoDetails((prevFormData) => ({ ...prevFormData, [name]: value }));
-        newProject[name] = value;
+        const value=e.target.value
+        setDescription(value);
+        newProject["description"] = value;
         setNewProject(newProject)
+    }
+
+    /**
+     * project status object
+     */
+
+    const getProjectStatus = () => {
+        return {
+            projectCategoryID : projectType[0]._id,
+            projectCategoryName :  projectType[0].label,
+            projectCategoryValue :  projectType[0].value,
+        }
     }
 
     /**
@@ -90,13 +101,11 @@ const AddProject = () => {
     async function addNewProject(event) {
         event.preventDefault();
         const project = {
-            projectCategoryID : projectType[0]._id,
-            projectCategoryName :  projectType[0].label,
-            projectCategoryValue :  projectType[0].value,
+            ...getProjectStatus(),
             projectTitle : projectName,
             createdBy : cookies.userName,
             userID : cookies.userId,
-            status : "0%",
+            status : projectType[0].label,
             isActive : true
         }
      
@@ -129,12 +138,19 @@ const AddProject = () => {
                 })
                 .then(res => res.json())
                 .then(data => {
+                    setProjectType([
+                        {
+                            label : data.project.projectCategoryName,
+                            value: data.project.projectCategoryValue,
+                            _id : data.project.projectCategoryID
+                        }
+                    ])
+                    setProjectStatus(data.project.projectCategoryName)
                     setNewProject(data.project)
                     const title = data.project.projectTitle;
                     setreadOnlyTitle(title);
                     setProjectName(title);
-                    const info = {description :data.project.description, status :data.project.status }
-                    setInfoDetails(info)
+                    setDescription(data.project.description)
                     setShow(true)
                     setErrorMessage(data.message)
                 })
@@ -162,8 +178,10 @@ const AddProject = () => {
        
         const projectProps = {
             ...newProject,
+            ...getProjectStatus(),
             projectTitle : projectName,
             updatedBy : cookies.userName,
+
         }
      
         try {
@@ -176,7 +194,7 @@ const AddProject = () => {
                 body: JSON.stringify(projectProps)
             })
             setProjectName('');
-            setInfoDetails(infoObj)
+            setDescription('')
         } catch (err) {
             setErrorMessage(err)
         }
@@ -256,7 +274,7 @@ const AddProject = () => {
             onChange={(e) => handleChange(e)} >
                 <option>Select Status</option>
                 {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
-                    return <option key={option._id} value={option.value}>
+                    return <option  key={option._id} value={option.value}>
                         {option.label}
                     </option>
                 })) : ('')}      
@@ -286,7 +304,7 @@ const AddProject = () => {
     {show ? 
     <>
     <div className='row bg-light px-5 mt-3 shadow-lg'>
-    {readOnlyTitle && <h3 className='my-4 text-success'>{readOnlyTitle} <span className="badge bg-warning text-dark" style={{fontSize: ".8rem"}}>  {  projectType[0]?.label?.toUpperCase()} PROJECT</span></h3>}
+    {readOnlyTitle && <h3 className='my-4 text-success'>{readOnlyTitle} <span className="badge bg-warning text-dark" style={{fontSize: ".8rem"}}>  {  projectStatus.toUpperCase()} PROJECT</span></h3>}
     
         <div className='col-md-3 bg-light pb-3'>
             <div className="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -307,13 +325,24 @@ const AddProject = () => {
                     <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
                 </div> 
                 <div className="mb-3">
-                    <label htmlFor="projectStatus" className="form-label  ">Status</label>
+                <label htmlFor="projectStatus" className="form-label  ">Status</label>
+                <select value={projectType[0]?.value}  className="form-select mb-3 shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
+                    onChange={(e) => handleChange(e)} >
+                        <option>Select Status</option>
+                        {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
+                            return <option key={option._id} value={option.value}>
+                                {option.label}
+                            </option>
+                        })) : ('')}      
+                    </select>
+                    {/* <label htmlFor="projectStatus" className="form-label  ">Status</label>
                     <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
-                </div>
+               */}
+                    </div> 
                 
                 <div className="mb-3">
                     <label htmlFor="projectDescription" className="form-label  ">Description</label>
-                    <textarea className="form-control" name="description" value={infoDetails.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
+                    <textarea className="form-control" name="description" value={description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
                 </div>
             </div>
             </div>

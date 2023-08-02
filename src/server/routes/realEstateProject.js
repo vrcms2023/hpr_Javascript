@@ -31,7 +31,6 @@ router.post("/addProject", verifyJWT, async (req, res, next) => {
             createdBy: project.createdBy,
             updatedBy: project.createdBy,
             userID: project.userID,
-            status: project.status+" completed",
             description:'',
             isActive: true
         })
@@ -55,7 +54,10 @@ router.post("/updateProject", verifyJWT, async (req, res, next) => {
             "projectTitle": project.projectTitle, 
             "updatedBy": project.updatedBy, 
             "description": project.description,
-            "status": project.status + " completed"
+            "projectCategoryID": project.projectCategoryID,
+            "projectCategoryName": project.projectCategoryName,
+            "projectCategoryValue": project.projectCategoryValue,
+           
         }
       };
     const options = { returnNewDocument: true };
