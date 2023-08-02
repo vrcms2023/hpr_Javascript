@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Title from '../../../Common/Title'
 import Button from '../../../Common/Button'
+import DeleteDialog from '../../../Common/DeleteDialog';
 import Projects from '../../Components/Projects';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
+
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Dashboard = () => {
 
@@ -57,7 +61,8 @@ const Dashboard = () => {
      * @param {project id} id 
      */
     const handleProjectDelete = (id) => {
-       
+
+      const deleteDashBoardProject = () => {
         fetch(`/deleteDashboardProject/${id}`,{
             headers: {"x-access-token": cookies.token}
         })
@@ -70,6 +75,14 @@ const Dashboard = () => {
                 setProjects([]);
             }
         }).catch(err => console.log(err))
+      }
+      confirmAlert({
+        customUI: ({ onClose, }) => {
+          return (
+            <DeleteDialog onClose={onClose} callback={deleteDashBoardProject}/>          
+          );
+        }
+      });
     }
 
 

@@ -2,6 +2,9 @@ import React, {useEffect} from 'react'
 import Title from './Title'
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom'
+import DeleteDialog from './DeleteDialog';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  project, category }) => {
   const [cookies,setCookie,removeCookie] = useCookies(["token","clientInformation"]);
@@ -28,19 +31,28 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  pr
   }, []);
 
   const thumbDelete = (id) => {
-    fetch(`/deleteImageById/${id}`, {
-      method: "DELETE",
-      headers: { "x-access-token": cookies.token },
-    })
-      .then(response => response.json())
-      .then((data) => {
-        if(data?.imageModel?._id) {
-          catategoryImgState(values => {
-            return values.filter(item => item._id !== data.imageModel._id)
-          })
-        }
-        
+
+    const deleteImageByID = () => {
+      fetch(`/deleteImageById/${id}`, {
+        method: "DELETE",
+        headers: { "x-access-token": cookies.token },
       })
+        .then(response => response.json())
+        .then((data) => {
+          if(data?.imageModel?._id) {
+            catategoryImgState(values => {
+              return values.filter(item => item._id !== data.imageModel._id)
+            })
+          }
+        })
+    }
+    confirmAlert({
+      customUI: ({ onClose, }) => {
+        return (
+          <DeleteDialog onClose={onClose} callback={deleteImageByID}/>          
+        );
+      }
+    });
   }
 
   const downloadPDF = (url) =>{
