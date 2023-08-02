@@ -6,12 +6,13 @@ import { useCookies } from "react-cookie";
 
 const Login = () => {
   const [cookies, setCookie,removeCookie] = useCookies(["token"]);
+  const navigate = useNavigate()
  
   useEffect(()=>{
     removeCookie("token");
     removeCookie("userName")
     removeCookie("userId")
-  })
+  },[])
 
   const [registrationState, setRegistrationState] = useState({
     userName: "",
@@ -86,7 +87,7 @@ async function handleLogin(event) {
   }
 }
 
-  const navigate = useNavigate()
+  
   return (
     <div className='bg-secondary mt-5 pt-5 pb-3 '>
       <div className='row py-5 '>

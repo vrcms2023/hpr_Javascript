@@ -1,7 +1,46 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Title from '../../Common/Title'
+import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom'
 
 const Contact = () => {
+  const formObject = {firstName: "",lastName:"", email: "",phone:"",message: ""};
+  const [formData, setFormData] = useState(formObject);
+  const [cookies, setCookie, removeCookie] = useCookies(["clientInformation"]);
+  const navigate = useNavigate()
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+
+  /**
+   * contactus form submit
+   */
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    
+    fetch('updateContactDetails/', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      removeCookie("clientInformation")
+      setCookie("clientInformation", data.contactus.email, {maxAge: 86400})
+      setFormData(formObject)
+      if(cookies.previousPath !== undefined) {
+        navigate(`/${cookies.previousPath}`)
+      }
+      
+    })
+    .catch((err) => console.log(err));
+  }
+
   return (
     <div className='continer pt-5'>
       <div className='row bg-secondary'>
@@ -24,32 +63,32 @@ const Contact = () => {
           </div>
         </div>
         <div className='col-md-6 d-flex justify-content-start align-items-center'>
-        <form className='w-50 my-5 py-5'>
+        <form className='w-50 my-5 py-5' onSubmit={onFormSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputFName" className="form-label">First Name</label>
-            <input type="email" className="form-control" id="exampleInputFName" aria-describedby="emailHelp" />
+            <input type="textbox" name="firstName" value={formData.firstName} onChange={handleChange} className="form-control" id="exampleInputFName" aria-describedby="emailHelp" />
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputLName" className="form-label">Last Name</label>
-            <input type="email" className="form-control" id="exampleInputLName" aria-describedby="emailHelp" />
+            <input type="textbox" name="lastName" value={formData.lastName} onChange={handleChange} className="form-control" id="exampleInputLName" aria-describedby="emailHelp" />
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <input type="email" name="email" value={formData.email} onChange={handleChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPhone" className="form-label">Phone</label>
-            <input type="email" className="form-control" id="exampleInputPhone" aria-describedby="emailHelp" />
+            <input type="textbox" name="phone" value={formData.phone} onChange={handleChange} className="form-control" id="exampleInputPhone" aria-describedby="emailHelp" />
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleFormMesg" className="form-label">Message</label>
-            <textarea className="form-control" id="exampleFormMesg" rows="3"></textarea>
+            <textarea className="form-control" value={formData.message} onChange={handleChange} name='message' id="exampleFormMesg" rows="3"></textarea>
           </div>
-          <button type="submit" className="btn btn-primary">Send Request</button>
+          <button type="submit" className="btn btn-primary" >Send Request</button>
         </form>
         </div>
       </div>

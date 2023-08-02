@@ -2,7 +2,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require('cors')
 const mongoose = require("mongoose")
-const path = require('path')
+const winston = require("winston");
 require('dotenv').config()
 
 
@@ -12,6 +12,7 @@ const realEstateProject = require("./routes/realEstateProject")
 const specification = require("./routes/specification")
 const amenitie = require("./routes/amenitie")
 const fileUploader = require("./routes/fileUploader")
+const ContactUS = require("./routes/contactus")
 
 const app = express()
 
@@ -26,10 +27,38 @@ app.use("/", realEstateProject)
 app.use("/", specification)
 app.use("/", amenitie)
 app.use("/", fileUploader)
+app.use("/", ContactUS)
 
 
-//app.use('public/uploads', express.static(process.cwd() + 'public/uploads'));
+const logger = winston.createLogger({
+    // Log only if level is less than (meaning more severe) or equal to this
+    level: "info",
+    // Use timestamp and printf to create a standard log format
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.printf(
+        (info) => `${info.timestamp} ${info.level}: ${info.message}`
+      )
+    ),
+    // Log to the console and a file
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: "logs/app.log" }),
+    ],
+  });
 
+  app.use((req, res, next) => {
+    // Log an info message for each incoming request
+    logger.info(`Received a ${req.method} request for ${req.url}`);
+    next();
+  });
+
+  // Handle errors using the logger
+app.use((err, req, res, next) => {
+    // Log the error message at the error level
+    logger.error(err.message);
+    res.status(500).send();
+  });
 
 
 // connects to mongoDB database

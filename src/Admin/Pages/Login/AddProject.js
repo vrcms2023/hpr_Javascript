@@ -9,7 +9,6 @@ import { Amenities ,AmenitiesList} from '../../Components/Amenities';
 import { useCookies } from "react-cookie";
 import { useParams } from 'react-router-dom';
 
-import GalleryJSON from '../../../Data/Gallery.json'
 import CatageoryImgC from '../../../Common/CatageoryImgC';
 
 
@@ -19,24 +18,21 @@ const AddProject = () => {
     const [show, setShow] = useState(false)
     const [projectType, setProjectType] = useState({})
     const [projectName, setProjectName] = useState('')
-    const [gallery, setGallery ] = useState(GalleryJSON)
-    const [onGoingImgs, setOngoingImgs] = useState([])
-    const [onFutureImgs, setFutureImgs] = useState([])
-    const [onCompletedImgs, setCompletedImgs] = useState([])
-
     const [defaultProjectType, setDefaultProjectType] = useState([]);
     const [cookies] = useCookies(["token","userName"]);
     const [errorMessage, setErrorMessage] = useState("")
     const [newProject, setNewProject] = useState({})
     const [readOnlyTitle, setreadOnlyTitle] = useState('');
-    const [description, setdescription] = useState('');
+    const infoObj = {description:'',status:''}
+    const [infoDetails, setInfoDetails]= useState(infoObj)
     const specificationKeys = {title:"",feature:""};
     const amenitieKeys = {amenitie:"",feature:"", googleMap:""};
     const [specifications, setSpecifications]=useState([specificationKeys])
     const [amenities, setAmenities] = useState(amenitieKeys)
-    const [googleMap, setGoogleMap] = useState("")
     const [pdfObject, setPdfObject] = useState([]);
     const [planObject, setPlanObject] = useState([]);
+    const [availabileObject, setAvailabileObject] = useState([]);
+    const [priceObject, setPriceObject] = useState([]);
     const [imgGallery, setImgGallery] = useState([])
     const { id } = useParams();
 
@@ -62,14 +58,14 @@ const AddProject = () => {
         
        getPorjectCategory()
        
-    }, []);
+    }, [cookies]);
 
     /**
      * Select Porject type handler
      */
     const handleChange = (e) => {
         const value = e.target.value.toLowerCase()    
-        const obj = defaultProjectType.filter(obj => {return (obj.value == value)});
+        const obj = defaultProjectType.filter(obj => {return (obj.value === value)});
         setProjectType(obj)
     }
 
@@ -82,8 +78,9 @@ const AddProject = () => {
     }
 
     const changeHandler =(e)=>{
-        setdescription(e.target.value)
-        newProject['description'] = e.target.value;
+        const {name,value}=e.target
+        setInfoDetails((prevFormData) => ({ ...prevFormData, [name]: value }));
+        newProject[name] = value;
         setNewProject(newProject)
     }
 
@@ -99,7 +96,7 @@ const AddProject = () => {
             projectTitle : projectName,
             createdBy : cookies.userName,
             userID : cookies.userId,
-            status : "0% complete",
+            status : "0%",
             isActive : true
         }
      
@@ -136,7 +133,8 @@ const AddProject = () => {
                     const title = data.project.projectTitle;
                     setreadOnlyTitle(title);
                     setProjectName(title);
-                    setdescription(data.project.description);
+                    const info = {description :data.project.description, status :data.project.status }
+                    setInfoDetails(info)
                     setShow(true)
                     setErrorMessage(data.message)
                 })
@@ -145,7 +143,7 @@ const AddProject = () => {
        if(id){
         getSelectedProject()
        }
-    },[])
+    },[cookies,id])
 
     
     function saveProject() {
@@ -177,9 +175,8 @@ const AddProject = () => {
                 },
                 body: JSON.stringify(projectProps)
             })
-            const data = await res.json();
             setProjectName('');
-            setdescription('');
+            setInfoDetails(infoObj)
         } catch (err) {
             setErrorMessage(err)
         }
@@ -241,39 +238,7 @@ const AddProject = () => {
         }
     }
 
-    // const handleChange = (e) => {
-    //     const value = e.target.value.toLowerCase();
-    //     setProjectType(value)
-    //     if(value === "ongoing" || value === "future" || value === "completed") {
-    //         document.getElementById('projectTitle').classList.remove('d-none')
-    //         document.getElementById('projectTitle').classList.add('d-block')
-    //         // setShow(!show)
-    //     }
-    // }
-    // const thumbDelete = (id) => {
-    //     console.log("id", id)
-    //     const filteredArr = onGoingImgs.filter(obj => obj.id !== id);
-    //     setOngoingImgs(filteredArr)
-    // }
 
-
-
-    const addTitle = (e) => {
-        if( projectName === "" ) {
-            document.getElementById('projectValidation').classList.remove('d-none')
-        } else {
-            setShow(!show)
-            document.getElementById('projectTitle').classList.remove('d-block')
-            document.getElementById('projectTitle').classList.add('d-none')
-            document.getElementById('projectStatus').classList.add('d-none')
-        } 
-    }
-
-    useEffect(() => {
-        setOngoingImgs(gallery.ongoing);
-        setFutureImgs(gallery.future);
-        setCompletedImgs(gallery.completed);
-    }, [])
 
   return (
     <div className='bg-light pt-5' style={{marginTop: "90px"}}>
@@ -341,19 +306,14 @@ const AddProject = () => {
                     <label htmlFor="projectName" className="form-label  ">Project Name</label>
                     <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
                 </div> 
-               {/*  <div className="mb-3">
+                <div className="mb-3">
                     <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                    <select className="form-select" aria-label="Default select example" id="projectStatus">
-                        <option>Select Status</option>
-                        <option value="1">Ongoing</option>
-                        <option value="2">Future</option>
-                        <option value="3">Completed</option>
-                    </select>
-                </div>*/}
+                    <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
+                </div>
                 
                 <div className="mb-3">
                     <label htmlFor="projectDescription" className="form-label  ">Description</label>
-                    <textarea className="form-control" name="description" value={description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
+                    <textarea className="form-control" name="description" value={infoDetails.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
                 </div>
             </div>
             </div>
@@ -364,6 +324,11 @@ const AddProject = () => {
                 <CatageoryImgC title={`${readOnlyTitle} PDF's`} catategoryImgs={pdfObject} catategoryImgState={setPdfObject} project={newProject} category="PDF" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
                 <FileUpload title="Add Plan" project={newProject} updatedBy={cookies.userName} category="Plans" gallerysetState={setPlanObject} galleryState={planObject} validTypes="image/png,image/jpeg" />
                 <CatageoryImgC title={`${readOnlyTitle} Plans`}   catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <FileUpload title="Add Availability" project={newProject} updatedBy={cookies.userName} category="availability" gallerysetState={setAvailabileObject} galleryState={availabileObject} validTypes="image/png,image/jpeg,application/pdf" />
+                <CatageoryImgC title={`${readOnlyTitle} Availibility`}   catategoryImgs={availabileObject} catategoryImgState={setAvailabileObject} project={newProject} category="availability"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <FileUpload title="Add Price" project={newProject} updatedBy={cookies.userName} category="price" gallerysetState={setPriceObject} galleryState={priceObject} validTypes="image/png,image/jpeg,application/pdf" />
+                <CatageoryImgC title={`${readOnlyTitle} Price`}   catategoryImgs={priceObject} catategoryImgState={setPriceObject} project={newProject} category="price"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+
                 {/* Add GOOGLE MAP  */}
                 <Amenities title="Google Map" value={amenities?.googleMap}  amenities={amenities} setAmenities={setAmenities} name="googleMap"/>
             </div>
