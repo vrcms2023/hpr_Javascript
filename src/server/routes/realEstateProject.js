@@ -2,11 +2,14 @@ const express = require('express')
 const RealEstateProject = require("../models/realEstateProject")
 const verifyJWT = require("../common/verifyJWT.js")
 const {porjectValidation } = require("../common/validation.js")
+const imagesModel = require("../models/imagesModel.js");
+const Specification = require("../models/specification.js")
+const Amenitie = require("../models/amenitie.js")
 
 const router = express.Router()
 
 const getDashboardProject = async (req, res) => {
-    const dashBoardFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle status isActive';
+    const dashBoardFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive';
     const data = await RealEstateProject.find({isActive : true}).select(dashBoardFields);
     return res.json({message: data.length > 0 ? "Success" :  "Record not found" , project: data}) 
 }
@@ -93,6 +96,32 @@ router.get("/deleteDashboardProject/:id", verifyJWT, async (req, res, next) => {
    
         getDashboardProject(req, res);
 })
+
+router.get("/client/getProjects", async (req, res, next) => {   
+
+    const clientViewFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive ';
+    const projectData = await RealEstateProject.find({isActive : true}).select(clientViewFields);
+
+    let projectIDs = []
+    projectData.map((d, k) => {
+        projectIDs.push(d._id);
+    }) 
+  
+    const data = await imagesModel.find({ projectID: { $in: projectIDs }, "category":'images' })
+    return res.json({message: data.length > 0 ? "Success" :  "Record not found" , projectList:projectData, imageList : data}) 
+});
+
+router.get("/client/getSelectedProject/:id", async (req, res, next) => {  
+
+    const query = { "projectID": req.params.id };
+    const projectData = await RealEstateProject.findById(req.params.id)
+    const imageData = await imagesModel.find(query); 
+    const specificationData = await Specification.find(query);
+    const amenitie = await Amenitie.find(query);  
+    
+    return res.json({message: "Success" , project:projectData ,imageData:imageData, specificationData:specificationData, amenitie:amenitie[0] }) 
+});
+
 
 
 
