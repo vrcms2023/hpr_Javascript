@@ -14,12 +14,13 @@ const Login = () => {
     removeCookie("userId")
   },[])
 
-  const [registrationState, setRegistrationState] = useState({
+  const registrationFields = {
     userName: "",
     email: "",
     password: "",
     confirmPassword : "",
-  })
+  };
+  const [registrationState, setRegistrationState] = useState(registrationFields)
 
   function handleRegistrationChange(evt) {
     const value = evt.target.value;
@@ -41,6 +42,7 @@ const Login = () => {
             body: JSON.stringify(registrationState)
         })
         const data = await res.json()
+        setRegistrationState(registrationFields);
         setErrorMessage(data.message)
     } catch (err) {
         setErrorMessage(err)

@@ -27,6 +27,7 @@ router.post("/register", async (req, res, next) => {
             password: user.password,
             email : user.email,
             confirmPassword: user.confirmPassword,
+            isActive: false
         })
 
         dbUser.save()
@@ -46,7 +47,7 @@ router.post("/login", (req, res, next) => {
     if (validationError) {
         return res.json({message: validationError.details[0].message})
     } else {
-        User.findOne({email: userLoggingIn.email.toLowerCase()})
+        User.findOne({email: userLoggingIn.email.toLowerCase(), isActive: true})
         .then(dbUser => {
             if (!dbUser) {
                 return res.json({message: "Invalid email or Password"})

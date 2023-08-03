@@ -12,8 +12,10 @@ import Login from './Admin/Pages/Login/Login';
 import Dashboard from './Admin/Pages/Login/Dashboard';
 import AddProject from './Admin/Pages/Login/AddProject';
 import ProtectedRoute from './Frontend/Components/ProtectedRoute';
+import UserAdmin from './Admin/Pages/Login/UserAdmin';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 function App() {
   
@@ -31,6 +33,7 @@ function App() {
               <Route exact path='/addproject' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/editproject/:id' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/dashboard' element={ <ProtectedRoute><Dashboard /> </ProtectedRoute>} />
+              <Route exact path='/userAdmin' element={ <ProtectedRoute><UserAdmin/> </ProtectedRoute>} />
             </Routes>
           <Footer />
           </BrowserRouter>

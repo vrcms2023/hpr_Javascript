@@ -12,7 +12,8 @@ const realEstateProject = require("./routes/realEstateProject")
 const specification = require("./routes/specification")
 const amenitie = require("./routes/amenitie")
 const fileUploader = require("./routes/fileUploader")
-const ContactUS = require("./routes/contactus")
+const ContactUS = require("./routes/contactus");
+const UserAdmin  = require("./routes/userAdmin");
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.use("/", specification)
 app.use("/", amenitie)
 app.use("/", fileUploader)
 app.use("/", ContactUS)
+app.use('/', UserAdmin)
 
 
 const logger = winston.createLogger({

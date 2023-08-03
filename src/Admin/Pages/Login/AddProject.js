@@ -65,7 +65,12 @@ const AddProject = () => {
     const handleChange = (e) => {
         const value = e.target.value.toLowerCase()    
         const obj = defaultProjectType.filter(obj => {return (obj.value === value)});
-        setProjectType(obj)
+        if(obj.length > 0) {
+            setProjectType(obj)
+        } else  {
+            alert("select status")
+        }
+        
     }
 
     /**
@@ -120,6 +125,7 @@ const AddProject = () => {
             })
             const data = await res.json()
             setNewProject(data.project)
+            setProjectStatus(data.project.projectCategoryName)
             setreadOnlyTitle(data.project.projectTitle)
             setShow(true)
             setErrorMessage(data.message)
@@ -180,8 +186,7 @@ const AddProject = () => {
             ...newProject,
             ...getProjectStatus(),
             projectTitle : projectName,
-            updatedBy : cookies.userName,
-
+            updatedBy : cookies.userName
         }
      
         try {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Title from '../../Common/Title'
 import Gallery from './Gallery'
 import Specifications from '../Components/Specifications'
@@ -8,6 +8,40 @@ import Location from '../Components/Location'
 import Amenities from './Amenities'
 
 const Projects = () => {
+
+  useEffect(() => {
+    fetch("/client/getProjects")
+    .then(res => res.json())
+    .then(data => {
+       const projectList = formatData(data);
+       console.log(projectList)
+    }).catch(err => console.log(err))
+}, []);
+
+const formatData  = (data)=> {
+  const project = data.projectList;
+  const images = data.imageList;
+
+  return project.reduce((acc, val, ind) => {
+    const imgs = [];
+    images.forEach((el, i) => {
+       if(el.projectID === val._id){
+        imgs.push(el);
+       };
+    });
+    return acc.concat({...val, imgs});
+ }, []);
+}
+
+useEffect(() => {
+  fetch("/client/getSelectedProject/64cb5d5eea535b04d760d664")
+  .then(res => res.json())
+  .then(data => {
+     console.log(data)
+  }).catch(err => console.log(err))
+  
+},[])
+
   return (
     <div className='row p-0 pt-5'>
       <div className='col-md-4 d-flex justify-content-center align-items-center p-5 bg-light'>
