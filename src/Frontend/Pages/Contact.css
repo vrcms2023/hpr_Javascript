@@ -1,0 +1,15 @@
+.contactForm input, .contactForm textarea{
+    background-color: #EEEEEE;
+    border: 1px solid #CACACA;
+    padding: 12px 10px;
+}
+
+.contactForm {
+    width: 60%;
+}
+
+@media (max-width: 768px) {
+    .contactForm {
+        width: 90% !important
+    }
+}
