@@ -8,8 +8,8 @@ import './Styles.css'
 const Footer = () => {
   return (
     <>
-    <footer className='text-center text-dark py-3 footerTop'>
-      <div className='container py-3'>
+    <footer className='text-center text-dark py-3 py-md-5 footerTop'>
+      <div className='container py-3 py-md-5'>
         <div className='row'>
           <div className='col-md-3 '>
             <address className='text-center text-sm-start'>
@@ -42,7 +42,7 @@ const Footer = () => {
           </div>
 
           <div className='col-md-3 text-start d-none d-md-block'>
-              <img src={Logo} alt=""/>
+              <img src={Logo} alt="HPR Infra"/>
           </div>
       </div>
       </div>
