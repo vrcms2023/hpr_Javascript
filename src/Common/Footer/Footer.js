@@ -42,7 +42,7 @@ const Footer = () => {
           </div>
 
           <div className='col-md-3 text-start d-none d-md-block'>
-              <img src={Logo} alt=""/>
+              <img src={Logo} alt="HPR Infra"/>
           </div>
       </div>
       </div>
