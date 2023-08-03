@@ -18,6 +18,8 @@ const Home = () => {
         <div className='row'>
             <div className='col-md-12'><Banner /></div>
         </div>
+
+        {/* Introduction */}
         <div className='row py-5'>
             <div className='col-md-8 offset-md-2 py-4'>
             <Title title="To excel in delivery of work!" cssClass="mb-2 fw-normal fs-2 text-center green-700" />
