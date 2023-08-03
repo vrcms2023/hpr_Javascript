@@ -32,10 +32,10 @@ button.nav-link.active {
   border: 5px solid #fff;
 }
 
-.footerTop {
+/* .footerTop {
   background: rgb(218,87,0);
 background: linear-gradient(350deg, rgba(218,87,0,0.9332107843137255) 0%, rgba(218,117,0,0.7287289915966386) 50%);
-}
+} */
 
 .thumb75 {
   width: 100px;
