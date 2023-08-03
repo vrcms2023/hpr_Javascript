@@ -2,7 +2,8 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif !important;
   font-size: 16px !important;
-  background-color: #bebebe !important;
+  background-color: #fff !important;
+  color: #666666 !important;
   /* background-image: url('https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); */
 
     /* background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)), 
@@ -25,5 +26,47 @@ body {
   background-color: #165D3D !important;
   color: #fff !important;
 }
+
+.green-900 {
+  color: #165D3D;
+}
+
+.green-700 {
+  color: #698845;
+}
+
+.green-500 {
+  color: #A8C849;
+}
+
+.blue-900 {
+  color: #295A93;
+}
+
+.blue-700 {
+  color: #017DB9;
+}
+
+.blue-500 {
+  color: #0098DA;
+}
+
+.blue-300 {
+  color: #92D0EC;
+}
+
+.gray-222 {
+  color: #222222
+}
+
+.gray-444 {
+  color: #444444
+}
+
+.homeProjectsBg {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(33,72,118,1) 50%, rgba(255,255,255,1) 100%);
+}
+
 
 
