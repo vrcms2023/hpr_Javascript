@@ -21,3 +21,5 @@
 2023-08-02T11:34:57.856Z info: Received a GET request for /dashboard
 2023-08-03T18:22:44.162Z info: Received a GET request for /getAllUsers
 2023-08-03T18:22:44.182Z info: Received a GET request for /getAllUsers
+2023-08-04T09:23:08.555Z info: Received a GET request for /main.ef77af48460592868dbf.hot-update.json
+2023-08-04T11:45:00.675Z info: Received a GET request for /main.b1a2ae4a7d56be3a99fb.hot-update.json
