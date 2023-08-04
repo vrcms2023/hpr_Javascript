@@ -13,6 +13,8 @@ const Contact = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["clientInformation"]);
   const navigate = useNavigate()
 
+  console.log("navigate", navigate)
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
