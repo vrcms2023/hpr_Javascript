@@ -21,8 +21,9 @@ const Projects = () => {
 const formatData  = (data)=> {
   const project = data.projectList;
   const images = data.imageList;
+  const projList =[];
 
-  return project.reduce((acc, val, ind) => {
+  const list = project.reduce((acc, val, ind) => {
     const imgs = [];
     images.forEach((el, i) => {
        if(el.projectID === val._id){
@@ -31,6 +32,15 @@ const formatData  = (data)=> {
     });
     return acc.concat({...val, imgs});
  }, []);
+
+ list.map((proj) => {
+  if(!projList[proj.projectCategoryValue]) {
+    projList[proj.projectCategoryValue] = []
+  }
+  projList[proj.projectCategoryValue].push(proj)
+  
+ });
+ return projList;
 }
 
 useEffect(() => {
