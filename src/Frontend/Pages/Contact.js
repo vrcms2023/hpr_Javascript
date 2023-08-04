@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import Title from '../../Common/Title'
+import Alert from '../../Common/Alert'
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom'
 
@@ -8,12 +9,13 @@ import './Contact.css'
 import contactImg from '../../Images/contact.png'
 
 const Contact = () => {
-  const formObject = {firstName: "",lastName:"", email: "",phone:"",message: ""};
+  const formObject = {firstName: "", email: "",phone:"",message: ""};
   const [formData, setFormData] = useState(formObject);
+  const [mesg, setMesg] = useState('');
+  const [show, setShow] = useState(false);
+  const [formerror, setFormerror] = useState({});
   const [cookies, setCookie, removeCookie] = useCookies(["clientInformation"]);
   const navigate = useNavigate()
-
-  console.log("navigate", navigate)
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,7 +28,10 @@ const Contact = () => {
    */
   const onFormSubmit = (e) => {
     e.preventDefault();
-    
+    setFormerror(validationform(formData));
+
+    if(Object.keys(formerror).length > 0) return;
+
     fetch('updateContactDetails/', {
       method: 'POST',
       body: JSON.stringify(formData),
@@ -36,6 +41,10 @@ const Contact = () => {
     })
     .then((res) => res.json())
     .then((data) => {
+      setMesg(data.message)
+      setShow(true)
+      setTimeout(() => {setShow(false)}, 4000);
+      
       removeCookie("clientInformation")
       setCookie("clientInformation", data.contactus.email, {maxAge: 86400})
       setFormData(formObject)
@@ -44,8 +53,37 @@ const Contact = () => {
       }
       
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      setMesg(err.message)
+      setShow(true)
+      setTimeout(() => {setShow(false)}, 4000);
+      // console.log(err)
+    })
+   
+    
+
   }
+  const validationform = (value)=>{
+    const errors= {};
+    const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if(!value.firstName){
+      errors.firstName="Please Enter Name";
+    }
+
+    if(!value.phone){
+      errors.phone="Please Enter Phone Number";
+    }
+
+    if(!value.email){
+        errors.email="Please Enter Email";
+    } else if(!emailPattern.test(value.email))
+    {
+        errors.email="Enter Valid Email";
+    }
+
+    return errors;
+}
 
   return (
     <div className='container-fluid'>
@@ -83,52 +121,48 @@ const Contact = () => {
             
           </div>
         </div>
-        <div className='col-md-8 d-flex justify-content-center align-items-center'>
-        <form className='my-5 py-0 py-md-5 contactForm' onSubmit={onFormSubmit}>
-        <Title title="Quick contact" cssClass="text-black fw-bold mb-4"/>
+       
+        <div className='col-md-8 d-flex justify-content-center align-items-center flex-column'>
+        {show && <Alert mesg={mesg} cssClass={`alert text-white w-75 mt-3 p-2 text-center ${mesg === "Success" ? "bg-success" : "bg-danger"}`} /> }
+          <form className='my-2 py-0 py-md-5 contactForm' onSubmit={onFormSubmit}>
+          <Title title="Quick contact" cssClass="text-black fw-bold mb-4"/>
 
           <div className="mb-3 row">
             <label htmlFor="exampleInputFName" className="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input type="textbox" name="firstName" value={formData.firstName} onChange={handleChange} className="form-control" id="exampleInputFName" aria-describedby="emailHelp" />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+              
+              {formData.firstName === "" ? <div id="emailHelp" className="form-text text-danger">{formerror.firstName}</div> : ""}
+              
             </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="exampleInputLName" className="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
-              <input type="textbox" name="lastName" value={formData.lastName} onChange={handleChange} className="form-control" id="exampleInputLName" aria-describedby="emailHelp" />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-              </div>
           </div>
           <div className="mb-3 row">
             <label htmlFor="exampleInputEmail1" className="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input type="email" name="email" value={formData.email} onChange={handleChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+              {formData.email === "" ? <div id="emailHelp" className="form-text text-danger">{formerror.email}</div> : ""}
             </div>
           </div>
           <div className="mb-3 row">
             <label htmlFor="exampleInputPhone" className="col-sm-2 col-form-label">Phone</label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input type="textbox" name="phone" value={formData.phone} onChange={handleChange} className="form-control" id="exampleInputPhone" aria-describedby="emailHelp" />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+              {formData.phone === "" ? <div id="emailHelp" className="form-text text-danger">{formerror.phone}</div> : ""}
             </div>
           </div>
           <div className="mb-3 row">
             <label htmlFor="exampleFormMesg" className="col-sm-2 col-form-label">Message</label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
             <textarea className="form-control" value={formData.message} onChange={handleChange} name='message' id="exampleFormMesg" rows="3"></textarea>
           </div>
           </div>
           <div className="mb-3 row">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-10">
+          <div className="col-sm-2"></div>
+          <div className="col-sm-10">
             <button type="submit" className="btn btn-primary w-100 text-uppercase py-2">Send Request</button>
           </div>
           </div>
-        </form>
+          </form>
         </div>
       </div>
 
