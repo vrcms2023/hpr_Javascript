@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from 'react'
 import Button from '../Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 
 import Logo from '../../../src/Images/hpr-infra-logo.png'
@@ -42,22 +41,23 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/" className="nav-Link active">Home</Link >
+              <NavLink to="/" className={
+             useCallback(({isActive}) => isActive ? "nav-Link active" : "nav-Link")}>Home</NavLink >
             </li>
             <li className="nav-item">
-              <Link  to="/about" className="nav-Link ">About Us</Link >
+              <NavLink  to="/about" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>About Us</NavLink >
             </li>
             <li className="nav-item dropdown">
-            <Link  to="/projects" className="nav-Link ">Projects</Link >
+            <NavLink  to="/projects" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>Projects</NavLink >
             </li>
             <li className="nav-item">
-              <Link  to="/gallery" className="nav-Link ">Gallery</Link >
+              <NavLink  to="/gallery" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>Gallery</NavLink >
             </li>
             <li className="nav-item">
-              <Link  to="/gallery" className="nav-Link ">News & Updates</Link >
+              <NavLink  to="/" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>News & Updates</NavLink >
             </li>
             <li className="nav-item">
-              <Link  to="/contact" className="nav-Link ">Contact Us</Link >
+              <NavLink  to="/contact" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>Contact Us</NavLink >
             </li>
             <li className="nav-item">
                   {loginState ? (
