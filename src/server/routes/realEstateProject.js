@@ -57,6 +57,8 @@ router.post("/updateProject", verifyJWT, async (req, res, next) => {
             "projectTitle": project.projectTitle, 
             "updatedBy": project.updatedBy, 
             "description": project.description,
+            "aboutstitle": project.aboutstitle,
+            "aboutussubtitle": project.aboutussubtitle,
             "projectCategoryID": project.projectCategoryID,
             "projectCategoryName": project.projectCategoryName,
             "projectCategoryValue": project.projectCategoryValue,

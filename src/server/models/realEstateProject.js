@@ -30,6 +30,12 @@ const realEstateProjectSchema = mongoose.Schema({
     description: {
         type: String
     },
+    aboutstitle: {
+        type: String
+    },
+    aboutussubtitle: {
+        type: String
+    },
     isActive : {
         type: Boolean,
         required : true

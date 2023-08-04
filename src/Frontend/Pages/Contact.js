@@ -20,6 +20,7 @@ const Contact = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    setFormerror((prevFormData) => ({ ...prevFormData, [name]: "" }));
   };
 
 
@@ -28,9 +29,9 @@ const Contact = () => {
    */
   const onFormSubmit = (e) => {
     e.preventDefault();
-    setFormerror(validationform(formData));
-
-    if(Object.keys(formerror).length > 0) return;
+    const errors =validationform(formData);
+    setFormerror(errors)
+    if(Object.keys(errors).length > 0) return;
 
     fetch('updateContactDetails/', {
       method: 'POST',
@@ -48,9 +49,10 @@ const Contact = () => {
       removeCookie("clientInformation")
       setCookie("clientInformation", data.contactus.email, {maxAge: 86400})
       setFormData(formObject)
-      if(cookies.previousPath !== undefined) {
-        navigate(`/${cookies.previousPath}`)
-      }
+      setFormerror("")
+      // if(cookies.previousPath !== undefined) {
+      //   navigate(`/${cookies.previousPath}`)
+      // }
       
     })
     .catch((err) => {
@@ -132,7 +134,7 @@ const Contact = () => {
             <div className="col-sm-10">
               <input type="textbox" name="firstName" value={formData.firstName} onChange={handleChange} className="form-control" id="exampleInputFName" aria-describedby="emailHelp" />
               
-              {formData.firstName === "" ? <div id="emailHelp" className="form-text text-danger">{formerror.firstName}</div> : ""}
+              {formerror.firstName !== null ? <div id="emailHelp" className="form-text text-danger">{formerror.firstName}</div> : ""}
               
             </div>
           </div>
@@ -140,14 +142,14 @@ const Contact = () => {
             <label htmlFor="exampleInputEmail1" className="col-sm-2 col-form-label">Email</label>
             <div className="col-sm-10">
               <input type="email" name="email" value={formData.email} onChange={handleChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-              {formData.email === "" ? <div id="emailHelp" className="form-text text-danger">{formerror.email}</div> : ""}
+              {formerror.email !== null ? <div id="emailHelp" className="form-text text-danger">{formerror.email}</div> : ""}
             </div>
           </div>
           <div className="mb-3 row">
             <label htmlFor="exampleInputPhone" className="col-sm-2 col-form-label">Phone</label>
             <div className="col-sm-10">
               <input type="textbox" name="phone" value={formData.phone} onChange={handleChange} className="form-control" id="exampleInputPhone" aria-describedby="emailHelp" />
-              {formData.phone === "" ? <div id="emailHelp" className="form-text text-danger">{formerror.phone}</div> : ""}
+              {formerror.phone !== null ? <div id="emailHelp" className="form-text text-danger">{formerror.phone}</div> : ""}
             </div>
           </div>
           <div className="mb-3 row">

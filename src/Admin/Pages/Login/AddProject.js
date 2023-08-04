@@ -23,7 +23,8 @@ const AddProject = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const [newProject, setNewProject] = useState({})
     const [readOnlyTitle, setreadOnlyTitle] = useState('');
-    const [description, setDescription]= useState('')
+    const about = {aboutstitle :'', aboutussubtitle :'', description:''}
+    const [aboutUs, setAboutUs]= useState(about)
     const specificationKeys = {title:"",feature:""};
     const amenitieKeys = {amenitie:"",feature:"", googleMap:""};
     const [specifications, setSpecifications]=useState([specificationKeys])
@@ -82,10 +83,7 @@ const AddProject = () => {
     }
 
     const changeHandler =(e)=>{
-        const value=e.target.value
-        setDescription(value);
-        newProject["description"] = value;
-        setNewProject(newProject)
+        setAboutUs({ ...aboutUs, [e.target.name]: e.target.value });
     }
 
     /**
@@ -97,6 +95,18 @@ const AddProject = () => {
             projectCategoryID : projectType[0]._id,
             projectCategoryName :  projectType[0].label,
             projectCategoryValue :  projectType[0].value,
+        }
+    }
+
+    /**
+     * about us status  object 
+     */
+
+    const getAboutUsStatus = () => {
+        return {
+            aboutstitle :aboutUs.aboutstitle, 
+            aboutussubtitle :aboutUs.aboutussubtitle,
+            description:aboutUs.description
         }
     }
 
@@ -156,7 +166,12 @@ const AddProject = () => {
                     const title = data.project.projectTitle;
                     setreadOnlyTitle(title);
                     setProjectName(title);
-                    setDescription(data.project.description)
+                    const aboutus ={
+                        aboutstitle :data.project.aboutstitle, 
+                        aboutussubtitle :data.project.aboutussubtitle,
+                        description:data.project.description
+                    }
+                    setAboutUs(aboutus);
                     setShow(true)
                     setErrorMessage(data.message)
                 })
@@ -185,6 +200,7 @@ const AddProject = () => {
         const projectProps = {
             ...newProject,
             ...getProjectStatus(),
+            ...getAboutUsStatus(),
             projectTitle : projectName,
             updatedBy : cookies.userName
         }
@@ -199,7 +215,7 @@ const AddProject = () => {
                 body: JSON.stringify(projectProps)
             })
             setProjectName('');
-            setDescription('')
+            setAboutUs({about})
         } catch (err) {
             setErrorMessage(err)
         }
@@ -344,10 +360,17 @@ const AddProject = () => {
                     <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
                */}
                     </div> 
-                
+                <div className="mb-3">
+                    <label htmlFor="projectDescription" className="form-label  ">AboutUs Title</label>
+                    <input type='text' className="form-control" name="aboutstitle" value={aboutUs.aboutstitle} onChange={changeHandler} id="aboutstitle"/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="projectDescription" className="form-label  ">AboutUs sub Title</label>
+                    <input type='text'  className="form-control" name="aboutussubtitle" value={aboutUs.aboutussubtitle} onChange={changeHandler} id="aboutussubtitle" />
+                </div>
                 <div className="mb-3">
                     <label htmlFor="projectDescription" className="form-label  ">Description</label>
-                    <textarea className="form-control" name="description" value={description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
+                    <textarea className="form-control" name="description" value={aboutUs.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
                 </div>
             </div>
             </div>
