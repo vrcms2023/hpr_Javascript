@@ -27,7 +27,8 @@ router.post("/register", async (req, res, next) => {
             password: user.password,
             email : user.email,
             confirmPassword: user.confirmPassword,
-            isActive: false
+            isActive: false,
+            isSuperAdmin: false
         })
 
         dbUser.save()
@@ -64,7 +65,7 @@ router.post("/login", (req, res, next) => {
                         process.env.PASSPORTSECRET,
                         {expiresIn: 86400},
                         (err, token) => {
-                            return res.json({message: "Success", token: "Bearer " + token, userName: dbUser.userName, id: dbUser._id })
+                            return res.json({message: "Success", token: "Bearer " + token, userName: dbUser.userName, id: dbUser._id, isSuperAdmin: dbUser.isSuperAdmin })
                         }
                     )
                 } else {

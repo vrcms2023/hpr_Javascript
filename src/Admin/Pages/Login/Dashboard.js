@@ -95,6 +95,8 @@ const Dashboard = () => {
             <div className='text-end d-flex justify-content-between'>
                 <Title title="Dashboard" cssClass="text-center fs-3"/>
                 <Button type="submit" cssClass="btn btn-success" label="Add New Project" handlerChange={() => navigate("/addproject")} />
+                <Button type="submit" cssClass="btn btn-success" label="User Admin" handlerChange={() => navigate("/userAdmin")} />
+                <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} />
             </div>
         </div>
         <hr />

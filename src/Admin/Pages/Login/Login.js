@@ -4,14 +4,22 @@ import Button from '../../../Common/Button'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
+
 const Login = () => {
   const [cookies, setCookie,removeCookie] = useCookies(["token"]);
   const navigate = useNavigate()
+
+ const removeAllCookies =() => {
+    removeCookie("token");
+    removeCookie("userName");
+    removeCookie("isSuperAdmin");
+    removeCookie("userId");
+    removeCookie("clientInformation");
+    removeCookie("previousPath");
+  }
  
   useEffect(()=>{
-    removeCookie("token");
-    removeCookie("userName")
-    removeCookie("userId")
+    removeAllCookies()
   },[])
 
   const registrationFields = {
@@ -78,10 +86,11 @@ async function handleLogin(event) {
         setCookie("token", data.token)
         setCookie("userName", data.userName)
         setCookie("userId", data.id)
+        setCookie("isSuperAdmin", data.isSuperAdmin)
         setErrorMessage(data.message)              
         navigate("/dashboard")
       } else{
-        removeCookie("token")
+        removeAllCookies();
         setErrorMessage(data.message)
       }      
   } catch (err) {
