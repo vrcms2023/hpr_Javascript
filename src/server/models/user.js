@@ -20,6 +20,10 @@ const userSchema = mongoose.Schema({
     isActive : {
         type : Boolean,
         required:true
+    },
+    isSuperAdmin : {
+        type:Boolean,
+        required: true
     }
   
 }, {timestamps: true})

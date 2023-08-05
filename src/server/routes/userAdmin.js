@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get("/getAllUsers", verifyJWT, async (req, res, next) => {   
 
-    const data = await User.find().select('userName email isActive');   
+    const data = await User.find().select('userName email isActive isSuperAdmin');   
     return res.json({message: data.length > 0 ? "Success" :  "Record not found" , users: data}) 
    
 })

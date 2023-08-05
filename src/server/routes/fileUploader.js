@@ -12,11 +12,12 @@ const router = express.Router();
 const storage = multer.diskStorage({
   //multers disk storage settings
   destination: function (req, file, cb) {
-       cb(null, "public/uploads");
+       cb(null, "public");
   },
   filename: function (req, file, cb) {
     var datetimestamp = Date.now();
-    cb(null,file.fieldname + "-" +datetimestamp +"." +file.originalname.split(".")[file.originalname.split(".").length - 1]
+    var ext = file.mimetype.split('/')[1]
+    cb(null, `uploads/${file.fieldname}-${datetimestamp}.${ext}`
     );
   },
 });
@@ -30,11 +31,12 @@ router.post("/fileUploader/:id/:name/:category", (req, res, next) => {
       res.json({ error_code: 1, err_desc: err });
       return;
     }
+    
     const path = req["file"].path;
     const dbimagesModel = new imagesModel({
       projectID: req.params.id,
       updatedBy: req.params.name,
-      path: path.replace("public/",""),
+      path: req["file"].filename,
       category: req.params.category,
       originalname: req["file"].originalname,
       contentType: path.split(".")[path.split(".").length - 1],
