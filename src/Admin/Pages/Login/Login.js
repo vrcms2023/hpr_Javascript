@@ -30,6 +30,7 @@ const Login = () => {
     });
   }
   const [errorMessage, setErrorMessage] = useState("")
+  const [errorLoginMessage, setErrorLoginMessage] = useState("")
 
   async function handleRegister(event) {
     event.preventDefault();
@@ -78,14 +79,17 @@ async function handleLogin(event) {
         setCookie("token", data.token)
         setCookie("userName", data.userName)
         setCookie("userId", data.id)
-        setErrorMessage(data.message)              
+        // setErrorMessage(data.message)  
+        setErrorLoginMessage(data.message)      
         navigate("/dashboard")
       } else{
         removeCookie("token")
-        setErrorMessage(data.message)
+        // setErrorMessage(data.message)
+        setErrorLoginMessage(data.message)   
       }      
   } catch (err) {
-      setErrorMessage(err)
+      // setErrorMessage(err)
+      setErrorLoginMessage(err)   
   }
 }
 
@@ -98,25 +102,27 @@ async function handleLogin(event) {
               <div className='col-lg-6 bg-secondary d-flex justify-content-center align-items-center'>
                 <form className='border1 p-5 rounded ' onSubmit={handleRegister}>
                   <Title title="Create account" cssClass="text-start text-dark mb-4 fs-4"/>
+                  {errorMessage && 
                   <div className='mb-3'>
-                  <div>{errorMessage}</div>
-                </div>
+                    <div className='text-white text-center bg-info rounded-2 p-1 w-100'>{errorMessage}</div>
+                  </div>
+                  }
                   <div className="mb-3">
-                      <label htmlFor="userName" className="form-label ">User name</label>
+                      <label htmlFor="userName" className="form-label text-white fw-normal">User name</label>
                       <input type="text" name="userName" value={registrationState.userName} onChange={handleRegistrationChange} className="form-control bg-secondary" id="userName" aria-describedby="emailHelp" />
                       {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                   </div>
                   <div className="mb-3">
-                      <label htmlFor="email" className="form-label">Email</label>
+                      <label htmlFor="email" className="form-label text-white fw-normal">Email</label>
                       <input type="email" value={registrationState.email} onChange={handleRegistrationChange} name="email"  className="form-control bg-secondary" id="email" aria-describedby="emailHelp" />
                   </div>
                   <div className="mb-3">
-                      <label htmlFor="signPassord" className="form-label">Password</label>
+                      <label htmlFor="signPassord" className="form-label text-white fw-normal">Password</label>
                       <input type="password" value={registrationState.password} onChange={handleRegistrationChange} name="password"  className="form-control bg-secondary" id="signPassord" />
-                      <small>Passwords must be at least 6 characters.</small>
+                      <small className='text-muted'>Passwords must be at least 6 characters.</small>
                   </div>
                   <div className="mb-3">
-                      <label htmlFor="signPassordRe" className="form-label">Re-enter password</label>
+                      <label htmlFor="signPassordRe" className="form-label text-white fw-normal">Re-enter password</label>
                       <input type="password" value={registrationState.confirmPassword} onChange={handleRegistrationChange} name="confirmPassword" className="form-control bg-secondary" id="signPassordRe" />
                   </div>
                   {/* <div className="mb-3 form-check">
@@ -131,6 +137,11 @@ async function handleLogin(event) {
 
               <div className='col-lg-6 bg-light d-flex justify-content-center align-items-center'>
                 <form className='border1 p-5 rounded shadow-lg' onSubmit={handleLogin}>
+                  {errorLoginMessage && 
+                <div className='mb-3'>
+                    <div className='text-white text-center bg-info rounded-2 p-1 w-100'>{errorLoginMessage}</div>
+                  </div>
+                  }
                   <Title title="Admin login" cssClass="text-start text-dark mb-4 fs-4"/>                 
                   <div className="mb-3">
                       <label htmlFor="userName" className="form-label">User name</label>
