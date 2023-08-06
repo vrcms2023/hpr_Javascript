@@ -66,8 +66,8 @@ const UserAdmin = () => {
       <tr key={user._id}>
         <td>{user.userName}</td>
         <td>{user.email}</td>
-        <td>{user.isActive.toString()}</td>
-        <td><input type='checkbox' checked={user.isActive} onClick={() => {activeDeactiveUser(user)}} /></td>
+        <td>{user.isActive.toString()} </td>
+        <td>{!user.isSuperAdmin ? (<input type='checkbox' checked={user.isActive} onClick={() => {activeDeactiveUser(user)}} />) : ('')}</td>
       </tr>
      ))}
     </tbody>
