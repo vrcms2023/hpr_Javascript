@@ -6,7 +6,7 @@ const Projects = ( {title, cssClass, projects, handleProjectDelete}) => {
   return (
     <>
         
-        <Title title={title} cssClass="text-start fw-bold pt-4 fs-5"/>
+        <Title title={title} cssClass="text-start fw-bold pt-4 mb-3 fs-6 text-dark"/>
         <table className={`table shadow-lg border border-1 table-striped table-secondary border-secondary`}>
             <thead>
                 <tr className=''>
