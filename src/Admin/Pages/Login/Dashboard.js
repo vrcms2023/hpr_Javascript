@@ -100,7 +100,6 @@ const Dashboard = () => {
                 <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} />
             </div>
         </div>
-        <hr />
        
         <div className='row bg-light p-5 pt-0'>
         { projects && projects.map((project, index) => (

@@ -288,12 +288,15 @@ const AddProject = () => {
             <Button type="submit" cssClass="btn btn-success" label="Back" handlerChange={() => navigate("/dashboard")} />
         </div>
     </div>
+    <hr />
+
         {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
         
+        <div className='py-2'>
         {!id ? (
-            <select  className="form-select mb-3 shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
+            <select  className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
             onChange={(e) => handleChange(e)} >
-                <option>Select Status</option>
+                <option>Select Project Type</option>
                 {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
                     return <option  key={option._id} value={option.value}>
                         {option.label}
@@ -301,19 +304,20 @@ const AddProject = () => {
                 })) : ('')}      
             </select>
         ) : ''}
-        
+        </div>
+        <hr />
 {projectType.length > 0  && !show ? (
     <div className='row' id="projectTitle">
         <div> {errorMessage} </div>
         <div className="col-md-4 offset-md-4 my-5 ">
             <div className=''>
-                <label htmlFor="projectName" className="form-label text-center d-block fs-4 mb-3 fw-normal">Enter Project Name</label>
+                {/* <label htmlFor="projectName" className="form-label text-center d-block fs-5 mb-3 fw-normal">Add project name</label> */}
                 <div className=''>
                     <input type="text" className="form-control" 
                     name="projectName" 
                     value={projectName}     
                     onChange={titleInputHandleChange}
-                    id="projectName" placeholder="Add Project Name" />
+                    id="projectName" placeholder="Add project name" />
                     <Button label="Save" cssClass="btn btn-success mt-2 w-100" handlerChange={addNewProject} />
                 </div>
                 <small id="projectValidation" className="d-none error">Project name should not be empty.</small>
@@ -345,39 +349,39 @@ const AddProject = () => {
         <div className='col-md-9 bg-light pb-3'>
         <div className="tab-content" id="v-pills-tabContent">
             <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-            <div className="border border-3 p-5 mb-4 shadow-lg">
-                <div className="mb-3">
-                    <label htmlFor="projectName" className="form-label  ">Project Name</label>
-                    <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
-                </div> 
-                <div className="mb-3">
-                <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                <select value={projectType[0]?.value}  className="form-select mb-3 w-100" aria-label="Default select example" id="projectStatus"
-                    onChange={(e) => handleChange(e)} >
-                        <option>Select Status</option>
-                        {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
-                            return <option key={option._id} value={option.value}>
-                                {option.label}
-                            </option>
-                        })) : ('')}      
-                    </select>
-                    {/* <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                    <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
-               */}
+                <div className="border border-3 p-5 mb-4 shadow-lg">
+                    <div className="mb-3">
+                        <label htmlFor="projectName" className="form-label  ">Project Name</label>
+                        <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
                     </div> 
-                <div className="mb-3">
-                    <label htmlFor="projectDescription" className="form-label">Title</label>
-                    <input type='text' className="form-control" name="aboutstitle" value={aboutUs.aboutstitle} onChange={changeHandler} id="aboutstitle"/>
+                    <div className="mb-3">
+                    <label htmlFor="projectStatus" className="form-label  ">Status</label>
+                    <select value={projectType[0]?.value}  className="form-select mb-3 w-100" aria-label="Default select example" id="projectStatus"
+                        onChange={(e) => handleChange(e)} >
+                            <option>Select Status</option>
+                            {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
+                                return <option key={option._id} value={option.value}>
+                                    {option.label}
+                                </option>
+                            })) : ('')}      
+                        </select>
+                        {/* <label htmlFor="projectStatus" className="form-label  ">Status</label>
+                        <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
+                */}
+                        </div> 
+                    <div className="mb-3">
+                        <label htmlFor="projectDescription" className="form-label">Title</label>
+                        <input type='text' className="form-control" name="aboutstitle" value={aboutUs.aboutstitle} onChange={changeHandler} id="aboutstitle"/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="projectDescription" className="form-label">Sub Title</label>
+                        <input type='text'  className="form-control" name="aboutussubtitle" value={aboutUs.aboutussubtitle} onChange={changeHandler} id="aboutussubtitle" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="projectDescription" className="form-label  ">Description</label>
+                        <textarea className="form-control" name="description" value={aboutUs.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
+                    </div>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="projectDescription" className="form-label">Sub Title</label>
-                    <input type='text'  className="form-control" name="aboutussubtitle" value={aboutUs.aboutussubtitle} onChange={changeHandler} id="aboutussubtitle" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="projectDescription" className="form-label  ">Description</label>
-                    <textarea className="form-control" name="description" value={aboutUs.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
-                </div>
-            </div>
             </div>
 
             {/* DOCUMENTS */}
