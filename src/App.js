@@ -15,6 +15,7 @@ import ProtectedRoute from './Frontend/Components/ProtectedRoute';
 import UserAdmin from './Admin/Pages/Login/UserAdmin';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ApplicationPages from './Admin/Pages/Login/ApplicationPages';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
               <Route exact path='/editproject/:id' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/dashboard' element={ <ProtectedRoute><Dashboard /> </ProtectedRoute>} />
               <Route exact path='/userAdmin' element={ <ProtectedRoute><UserAdmin/> </ProtectedRoute>} />
+              <Route exact path='/applicationPages' element={ <ProtectedRoute> <ApplicationPages/></ProtectedRoute>} />
             </Routes>
           <Footer />
           </BrowserRouter>

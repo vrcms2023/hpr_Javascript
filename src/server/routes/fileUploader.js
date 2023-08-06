@@ -31,7 +31,7 @@ router.post("/fileUploader/:id/:name/:category", (req, res, next) => {
       res.json({ error_code: 1, err_desc: err });
       return;
     }
-    console.log("req[file]", req["file"])
+    
     const path = req["file"].path;
     const dbimagesModel = new imagesModel({
       projectID: req.params.id,

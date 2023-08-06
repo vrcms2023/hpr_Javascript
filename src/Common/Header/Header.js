@@ -3,6 +3,7 @@ import Button from '../Button';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 
+
 import Logo from '../../../src/Images/hpr-infra-logo.png'
 
 import './Styles.css'
@@ -12,6 +13,15 @@ const Header = () => {
   const [cookies,removeCookie] = useCookies(["token","userName"]);
   const [userName, setUserName] = useState('')
   const [loginState, setLoginState] = useState(false);
+
+  const removeAllCookies =() => {
+    removeCookie("token");
+    removeCookie("userName");
+    removeCookie("isSuperAdmin");
+    removeCookie("userId");
+    removeCookie("clientInformation");
+    removeCookie("previousPath");
+  }
 
   useEffect(()=>{
     let token = cookies.token;
@@ -23,11 +33,12 @@ const Header = () => {
   }, [userName]);
 
   function logOutHandler(){
-    removeCookie("token");
-    removeCookie("userName");
+    removeAllCookies();
     setLoginState(false)
     navigate("/login");
   }
+
+  
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
