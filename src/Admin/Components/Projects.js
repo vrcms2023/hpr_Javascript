@@ -20,8 +20,17 @@ const Projects = ( {title, cssClass, projects, handleProjectDelete}) => {
                 <tr key={project._id}>
                   {/* <td className='align-middle fw-bold'>{project._id}</td> */}
                   <td className='align-middle'>{project.projectTitle} <span className={`badge text-dark bg-${project.projectCategoryValue === "ongoing" ? "warning" : project.projectCategoryValue === "future" ? "info " : project.projectCategoryValue === "completed" ? "success text-white" : ""}`}>{project.status}</span></td>
-                  <td className='align-middle'><Link to={`/editproject/${project._id}`}><i className="fa fa-pencil fs-3 text-secondary" aria-hidden="true"></i></Link></td>
-                  <td className='align-middle'><Link to="" onClick={() => handleProjectDelete(project._id)}><i className="fa fa-trash-o fs-3 text-danger" aria-hidden="true"></i></Link></td>
+                  <td className='align-middle'>
+                  <select className="form-select" aria-label="Default select example">
+                    <option>Change Status</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="future">Future</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                  </td>
+                  <td className='align-middle'>
+                    <Link to={`/editproject/${project._id}`}><i className="fa fa-pencil fs-4 text-secondary me-2" aria-hidden="true"></i></Link>
+                    <Link to="" onClick={() => handleProjectDelete(project, project._id)}><i className="fa fa-trash-o fs-4 text-danger" aria-hidden="true"></i></Link></td>
               </tr>
             ))  
             : 

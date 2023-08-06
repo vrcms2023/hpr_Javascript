@@ -60,8 +60,9 @@ const Dashboard = () => {
      * Delete project form Dashboard
      * @param {project id} id 
      */
-    const handleProjectDelete = (id) => {
 
+    const handleProjectDelete = (project, id) => {
+        console.log(project, "project")
       const deleteDashBoardProject = () => {
         fetch(`/deleteDashboardProject/${id}`,{
             headers: {"x-access-token": cookies.token}
@@ -79,7 +80,7 @@ const Dashboard = () => {
       confirmAlert({
         customUI: ({ onClose, }) => {
           return (
-            <DeleteDialog onClose={onClose} callback={deleteDashBoardProject}/>          
+            <DeleteDialog onClose={onClose} callback={deleteDashBoardProject} projectName={project.projectTitle}/>          
           );
         }
       });
