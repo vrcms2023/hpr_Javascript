@@ -42,7 +42,7 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
   return (
     <>
         <Title title={title} cssClass="fs-5 fw-bold"/>
-        <div className="border border-3  p-5 mb-4 shadow-lg">
+        <div className="border border-3 mb-4 shadow-lg">
             {/* <label htmlFor="addImages" className="form-label  ">Add Image's</label> */}
             {/* <input className="form-control" type="file" id="addImages" multiple />  */}
             <FilePond 
