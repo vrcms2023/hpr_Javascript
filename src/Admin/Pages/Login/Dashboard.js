@@ -60,8 +60,9 @@ const Dashboard = () => {
      * Delete project form Dashboard
      * @param {project id} id 
      */
-    const handleProjectDelete = (id) => {
 
+    const handleProjectDelete = (project, id) => {
+        console.log(project, "project")
       const deleteDashBoardProject = () => {
         fetch(`/deleteDashboardProject/${id}`,{
             headers: {"x-access-token": cookies.token}
@@ -79,7 +80,7 @@ const Dashboard = () => {
       confirmAlert({
         customUI: ({ onClose, }) => {
           return (
-            <DeleteDialog onClose={onClose} callback={deleteDashBoardProject}/>          
+            <DeleteDialog onClose={onClose} callback={deleteDashBoardProject} projectName={project.projectTitle}/>          
           );
         }
       });
@@ -88,9 +89,9 @@ const Dashboard = () => {
 
   return (
     <div className='bg-light pt-5' style={{marginTop: "90px"}}>
-    <div className='row bg-light px-5'>
-        {userName ? (`userName = ${userName}`):""}
-    </div>
+        {/* <div className='text-end'>
+            <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
+        </div> */}
         <div className='row bg-light px-5'>
             <div className='text-end d-flex justify-content-between'>
                 <Title title="Dashboard" cssClass="text-center fs-3"/>
@@ -99,7 +100,6 @@ const Dashboard = () => {
                 <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} />
             </div>
         </div>
-        <hr />
        
         <div className='row bg-light p-5 pt-0'>
         { projects && projects.map((project, index) => (

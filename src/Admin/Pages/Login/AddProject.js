@@ -288,12 +288,15 @@ const AddProject = () => {
             <Button type="submit" cssClass="btn btn-success" label="Back" handlerChange={() => navigate("/dashboard")} />
         </div>
     </div>
+    <hr />
+
         {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
         
+        <div className='py-2'>
         {!id ? (
-            <select  className="form-select mb-3 shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
+            <select  className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
             onChange={(e) => handleChange(e)} >
-                <option>Select Status</option>
+                <option>Select Project Type</option>
                 {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
                     return <option  key={option._id} value={option.value}>
                         {option.label}
@@ -301,21 +304,24 @@ const AddProject = () => {
                 })) : ('')}      
             </select>
         ) : ''}
-        
+        </div>
+        <hr />
 {projectType.length > 0  && !show ? (
     <div className='row' id="projectTitle">
         <div> {errorMessage} </div>
-        <div className="col-md-8  mb-3">
-            <label htmlFor="projectName" className="form-label text-center d-block">Enter Project Name</label>
-                <div className='d-flex'>
+        <div className="col-md-4 offset-md-4 my-5 ">
+            <div className=''>
+                {/* <label htmlFor="projectName" className="form-label text-center d-block fs-5 mb-3 fw-normal">Add project name</label> */}
+                <div className=''>
                     <input type="text" className="form-control" 
                     name="projectName" 
                     value={projectName}     
                     onChange={titleInputHandleChange}
-                    id="projectName" placeholder="Add Project Name" />
-                    <Button label="Save" cssClass="btn btn-success" handlerChange={addNewProject} />
+                    id="projectName" placeholder="Add project name" />
+                    <Button label="Save" cssClass="btn btn-success mt-2 w-100" handlerChange={addNewProject} />
                 </div>
                 <small id="projectValidation" className="d-none error">Project name should not be empty.</small>
+        </div>
         </div>
         
     </div>
@@ -330,64 +336,85 @@ const AddProject = () => {
         <div className='col-md-3 bg-light pb-3'>
             <div className="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button className="nav-link active mb-3" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Info</button>
-                <button className="nav-link mb-3" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Pdfs / Plan / Map</button>
+                <button className="nav-link mb-3" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Pdfs / Plan / Map / Cost / Availability</button>
                 <button className="nav-link mb-3" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Specifications</button>
                 <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Amenities</button>
 
                 <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-gallery" type="button" role="tab" aria-controls="v-pills-gallery" aria-selected="false">Image Gallery</button>
+
+                {/* <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cost" type="button" role="tab" aria-controls="v-pills-cost" aria-selected="false">Cost</button>
+                <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-availability" type="button" role="tab" aria-controls="v-pills-availability" aria-selected="false">Availability</button> */}
             </div>
         </div>
         <div className='col-md-9 bg-light pb-3'>
         <div className="tab-content" id="v-pills-tabContent">
             <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-            <div className="border border-3 p-5 mb-4 shadow-lg">
-                <div className="mb-3">
-                    <label htmlFor="projectName" className="form-label  ">Project Name</label>
-                    <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
-                </div> 
-                <div className="mb-3">
-                <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                <select value={projectType[0]?.value}  className="form-select mb-3 shadow-lg border border-2 border-success w-25 m-auto d-block" aria-label="Default select example" id="projectStatus"
-                    onChange={(e) => handleChange(e)} >
-                        <option>Select Status</option>
-                        {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
-                            return <option key={option._id} value={option.value}>
-                                {option.label}
-                            </option>
-                        })) : ('')}      
-                    </select>
-                    {/* <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                    <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
-               */}
+                <div className="border border-3 p-5 mb-4 shadow-lg">
+                    <div className="mb-3">
+                        <label htmlFor="projectName" className="form-label  ">Project Name</label>
+                        <input type="text" className="form-control" value={projectName} onChange={titleInputHandleChange} id="projectName" placeholder="Add Project Name" />
                     </div> 
-                <div className="mb-3">
-                    <label htmlFor="projectDescription" className="form-label  ">AboutUs Title</label>
-                    <input type='text' className="form-control" name="aboutstitle" value={aboutUs.aboutstitle} onChange={changeHandler} id="aboutstitle"/>
+                    <div className="mb-3">
+                    <label htmlFor="projectStatus" className="form-label  ">Status</label>
+                    <select value={projectType[0]?.value}  className="form-select mb-3 w-100" aria-label="Default select example" id="projectStatus"
+                        onChange={(e) => handleChange(e)} >
+                            <option>Select Status</option>
+                            {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
+                                return <option key={option._id} value={option.value}>
+                                    {option.label}
+                                </option>
+                            })) : ('')}      
+                        </select>
+                        {/* <label htmlFor="projectStatus" className="form-label  ">Status</label>
+                        <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
+                */}
+                        </div> 
+                    <div className="mb-3">
+                        <label htmlFor="projectDescription" className="form-label">Title</label>
+                        <input type='text' className="form-control" name="aboutstitle" value={aboutUs.aboutstitle} onChange={changeHandler} id="aboutstitle"/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="projectDescription" className="form-label">Sub Title</label>
+                        <input type='text'  className="form-control" name="aboutussubtitle" value={aboutUs.aboutussubtitle} onChange={changeHandler} id="aboutussubtitle" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="projectDescription" className="form-label  ">Description</label>
+                        <textarea className="form-control" name="description" value={aboutUs.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
+                    </div>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="projectDescription" className="form-label  ">AboutUs sub Title</label>
-                    <input type='text'  className="form-control" name="aboutussubtitle" value={aboutUs.aboutussubtitle} onChange={changeHandler} id="aboutussubtitle" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="projectDescription" className="form-label  ">Description</label>
-                    <textarea className="form-control" name="description" value={aboutUs.description} onChange={changeHandler} id="projectDescription" rows="3"></textarea>
-                </div>
-            </div>
             </div>
 
             {/* DOCUMENTS */}
             <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                <FileUpload title="Add PDF's" project={newProject} updatedBy={cookies.userName} category="PDF" gallerysetState={setPdfObject} galleryState={pdfObject} validTypes="application/pdf" />
-                <CatageoryImgC title={`${readOnlyTitle} PDF's`} catategoryImgs={pdfObject} catategoryImgState={setPdfObject} project={newProject} category="PDF" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
-                <FileUpload title="Add Plan" project={newProject} updatedBy={cookies.userName} category="Plans" gallerysetState={setPlanObject} galleryState={planObject} validTypes="image/png,image/jpeg" />
-                <CatageoryImgC title={`${readOnlyTitle} Plans`}   catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
-                <FileUpload title="Add Availability" project={newProject} updatedBy={cookies.userName} category="availability" gallerysetState={setAvailabileObject} galleryState={availabileObject} validTypes="image/png,image/jpeg,application/pdf" />
-                <CatageoryImgC title={`${readOnlyTitle} Availibility`}   catategoryImgs={availabileObject} catategoryImgState={setAvailabileObject} project={newProject} category="availability"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
-                <FileUpload title="Add Price" project={newProject} updatedBy={cookies.userName} category="price" gallerysetState={setPriceObject} galleryState={priceObject} validTypes="image/png,image/jpeg,application/pdf" />
-                <CatageoryImgC title={`${readOnlyTitle} Price`}   catategoryImgs={priceObject} catategoryImgState={setPriceObject} project={newProject} category="price"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                <div className="mb-3">
+                    <label className="form-label">Add PDF's</label>
+                    <FileUpload  project={newProject} updatedBy={cookies.userName} category="PDF" gallerysetState={setPdfObject} galleryState={pdfObject} validTypes="application/pdf" />
+                    <CatageoryImgC title={`${readOnlyTitle} PDF's`} catategoryImgs={pdfObject} catategoryImgState={setPdfObject} project={newProject} category="PDF" cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Add Plan</label>
+                    <FileUpload  project={newProject} updatedBy={cookies.userName} category="Plans" gallerysetState={setPlanObject} galleryState={planObject} validTypes="image/png,image/jpeg" />
+                    <CatageoryImgC title={`${readOnlyTitle} Plans`}   catategoryImgs={planObject} catategoryImgState={setPlanObject} project={newProject} category="Plans"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Add Availability</label>
+                    <FileUpload project={newProject} updatedBy={cookies.userName} category="availability" gallerysetState={setAvailabileObject} galleryState={availabileObject} validTypes="image/png,image/jpeg,application/pdf" />
+                    <CatageoryImgC title={`${readOnlyTitle} Availibility`}   catategoryImgs={availabileObject} catategoryImgState={setAvailabileObject} project={newProject} category="availability"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                </div>
+                
+                <div className="mb-3">
+                <label className="form-label">Add Price</label>
+                    <FileUpload title="" project={newProject} updatedBy={cookies.userName} category="price" gallerysetState={setPriceObject} galleryState={priceObject} validTypes="image/png,image/jpeg,application/pdf" />
+                    <CatageoryImgC title={`${readOnlyTitle} Price`}   catategoryImgs={priceObject} catategoryImgState={setPriceObject} project={newProject} category="price"  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5" />
+                </div>
 
                 {/* Add GOOGLE MAP  */}
-                <Amenities title="Google Map" value={amenities?.googleMap}  amenities={amenities} setAmenities={setAmenities} name="googleMap"/>
+                 <div className="mb-3">
+                    <label className="form-label">Add Google Map</label>
+                <Amenities title="" value={amenities?.googleMap}  amenities={amenities} setAmenities={setAmenities} name="googleMap"/>
+                </div>
             </div>
             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                 {/* Add SPECIFICATIONS */}
@@ -404,6 +431,8 @@ const AddProject = () => {
                 {/* <CatageoryImgC title="Future Projects" thumbDelete={thumbDelete}catategoryImgs={onFutureImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-success rounded-5" /> */}
                 {/* <CatageoryImgC title="Completed Projects" thumbDelete={thumbDelete} catategoryImgs={onCompletedImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-secondary rounded-5" /> */}
             </div>
+
+            {/* <div className="tab-pane fade" id="v-pills-cost" role="tabpanel" aria-labelledby="v-pills-cost-tab">COST</div> */}
         </div>
         </div>
     </div>
