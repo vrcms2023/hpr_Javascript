@@ -67,7 +67,7 @@ export const Amenities = ({
   return (
     <>
       <Title title={title} cssClass="fs-5 fw-bold" />
-      <div className="border border-3 p-5 mb-4 shadow-lg">
+      <div className="border border-3 mb-4 shadow-lg">
         {/* <label htmlFor="addImages" className="form-label  ">Add Image's</label> */}
         <textarea
           className="form-control"

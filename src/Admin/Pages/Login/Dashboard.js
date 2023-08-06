@@ -89,9 +89,9 @@ const Dashboard = () => {
 
   return (
     <div className='bg-light pt-5' style={{marginTop: "90px"}}>
-    <div className='row bg-light px-5'>
-        {userName ? (`userName = ${userName}`):""}
-    </div>
+        {/* <div className='text-end'>
+            <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
+        </div> */}
         <div className='row bg-light px-5'>
             <div className='text-end d-flex justify-content-between'>
                 <Title title="Dashboard" cssClass="text-center fs-3"/>
@@ -100,7 +100,6 @@ const Dashboard = () => {
                 <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} />
             </div>
         </div>
-        <hr />
        
         <div className='row bg-light p-5 pt-0'>
         { projects && projects.map((project, index) => (

@@ -26,6 +26,7 @@ const Header = () => {
   useEffect(()=>{
     let token = cookies.token;
     setUserName(cookies.userName);
+    console.log(cookies.userName)
 
     if(token && userName) {
       setLoginState(true)
@@ -76,8 +77,13 @@ const Header = () => {
                   ) : (
                     <Button type="submit" cssClass="btn btn-warning" label="Login" handlerChange={() => navigate("/login")} />
                   )}
+                  <div className='text-white text-capitalize'>
+                      {userName ? (`${userName}`):""}
+                  </div>
               </li>
           </ul>
+
+          
         </div>
       </div>
     </nav>
