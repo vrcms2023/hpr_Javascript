@@ -285,7 +285,11 @@ const AddProject = () => {
     <div className='row bg-light px-5'>
         <div className='text-end d-flex justify-content-between'>
             <Title title={`${id ? 'Edit Project' : 'Add Project' }`} cssClass="text-center fs-3"/>
-            <Button type="submit" cssClass="btn btn-success" label="Back" handlerChange={() => navigate("/dashboard")} />
+            <div>
+            <Button type="" cssClass="btn btn-success me-3" label="Dashboard" handlerChange={() => navigate("/dashboard")} />
+            <Button type="" cssClass="btn btn-secondary " label="Back to Menu" handlerChange={() => navigate("/main")} />
+            
+            </div>
         </div>
     </div>
     <hr />

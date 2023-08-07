@@ -12,6 +12,7 @@ import Dashboard from './Admin/Pages/Login/Dashboard';
 import AddProject from './Admin/Pages/Login/AddProject';
 import ProtectedRoute from './Frontend/Components/ProtectedRoute';
 import UserAdmin from './Admin/Pages/Login/UserAdmin';
+import MainPage from './Admin/Pages/Login/MainPage'
 
 import AdminHeader from './Admin/Components/Header/AdminHeader'
 
@@ -22,7 +23,7 @@ function App() {
   return (
         <>
           <BrowserRouter>
-          {window.location.pathname === "/login" || window.location.pathname === "/dashboard"  || window.location.pathname === "/addproject" ? <AdminHeader /> : <Header /> }
+          {window.location.pathname === "/login" || window.location.pathname === "/dashboard"  || window.location.pathname === "/main" || window.location.pathname === "/addproject" ? <AdminHeader /> : <Header /> }
           {/* <Header /> */}
             <Routes>
               <Route exact path='/' element={ <Home/> } />
@@ -31,6 +32,7 @@ function App() {
               <Route exact  path='/gallery' element={ <Gallery /> } />
               <Route exact  path='/contact' element={ <Contact /> } />
               <Route exact path='/login' element={ <Login/> } /> 
+              <Route exact path='/main' element={ <ProtectedRoute> <MainPage/> </ProtectedRoute>} />
               <Route exact path='/addproject' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/editproject/:id' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/dashboard' element={ <ProtectedRoute><Dashboard /> </ProtectedRoute>} />
@@ -38,7 +40,7 @@ function App() {
               <Route exact path='/applicationPages' element={ <ProtectedRoute> <ApplicationPages/></ProtectedRoute>} />
             </Routes>
           {/* <Footer /> */}
-          {window.location.pathname === "/login" || window.location.pathname === "/dashboard" || window.location.pathname === "/addproject" ? null : <Footer /> }
+          {window.location.pathname === "/login" || window.location.pathname === "/dashboard" || window.location.pathname === "/main"  || window.location.pathname === "/addproject" ? null : <Footer /> }
           </BrowserRouter>
         </>
   );
