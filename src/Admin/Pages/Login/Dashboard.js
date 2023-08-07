@@ -95,9 +95,13 @@ const Dashboard = () => {
         <div className='row bg-light px-5'>
             <div className='text-end d-flex justify-content-between'>
                 <Title title="Dashboard" cssClass="text-center fs-3"/>
-                <Button type="submit" cssClass="btn btn-success" label="Add New Project" handlerChange={() => navigate("/addproject")} />
-                <Button type="submit" cssClass="btn btn-success" label="User Admin" handlerChange={() => navigate("/userAdmin")} />
-                <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} />
+                <div>
+                
+                <Button type="" cssClass="btn btn-success me-3" label="Add New Project" handlerChange={() => navigate("/addproject")} />
+                {/* <Button type="" cssClass="btn btn-success" label="User Admin" handlerChange={() => navigate("/userAdmin")} /> */}
+                {/* <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} /> */}
+                <Button type="" cssClass="btn btn-secondary" label="Back to Menu" handlerChange={() => navigate("/main")} />  
+                </div>
             </div>
         </div>
        
