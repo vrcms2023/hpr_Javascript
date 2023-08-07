@@ -3,7 +3,11 @@ import Title from '../../Common/Title'
 
 const About = () => {
   return (
-    <div className='row bg-light'>
+    <>
+      <div className='row p-0 pt-5'>
+        <div className='col-md-12 banner'>fsda</div>
+      </div>
+      <div className='row'>
       <div className="col-lg-8 p-5">
             <div className='p-5'>
             <Title title="HPR Infra" cssClass="mt-5 fs-1 fw-normal"/>
@@ -25,6 +29,8 @@ const About = () => {
 
         <div className="col-lg-4 p-5" style={{background: "url('https://images.unsplash.com/photo-1512699355324-f07e3106dae5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80"}}></div>
     </div>
+    </>
+    
   )
 }
 
