@@ -98,15 +98,13 @@ async function handleLogin(event) {
     setErrorLoginMessage(err)
   }
 }
-
-  
   return (
-    <div className='bg-secondary mt-5 pt-5 pb-3 '>
+    <div className='mt-5 pt-5 pb-3' style={{background: "#E6E6E6", borderBottom: "1px solid #ccc"}}>
       <div className='row py-5 '>
         <div className='col-lg-6 offset-lg-3 bg-light shadow-lg'>
           <div className='row'>
               <div className='col-lg-6 bg-secondary d-flex justify-content-center align-items-center'>
-                <form className='border1 p-5 rounded ' onSubmit={handleRegister}>
+                <form className='border1 p-4 rounded ' onSubmit={handleRegister}>
                   <Title title="Create account" cssClass="text-start text-dark mb-4 fs-4"/>
                   <div className='mb-3'>
                   {errorMessage !== null ? <div className='text-white text-center bg-info rounded-2 p-1 w-100'>{errorMessage}</div> : ""}
@@ -123,7 +121,7 @@ async function handleLogin(event) {
                   <div className="mb-3">
                       <label htmlFor="signPassord" className="form-label text-white fw-normal">Password</label>
                       <input type="password" value={registrationState.password} onChange={handleRegistrationChange} name="password"  className="form-control bg-secondary" id="signPassord" />
-                      <small>Passwords must be at least 6 characters.</small>
+                      <small className="text-white">Passwords must be at least 6 characters.</small>
                   </div>
                   <div className="mb-3">
                       <label htmlFor="signPassordRe" className="form-label text-white fw-normal">Re-enter password</label>
@@ -148,12 +146,12 @@ async function handleLogin(event) {
                   }
                   <Title title="Admin login" cssClass="text-start text-dark mb-4 fs-4"/>                 
                   <div className="mb-3">
-                      <label htmlFor="userName" className="form-label text-white fw-normal">User name</label>
+                      <label htmlFor="userName" className="form-label text-dark fw-normal">User name</label>
                       <input type="text" value={loginState.email} onChange={handleloginChange} name="email"  className="form-control bg-light border border-secondary" id="userName" aria-describedby="emailHelp" />
                       {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                   </div>
                   <div className="mb-3">
-                      <label htmlFor="signPassord" className="form-label text-white fw-normal">Password</label>
+                      <label htmlFor="signPassord" className="form-label text-dark fw-normal">Password</label>
                       <input type="password" value={loginState.password} onChange={handleloginChange} name="password"  className="form-control bg-light border border-secondary" id="signPassord" />
                       <p>Error </p>
                   </div>

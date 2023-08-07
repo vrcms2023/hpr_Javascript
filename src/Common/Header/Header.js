@@ -38,9 +38,6 @@ const Header = () => {
     setLoginState(false)
     navigate("/login");
   }
-
-  
-
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container">
@@ -71,7 +68,7 @@ const Header = () => {
             <li className="nav-item">
               <NavLink  to="/contact" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>Contact Us</NavLink >
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
                   {loginState ? (
                     <Button type="submit" cssClass="btn btn-warning" label="Logout" handlerChange={logOutHandler} />
                   ) : (
@@ -80,7 +77,7 @@ const Header = () => {
                   <div className='text-white text-capitalize'>
                       {userName ? (`${userName}`):""}
                   </div>
-              </li>
+              </li> */}
           </ul>
 
           
