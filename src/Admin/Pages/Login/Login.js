@@ -4,7 +4,6 @@ import Button from '../../../Common/Button'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
-
 const Login = () => {
   const [cookies, setCookie,removeCookie] = useCookies(["token"]);
   const navigate = useNavigate()
@@ -167,5 +166,4 @@ async function handleLogin(event) {
     </div>
   )
 }
-
 export default Login
