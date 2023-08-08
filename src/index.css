@@ -30,6 +30,39 @@ body {
   color: #fff !important;
 }
 
+.loadMore {
+  padding: 6px 15px;
+  border: 1px solid #cccccc;
+  color: #165D3D;
+  text-decoration: none;
+  transition: transform .3s;
+  border-radius: 5px;
+}
+
+.loadMore svg {
+  fill: #165D3D;
+}
+.loadMore:hover {
+  background-color: #698845;
+  color: #fff;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, .3);
+}
+
+.loadMore:hover svg {
+  transform: translateX(10px);
+  fill: #fff;
+} 
+
+.modelBg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.6)
+}
+
 .green-900 {
   color: #165D3D;
 }

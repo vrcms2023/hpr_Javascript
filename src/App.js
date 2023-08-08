@@ -13,6 +13,7 @@ import AddProject from './Admin/Pages/Login/AddProject';
 import ProtectedRoute from './Frontend/Components/ProtectedRoute';
 import UserAdmin from './Admin/Pages/Login/UserAdmin';
 import MainPage from './Admin/Pages/Login/MainPage'
+import NewsAndUpdates from './Frontend/Pages/NewsAndUpdates';
 
 import AdminHeader from './Admin/Components/Header/AdminHeader'
 
@@ -31,6 +32,7 @@ function App() {
               <Route exact  path='/projects' element={ <Projects /> } />
               <Route exact  path='/gallery' element={ <Gallery /> } />
               <Route exact  path='/contact' element={ <Contact /> } />
+              <Route exact  path='/news' element={ <NewsAndUpdates /> } />
               <Route exact path='/login' element={ <Login/> } /> 
               <Route exact path='/main' element={ <ProtectedRoute> <MainPage/> </ProtectedRoute>} />
               <Route exact path='/addproject' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />

@@ -47,17 +47,4 @@
     object-fit: cover;
 }
 
-.loadMore {
-    padding: 6px 30px;
-    border: 1px solid #698845;
-    color: #A8C849;
-    text-decoration: none;
-    transition: transform .3s;
-}
-
-.loadMore:hover svg {
-    transform: translateY(5px);
-} 
-
-
 

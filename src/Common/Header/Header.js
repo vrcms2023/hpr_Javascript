@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import Button from '../Button';
+// import Button from '../Button';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 
@@ -63,7 +63,7 @@ const Header = () => {
               <NavLink  to="/gallery" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>Gallery</NavLink >
             </li>
             <li className="nav-item">
-              <NavLink  to="/" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>News & Updates</NavLink >
+              <NavLink  to="/news" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>News & Updates</NavLink >
             </li>
             <li className="nav-item">
               <NavLink  to="/contact" className={({ isActive }) => (isActive ? "nav-Link active" : "nav-Link")}>Contact Us</NavLink >
