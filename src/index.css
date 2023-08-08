@@ -42,7 +42,7 @@ body {
 .loadMore svg {
   fill: #165D3D;
 }
-.loadMore:hover {
+.loadMore:hover, .loadMore.active {
   background-color: #698845;
   color: #fff;
   box-shadow: 0 5px 10px 0px rgba(0, 0, 0, .3);
