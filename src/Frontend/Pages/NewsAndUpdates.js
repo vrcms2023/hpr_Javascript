@@ -61,8 +61,7 @@ const NewsAndUpdates = () => {
         </div>
     </div>
     {showModal && <Model obj={obj} closeModel={closeModel}/>}
-    {showModal &&
-    <ModelBg /> }
+    {showModal && <ModelBg /> }
     </>
   )
 }

@@ -55,7 +55,7 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
               credits={false}
               acceptedFileTypes={extTypes}
               server={`/fileUploader/${project?._id}/${updatedBy}/${category}`}
-              labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+              labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
               labelInvalidField="invalid files"
               />
         </div>
