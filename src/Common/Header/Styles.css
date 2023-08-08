@@ -92,8 +92,8 @@
     position: absolute;
     content: "";
     width: 35%;
-    height: 1px;
-    border-bottom: 3px solid #165D3D;
+    /* height: 1px; */
+    border-bottom: 2px solid #165D3D;
     bottom: -4px;
 }
 
@@ -101,8 +101,8 @@
     position: absolute;
     content: "";
     width: 0%;
-    height: 1px;
-    border-bottom: 3px solid #165D3D;
+    /* height: 1px; */
+    border-bottom: 2px solid rgba(22, 93, 61, .6);
     bottom: -4px;
     transition: width .3s;
 }
@@ -114,5 +114,3 @@
 .nav-Link:hover {
     color: #165D3D;
 }
-
-

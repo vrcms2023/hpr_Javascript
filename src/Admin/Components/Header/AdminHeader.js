@@ -5,8 +5,6 @@ import { useCookies } from "react-cookie";
 import Logo from '../../../../src/Images/hpr-infra-logo.png'
 import testimonialUser from '../../../../src/Images/testimonial.jpg'
 
-import './Styles.css'
-
 const Header = () => {
 
   const navigate = useNavigate()
@@ -31,7 +29,7 @@ const Header = () => {
     if(token && userName) {
       setLoginState(true)
     }
-  }, [userName]);
+  }, [userName, cookies]);
   
   function logOutHandler(){
     removeAllCookies();
@@ -40,9 +38,7 @@ const Header = () => {
   }
   return (
     <>
-    
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-    
       <div className="container">
         
         <Link  to="/" className="navbar-brand logo" >
