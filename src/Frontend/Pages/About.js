@@ -5,7 +5,7 @@ const About = () => {
   return (
     <>
       <div className='row p-0 pt-5'>
-        <div className='col-md-12 banner'>fsda</div>
+        <div className='col-md-12 banner'></div>
       </div>
       <div className='row'>
       <div className="col-lg-8 p-5">
