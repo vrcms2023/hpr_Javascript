@@ -1,8 +1,8 @@
 import React from 'react'
 
-const ModelBg = () => {
+const ModelBg = ({closeModel}) => {
   return (
-    <div className='modelBg'></div>
+    <div className='modelBg' onClick={closeModel}></div>
   )
 }
 
