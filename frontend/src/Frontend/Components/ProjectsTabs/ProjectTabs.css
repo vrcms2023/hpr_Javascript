@@ -1,0 +1,19 @@
+.projectTabs .nav-link {
+    border: 0px !important;
+    border-radius: 0px !important;
+}
+
+.projectTabs .nav-link:hover {
+    color: #698845 !important;
+}
+
+.projectTabs .nav-link.active {
+   background-color: #698845 !important;
+   color: #fff !important;
+}
+
+.nav-tabs {
+    border-top: 1px solid #ddd;
+    border-bottom: 0px !important;
+}
+

@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px !important;
+  background-color: #fff !important;
+  color: #666666 !important;
+  /* background-image: url('https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); */
+
+    /* background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)), 
+                url('https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') */
+}
+
+.btn-primary {
+  background-color: #A8C849 !important;
+  color: #fff !important;
+  border: 0px !important;
+  box-shadow: 0 4px 4px 0 #555;
+}
+
+.btn-secondary {
+  background-color: #fff !important;
+  color: #165D3D !important;
+  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, .3) !important;
+  font-weight:bold !important;
+  border: 0px solid #fff !important;
+}
+
+.btn-secondary:hover {
+  background-color: #165D3D !important;
+  color: #fff !important;
+}
+
+.loadMore {
+  padding: 6px 15px;
+  border: 1px solid #cccccc;
+  color: #165D3D;
+  text-decoration: none;
+  transition: transform .3s;
+  border-radius: 5px;
+}
+
+.loadMore svg {
+  fill: #165D3D;
+}
+.loadMore:hover, .loadMore.active {
+  background-color: #698845;
+  color: #fff;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, .3);
+}
+
+.loadMore:hover svg {
+  transform: translateX(10px);
+  fill: #fff;
+} 
+
+.modelBg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.6)
+}
+
+.green-900 {
+  color: #165D3D;
+}
+
+.green-700 {
+  color: #698845;
+}
+
+.green-500 {
+  color: #A8C849;
+}
+
+.blue-900 {
+  color: #295A93;
+}
+
+.blue-700 {
+  color: #017DB9;
+}
+
+.blue-500 {
+  color: #0098DA;
+}
+
+.blue-300 {
+  color: #92D0EC;
+}
+
+.gray-222 {
+  color: #222222
+}
+
+.gray-444 {
+  color: #444444
+}
+
+.homeProjectsBg {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(33,72,118,1) 50%, rgba(255,255,255,1) 100%);
+}
+
+.introGrayBg {
+  background-color: #F3F3F3;
+}
+
+.blueBg-500 {
+  background-color: #0098DA;
+}
+
+
+
