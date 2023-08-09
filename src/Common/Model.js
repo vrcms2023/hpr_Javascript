@@ -3,7 +3,7 @@ import React from 'react'
 const Model = ({obj, closeModel} ) => {
     const {title, description} = obj
   return (
-    <div className="modal d-block modal-lg" tabIndex="-1" style={{zIndex: 99999}}>
+    <div className="modal d-block modal-lg" tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
             <div className="modal-header">
