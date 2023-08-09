@@ -75,6 +75,10 @@ const Gallery = () => {
         setShowModal(!showModal)
     }
 
+    useEffect(() => {
+        window.scrollTo(0,0)
+    },[])
+
   return (
     <>
     <div className='py-5 mt-5'>

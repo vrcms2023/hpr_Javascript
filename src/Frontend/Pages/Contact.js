@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 import Title from '../../Common/Title'
 import Alert from '../../Common/Alert'
 import { useCookies } from "react-cookie";
@@ -87,6 +87,10 @@ const Contact = () => {
     return errors;
 }
 
+useEffect(() => {
+  window.scrollTo(0,0)
+},[])
+
   return (
     <div className='container-fluid'>
         <div className='row'>
@@ -174,10 +178,7 @@ const Contact = () => {
         </div>
         
       </div>
-
-      
     </div>
   )
 }
-
 export default Contact
