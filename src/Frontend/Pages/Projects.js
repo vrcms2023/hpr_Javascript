@@ -21,6 +21,8 @@ const Projects = () => {
   const [future, setFuture] = useState([])
   const [ongoing, setOngoing] = useState([])
 
+  
+
   useEffect(() => {
     fetch("/client/getProjects")
     .then(res => res.json())
@@ -69,6 +71,10 @@ useEffect(() => {
     //  console.log(data)
   }).catch(err => console.log(err))
   
+},[])
+
+useEffect(() => {
+  window.scrollTo(0,0)
 },[])
   return (
     <>

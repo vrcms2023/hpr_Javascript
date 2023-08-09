@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Title from '../../Common/Title'
 
 import Img1 from '../../Images/project1.png'
@@ -8,6 +8,9 @@ import Img3 from '../../Images/quality.png'
 import './About.css'
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0,0)
+},[])
   return (
     <>
       <div className='row p-0 pt-5'>
