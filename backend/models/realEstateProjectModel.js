@@ -48,6 +48,10 @@ const realEstateProjectSchema = mongoose.Schema(
 )
 
 
-const realEstateProject = mongoose.model('realEstateProject', realEstateProjectSchema)
+const Realestateproject = mongoose.model('realestateproject', realEstateProjectSchema)
 
-export default realEstateProject
+// mongoose.set("debug", (collectionName, method, query, doc) => {
+//     console.log(`${collectionName}.${method}`, JSON.stringify(query), doc);
+// });
+
+export default Realestateproject

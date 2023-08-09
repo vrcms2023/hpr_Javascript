@@ -16,6 +16,6 @@ const appNewsModelSchema = mongoose.Schema(
 )
 
 
-const AppNews = mongoose.model('AppNewsModel', appNewsModelSchema)
+const AppNews = mongoose.model('AppNews', appNewsModelSchema)
 
 export default AppNews

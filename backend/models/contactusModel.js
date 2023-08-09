@@ -14,6 +14,6 @@ const contactUSModelSchema = mongoose.Schema(
 )
 
 
-const ContactUS = mongoose.model('ContactUSModel', contactUSModelSchema)
+const ContactUS = mongoose.model('ContactUS', contactUSModelSchema)
 
 export default ContactUS

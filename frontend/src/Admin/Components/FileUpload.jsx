@@ -7,12 +7,14 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { getBaseURL } from '../../util/ulrUtil';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 
 const FileUpload = ({title,project, updatedBy, category, gallerysetState, galleryState, validTypes}) => {
   const [files, setFiles] = useState([]);
   const [extTypes, setExtTypes] = useState([]);
+  const backendURL = getBaseURL()
 
   useEffect(() => {
     let extArr = validTypes.split(",");
@@ -54,7 +56,7 @@ const FileUpload = ({title,project, updatedBy, category, gallerysetState, galler
               maxFiles={2} 
               credits={false}
               acceptedFileTypes={extTypes}
-              server={`/fileUploader/${project?._id}/${updatedBy}/${category}`}
+              server={`${backendURL}/api/imageUpload/fileUploader/${project?._id}/${updatedBy}/${category}`}
               labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
               labelInvalidField="invalid files"
               />

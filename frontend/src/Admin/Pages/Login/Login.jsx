@@ -6,9 +6,11 @@ import Title from '../../../Common/Title'
 import Button from '../../../Common/Button'
 import { useNavigate } from 'react-router-dom'
 import Error from '../../Components/Error'
+import { useCookies } from "react-cookie";
 
 
 const Login = () => {
+  const [cookies, setCookie,removeCookie] = useCookies(["token"]);
   const { userInfo, error } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
@@ -19,7 +21,12 @@ const Login = () => {
   // redirect authenticated user to Main screen
   useEffect(() => {
     if (userInfo) {
-      navigate('/main')
+        setCookie("userToken", userInfo.userToken)
+        setCookie("email", userInfo.email)
+        setCookie("userName", userInfo.userName)
+        setCookie("userId", userInfo._id)
+        setCookie("isSuperAdmin", userInfo.isSuperAdmin)
+        navigate('/main')
     }
   }, [navigate, userInfo])
 

@@ -2,8 +2,9 @@ import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { getBaseURL } from '../../util/ulrUtil';
 
+
 const backendURL = getBaseURL()
- 
+
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
@@ -20,7 +21,7 @@ export const userLogin = createAsyncThunk(
         { email, password },
         config
       )
-
+      
       // store user's token in local storage
       localStorage.setItem('userToken', data.userToken)
 

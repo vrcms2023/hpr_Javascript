@@ -45,8 +45,10 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   // check if user email exists in db
-  const user = await User.findOne({ email })
-
+  const user = await User.findOne({ email, isActive: true })
+  if(!user){
+    res.status(401).json({message : "User not activated Please check with Admin"})
+  }
   // return user obj if their password matches
   if (user && (await user.matchPassword(password))) {
     res.json({
@@ -81,18 +83,19 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
 
 const getAllUser = asyncHandler(async (req, res) => {
-
+ 
   const users = await User.find().select('userName email isActive isSuperAdmin'); 
-  return res.json({message: data.length > 0 ? "Success" :  "Record not found" , users: users})   
+  return res.json({message: users.length > 0 ? "Success" :  "Record not found" , users: users})   
 
 })
 
 const updateUserStatus =  asyncHandler(async (req, res) => {
-
-  const query = { "_id": req.user._id};
-  const update = { "$set": {"isActive": user.isActive } };
+  
+  const { id, isActive } = req.body
+  const query = { "_id": id};
+  const update = { "$set": {"isActive": isActive } };
   const options = { returnNewDocument: true };   
-
+ 
   const user = await User.findOneAndUpdate(query, update, options);
   
   if (user) {

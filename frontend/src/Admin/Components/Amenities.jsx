@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Title from "../../Common/Title";
 import { useCookies } from "react-cookie";
+import { getBaseURL } from "../../util/ulrUtil";
 
 export const AmenitiesList = ({  
   project,
@@ -9,13 +10,18 @@ export const AmenitiesList = ({
 }) => {
   const [cookies] = useCookies(["token"]);
 
+  const backendURL = getBaseURL();
+
   /**
    * get selected Specification for edit
    */
   useEffect(() => {
     const getSelectedAmenities = () => {
-      fetch(`/getAmenitiesById/${project?._id}`, {
-        headers: { "x-access-token": cookies.token },
+      fetch(`${backendURL}/api/amenities/getAmenitiesById/${project?._id}`, {
+        headers: {
+          "authorization": `Bearer ${cookies.userToken}`,
+          "Content-type": "application/json",
+      },
       })
         .then((res) => res.json())
         .then((data) => {

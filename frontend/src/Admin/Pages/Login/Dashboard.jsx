@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { getBaseURL } from '../../../util/ulrUtil';
 
 const Dashboard = () => {
 
@@ -16,6 +17,8 @@ const Dashboard = () => {
     const [cookies] = useCookies(["userName"]);
     const [userName, setUserName] = useState('');
     
+    const backendURL = getBaseURL();
+
     /**
      * set user name
      */
@@ -28,13 +31,16 @@ const Dashboard = () => {
      * Get Dash borad projects
      */
     useEffect(() => {
-        fetch("/getDashboardProject",{
-            headers: {"x-access-token": cookies.token}
+        fetch(`${backendURL}/api/project/getDashboardProject`,{
+            headers: {
+                "authorization": `Bearer ${cookies.userToken}`,
+                "Content-type": "application/json",
+              }
         })
         .then(res => res.json())
         .then(data => {
-            if(data?.project?.length > 0) {
-                const finalObj = formatData(data.project);
+            if(data?.projectList?.length > 0) {
+                const finalObj = formatData(data.projectList);
                 setProjects(finalObj);
             }
         }).catch(err => console.log(err))
@@ -64,13 +70,16 @@ const Dashboard = () => {
     const handleProjectDelete = (project, id) => {
         console.log(project, "project")
       const deleteDashBoardProject = () => {
-        fetch(`/deleteDashboardProject/${id}`,{
-            headers: {"x-access-token": cookies.token}
+        fetch(`${backendURL}/api/project/deleteDashboardProject/${id}`,{
+            headers: {
+                "authorization": `Bearer ${cookies.userToken}`,
+                "Content-type": "application/json",
+              }
         })
         .then(res => res.json())
         .then(data => {
-            if(data?.project?.length > 0) {
-                const finalObj = formatData(data.project);
+            if(data?.projectList?.length > 0) {
+                const finalObj = formatData(data.projectList);
                 setProjects(finalObj);
             }else {
                 setProjects([]);

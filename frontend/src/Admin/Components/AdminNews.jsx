@@ -40,7 +40,7 @@ export const AdminNews = () => {
                 body: JSON.stringify(news)
             })
             const data = await res.json()
-            console.log("data", data)
+         
         } catch (err) {
             setErrorMessage(err)
         }

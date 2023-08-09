@@ -17,6 +17,6 @@ const specificationModelSchema = mongoose.Schema(
 )
 
 
-const SpecificationModel = mongoose.model('SpecificationModel', specificationModelSchema)
+const Specification = mongoose.model('Specification', specificationModelSchema)
 
-export default SpecificationModel
+export default Specification

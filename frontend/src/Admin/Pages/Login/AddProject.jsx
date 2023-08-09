@@ -10,6 +10,7 @@ import { useCookies } from "react-cookie";
 import { useParams } from 'react-router-dom';
 
 import CatageoryImgC from '../../../Common/CatageoryImgC';
+import { getBaseURL } from '../../../util/ulrUtil';
 
 
 const AddProject = () => {
@@ -38,13 +39,18 @@ const AddProject = () => {
     const { id } = useParams();
 
 
+    const backendURL = getBaseURL();
+
     /**
      * Get project type object
      */
     useEffect(() => {
         const getPorjectCategory =() => {
-            fetch("/projectCategory",{
-                headers: {"x-access-token": cookies.token}
+            fetch(`${backendURL}/api/projectCategory/projectCategoryList`,{
+                headers: {
+                    "authorization": `Bearer ${cookies.userToken}`,
+                    "Content-type": "application/json",
+                  }
             })
             .then(res => res.json())
             .then(data => {
@@ -125,11 +131,11 @@ const AddProject = () => {
         }
      
         try {
-            const res = await fetch("/addProject", {
+            const res = await fetch(`${backendURL}/api/project/addProject`, {
                 method: "POST",
                 headers: {
+                    "authorization": `Bearer ${cookies.userToken}`,
                     "Content-type": "application/json",
-                    "x-access-token": cookies.token
                 },
                 body: JSON.stringify(project)
             })
@@ -149,8 +155,11 @@ const AddProject = () => {
      */
     useEffect(() => {
        const getSelectedProject = () => {
-                fetch(`/findById/${id}`,{
-                    headers: {"x-access-token": cookies.token}
+                fetch(`${backendURL}/api/project/findById/${id}`,{
+                    headers: {
+                        "authorization": `Bearer ${cookies.userToken}`,
+                        "Content-type": "application/json",
+                      }
                 })
                 .then(res => res.json())
                 .then(data => {
@@ -206,11 +215,11 @@ const AddProject = () => {
         }
      
         try {
-            const res = await fetch("/updateProject", {
+            const res = await fetch(`${backendURL}/api/project/updateProject`, {
                 method: "POST",
                 headers: {
+                    "authorization": `Bearer ${cookies.userToken}`,
                     "Content-type": "application/json",
-                    "x-access-token": cookies.token
                 },
                 body: JSON.stringify(projectProps)
             })
@@ -231,12 +240,12 @@ const AddProject = () => {
             specifications :specifications
         };
         try {
-            const res = await fetch("/addAndUpdateSpecifications", {
+            const res = await fetch(`${backendURL}/api/specification/addAndUpdateSpecifications`, {
                 method: "POST",
                 headers: {
+                    "authorization": `Bearer ${cookies.userToken}`,
                     "Content-type": "application/json",
-                    "x-access-token": cookies.token
-                },
+                  },
                 body: JSON.stringify(specification)
             })
             const data = await res.json()
@@ -259,12 +268,12 @@ const AddProject = () => {
             amenitieslist :amenities
         };
         try {
-            const res = await fetch("/addAndUpdateAmenities", {
+            const res = await fetch(`${backendURL}/api/amenities/addAndUpdateAmenities`, {
                 method: "POST",
                 headers: {
+                    "authorization": `Bearer ${cookies.userToken}`,
                     "Content-type": "application/json",
-                    "x-access-token": cookies.token
-                },
+                  },
                 body: JSON.stringify(amenitiesObj)
             })
             const data = await res.json()

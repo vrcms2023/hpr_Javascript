@@ -2,9 +2,12 @@ import React, { useEffect} from 'react'
 import Title from '../../Common/Title'
 import Button from '../../Common/Button'
 import { useCookies } from "react-cookie";
+import { getBaseURL } from '../../util/ulrUtil';
 
 const Specifications = ({title, project, specifications, setSpecifications }) => {
     const [cookies] = useCookies(["token"]);
+
+    const backendURL = getBaseURL();
 
     const handleClick=()=>{
         setSpecifications([...specifications,{title:"",feature:""}])
@@ -28,8 +31,11 @@ const Specifications = ({title, project, specifications, setSpecifications }) =>
      */
     useEffect(() => {
         const getSelectedSpecification = () => {
-                fetch(`/getSpecificationsById/${project._id}`,{
-                    headers: {"x-access-token": cookies.token}
+                fetch(`${backendURL}/api/specification/getSpecificationsById/${project._id}`,{
+                    headers: {
+                        "authorization": `Bearer ${cookies.userToken}`,
+                        "Content-type": "application/json",
+                    },
                 })
                 .then(res => res.json())
                 .then(data => {

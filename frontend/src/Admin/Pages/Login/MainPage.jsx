@@ -11,6 +11,7 @@ const MainPage = () => {
             <li className="list-group-item list-group-item-action text-center py-4"><Link to="/applicationPages" className='blue-500 text-decoration-none fs-4'>New & Updates</Link></li>
             <li className="list-group-item list-group-item-action text-center py-4"><Link to="/applicationPages" className='blue-500 text-decoration-none fs-4' >Testimonials</Link></li>
             <li className="list-group-item list-group-item-action text-center py-4 bg-info"><Link to="/dashboard" className='text-decoration-none blue-900 fs-4 text-uppercase'>Dashboard</Link></li>
+            <li className="list-group-item list-group-item-action text-center"><Link to="/userAdmin" className='text-decoration-none blue-900 fs-4 '>User Administration</Link></li>
         </ul>
     </div>
   )

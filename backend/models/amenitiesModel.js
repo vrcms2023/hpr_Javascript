@@ -14,6 +14,6 @@ const amenitiesModelSchema = mongoose.Schema(
 )
 
 
-const AmenitiesModel = mongoose.model('AmenitiesModel', amenitiesModelSchema)
+const Amenities = mongoose.model('Amenities', amenitiesModelSchema)
 
-export default AmenitiesModel
+export default Amenities

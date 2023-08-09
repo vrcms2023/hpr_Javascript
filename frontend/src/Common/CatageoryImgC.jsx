@@ -5,18 +5,24 @@ import { useNavigate } from 'react-router-dom'
 import DeleteDialog from './DeleteDialog';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { getBaseURL } from '../util/ulrUtil';
 
 const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  project, category }) => {
   const [cookies,setCookie,removeCookie] = useCookies(["token","clientInformation"]);
   const navigate = useNavigate()
+
+  const backendURL = getBaseURL();
 
   /**
    * get selected Images for edit
    */
   useEffect(() => {
     const getSelectedImages = () => {
-      fetch(`/getSelectedImagesById/${project?._id}/${category}`, {
-        headers: { "x-access-token": cookies.token },
+      fetch(`${backendURL}/api/imageUpload/getSelectedImagesById/${project?._id}/${category}`, {
+        headers: {
+          "authorization": `Bearer ${cookies.userToken}`,
+          "Content-type": "application/json",
+        }
       })
         .then((res) => res.json())
         .then((data) => {
@@ -33,9 +39,12 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  pr
   const thumbDelete = (id) => {
 
     const deleteImageByID = () => {
-      fetch(`/deleteImageById/${id}`, {
+      fetch(`${backendURL}/api/imageUpload/deleteImageById/${id}`, {
         method: "DELETE",
-        headers: { "x-access-token": cookies.token },
+        headers: {
+          "authorization": `Bearer ${cookies.userToken}`,
+          "Content-type": "application/json",
+        }
       })
         .then(response => response.json())
         .then((data) => {

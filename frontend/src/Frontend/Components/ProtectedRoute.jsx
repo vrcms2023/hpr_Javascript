@@ -1,22 +1,34 @@
 
-import React from "react";
-import { useSelector } from 'react-redux'
-import { NavLink} from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import {useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import UnauthorizedPage from '../../Admin/Pages/Login/UnauthorizedPage'
+
 
 const ProtectedRoute = (props) => {
-  
-    const { userInfo } = useSelector((state) => state.auth)
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [cookies] = useCookies(["token","userName"]);
+
+
+    useEffect(() => {
+        const checkUserToken = () => {
+            const userToken = cookies.userToken;
+            if (!userToken || userToken === undefined) {
+                setIsLoggedIn(false);
+                return navigate('/login');
+            }
+            setIsLoggedIn(true);
+        }
+
+        checkUserToken();
+    }, [isLoggedIn]);
 
     return (
+       
         <React.Fragment>
             {
-                userInfo ? props.children : ( 
-                <div className='unauthorized'>
-                <h1>Unauthorized :(</h1>
-                <span>
-                  <NavLink to='/login'>Login</NavLink> to gain access
-                </span>
-              </div>)
+                isLoggedIn ? props.children : <UnauthorizedPage/>
             }
         </React.Fragment>
     );

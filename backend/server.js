@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js'
 import projectRoutes from './routes/projectRoutes.js'
 import projectCategoryRoutes from './routes/projectCategoryRoutes.js'
 import fileUploaderRoutes from './routes/fileUploaderRoutes.js'
+import specificationRoutes from './routes/specificationRoutes.js'
 import amenitieRoutes from './routes/amenitieRoutes.js'
 import contactusRoutes from './routes/contactusRoutes.js'
 import appNewsRoutes from './routes/appNewsRoutes.js'
@@ -45,8 +46,8 @@ app.use(
 app.use('/api/user', userRoutes)
 app.use('/api/projectCategory', projectCategoryRoutes)
 app.use('/api/project', projectRoutes)
-app.use('/api/project', fileUploaderRoutes)
-app.use('/api/specification', fileUploaderRoutes)
+app.use('/api/imageUpload', fileUploaderRoutes)
+app.use('/api/specification', specificationRoutes)
 app.use('/api/amenities', amenitieRoutes)
 app.use('/api/appnews', appNewsRoutes)
 app.use('/api/contactus', contactusRoutes)
