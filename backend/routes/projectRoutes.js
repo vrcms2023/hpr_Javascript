@@ -11,8 +11,6 @@ router.route('/findById/:id').get(protect, projectController.getSelectedProject)
 router.route('/deleteDashboardProject/:id').get(protect, projectController.deleteSelectedProject);
 router.get('/client/getProjects', projectController.getClientProjects)
 router.get('/client/getSelectedProject/:id', projectController.getClientSelectedProject)
-//router.route('/profile').get(protect, projectController.getUserProfile)
-//router.route('/getAllUsers').get(protect, projectController.getAllUser)
-//router.post('/getAllUsuserActiveStatusUpdateers').get(protect, projectController.updateUserStatus)
+
 
 export default router

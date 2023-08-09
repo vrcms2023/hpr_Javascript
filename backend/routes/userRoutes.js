@@ -8,6 +8,6 @@ router.post('/register', userController.registerUser)
 router.post('/login', userController.loginUser)
 router.route('/profile').get(protect, userController.getUserProfile)
 router.route('/getAllUsers').get(protect, userController.getAllUser)
-router.route('/activeAminUser').post(protect, userController.updateUserStatus)
+router.route('/activeAdminUser').post(protect, userController.updateUserStatus)
 
 export default router

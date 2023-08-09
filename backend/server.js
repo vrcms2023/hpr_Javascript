@@ -9,6 +9,9 @@ import userRoutes from './routes/userRoutes.js'
 import projectRoutes from './routes/projectRoutes.js'
 import projectCategoryRoutes from './routes/projectCategoryRoutes.js'
 import fileUploaderRoutes from './routes/fileUploaderRoutes.js'
+import amenitieRoutes from './routes/amenitieRoutes.js'
+import contactusRoutes from './routes/contactusRoutes.js'
+import appNewsRoutes from './routes/appNewsRoutes.js'
 import { errorHandler, notFound } from './middleware/errorMiddleware.js'
 
 const __dirname = path.resolve()
@@ -37,11 +40,18 @@ app.use(
   })
 )
 
+
 // API routes
 app.use('/api/user', userRoutes)
 app.use('/api/projectCategory', projectCategoryRoutes)
 app.use('/api/project', projectRoutes)
 app.use('/api/project', fileUploaderRoutes)
+app.use('/api/specification', fileUploaderRoutes)
+app.use('/api/amenities', amenitieRoutes)
+app.use('/api/appnews', appNewsRoutes)
+app.use('/api/contactus', contactusRoutes)
+
+
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -56,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound)
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 5001
+const PORT = process.env.PORT || 5000
 app.listen(
   PORT,
   console.log(

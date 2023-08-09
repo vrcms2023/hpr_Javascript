@@ -20,6 +20,8 @@ import AdminHeader from './Admin/Components/Header/AdminHeader'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ApplicationPages from './Admin/Pages/Login/ApplicationPages';
+import Registration from './Admin/Pages/Login/Registration';
+import AuthForm from './Admin/Pages/Login/AuthForm';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
               <Route exact  path='/contact' element={ <Contact /> } />
               <Route exact  path='/news' element={ <NewsAndUpdates /> } />
               <Route exact path='/login' element={ <Login/> } /> 
+              <Route exact path='/register' element={ <Registration/> } /> 
+              <Route exact path='/authForm' element={ <AuthForm/> } /> 
               <Route exact path='/main' element={ <ProtectedRoute> <MainPage/> </ProtectedRoute>} />
               <Route exact path='/addproject' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/editproject/:id' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />

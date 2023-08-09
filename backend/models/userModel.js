@@ -3,19 +3,31 @@ import { mongoose } from 'mongoose'
 
 const userSchema = mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
       unique: true,
     },
+    userName: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
     },
+    confirmPassword: {
+      type: String,
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      required: true
+    },
+    isSuperAdmin: {
+      type: Boolean,
+      required: true
+    }
   },
   {
     timestamps: true,

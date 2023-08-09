@@ -27,7 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
-      firstName: user.firstName,
+      userName: user.userName,
       email: user.email,
     })
   } else {
@@ -38,9 +38,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
-
-  const validationError = loginValidation(userLoggingIn).error
-
+  const validationError = loginValidation({ email, password }).error
+ 
   if (validationError) {
     return res.status(404).json({message: validationError.details[0].message})
   }
