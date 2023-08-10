@@ -37,6 +37,9 @@ const realEstateProjectSchema = mongoose.Schema(
       aboutussubtitle: {
           type: String
       },
+      percentValue: {
+        type: String
+      },
       isActive : {
           type: Boolean,
           required : true

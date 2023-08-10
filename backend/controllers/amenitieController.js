@@ -17,15 +17,13 @@ const addAndUpdateAmenities = asyncHandler(async (req, res) => {
         }
       };
     const options = { returnNewDocument: true };    
-    const data = await Amenitie.find(query);   
+    const data = await AmenitiesModel.find(query);   
     
 
     if(data.length > 0) {
-        dbAmenitie = Amenitie.findOneAndUpdate(query, update, options)
-        .then(updatedDocument => {return updatedDocument})
-        .catch(err => console.error(`Failed to find and update document: ${err}`))
+        dbAmenitie = await AmenitiesModel.findOneAndUpdate(query, update, options);
     } else {
-        dbAmenitie = new Amenitie({
+        dbAmenitie = new AmenitiesModel({
             projectID: project.projectID,
             updatedBy: project.updatedBy,
             amenitie: project.amenitieslist.amenitie,

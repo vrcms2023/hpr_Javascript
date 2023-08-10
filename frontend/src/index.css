@@ -51,7 +51,15 @@ body {
 .loadMore:hover svg {
   transform: translateX(10px);
   fill: #fff;
-} 
+}
+
+.modal {
+  z-index: 9999 !important
+}
+
+.modal-body{
+  white-space: pre-line;
+}
 
 .modelBg {
   position: fixed;
@@ -59,7 +67,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 9991;
   background: rgba(0,0,0,.6)
 }
 

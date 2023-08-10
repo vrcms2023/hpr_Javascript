@@ -19,9 +19,10 @@ import NewsAndUpdates from './Frontend/Pages/NewsAndUpdates';
 import AdminHeader from './Admin/Components/Header/AdminHeader'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ApplicationPages from './Admin/Pages/Login/ApplicationPages';
+import AdminTestimonial from './Admin/pages/Login/AdminTestimonial';
 import Registration from './Admin/Pages/Login/Registration';
 import AuthForm from './Admin/Pages/Login/AuthForm';
+import AdminNews from './Admin/Pages/Login/AdminNews';
 
 function App() {
   return (
@@ -44,7 +45,8 @@ function App() {
               <Route exact path='/editproject/:id' element={ <ProtectedRoute><AddProject /> </ProtectedRoute>} />
               <Route exact path='/dashboard' element={ <ProtectedRoute><Dashboard /> </ProtectedRoute>} />
               <Route exact path='/userAdmin' element={ <ProtectedRoute><UserAdmin/> </ProtectedRoute>} />
-              <Route exact path='/applicationPages' element={ <ProtectedRoute> <ApplicationPages/></ProtectedRoute>} />
+              <Route exact path='/adminNews' element={ <ProtectedRoute> <AdminNews/> </ProtectedRoute>} />
+              <Route exact path='/testimonial' element={ <ProtectedRoute> <AdminTestimonial/></ProtectedRoute>} />
             </Routes>
           {/* <Footer /> */}
           {window.location.pathname === "/login" || window.location.pathname === "/dashboard" || window.location.pathname === "/main"  || window.location.pathname === "/addproject" ? null : <Footer /> }

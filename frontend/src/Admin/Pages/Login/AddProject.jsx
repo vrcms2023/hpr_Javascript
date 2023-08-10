@@ -38,7 +38,13 @@ const AddProject = () => {
     const [projectStatus, setProjectStatus] =useState('');
     const { id } = useParams();
 
+    const [percentValue, setPercentValue] = useState('');
+    const options = [0, 10, 20, 30, 40, 50, 60, 70, 80,90,100];
 
+    const handleSelectChange = (event) => {
+        setPercentValue(event.target.value);
+      };
+    
     const backendURL = getBaseURL();
 
     /**
@@ -120,7 +126,7 @@ const AddProject = () => {
      * Add project handler
      */
     async function addNewProject(event) {
-        event.preventDefault();
+       
         const project = {
             ...getProjectStatus(),
             projectTitle : projectName,
@@ -181,6 +187,7 @@ const AddProject = () => {
                         description:data.project.description
                     }
                     setAboutUs(aboutus);
+                    setPercentValue(Number(data.project.percentValue))
                     setShow(true)
                     setErrorMessage(data.message)
                 })
@@ -211,7 +218,8 @@ const AddProject = () => {
             ...getProjectStatus(),
             ...getAboutUsStatus(),
             projectTitle : projectName,
-            updatedBy : cookies.userName
+            updatedBy : cookies.userName,
+            percentValue : percentValue
         }
      
         try {
@@ -369,7 +377,7 @@ const AddProject = () => {
                     </div> 
                     <div className="mb-3">
                     <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                    <select value={projectType[0]?.value}  className="form-select mb-3 w-100" aria-label="Default select example" id="projectStatus"
+                        <select value={projectType[0]?.value}  className="form-select mb-3 w-100" aria-label="Default select example" id="projectStatus"
                         onChange={(e) => handleChange(e)} >
                             <option>Select Status</option>
                             {defaultProjectType?.length ? (defaultProjectType?.map((option, index) => {
@@ -378,10 +386,17 @@ const AddProject = () => {
                                 </option>
                             })) : ('')}      
                         </select>
-                        {/* <label htmlFor="projectStatus" className="form-label  ">Status</label>
-                        <input type="text" className="form-control" name="status" value={infoDetails.status} onChange={changeHandler} id="status" placeholder="Project status" />
-                */}
-                        </div> 
+                    </div> 
+                    <div className="mb-3">
+                    <label htmlFor="projectStatus" className="form-label  ">Project % Completed</label>
+                        <select  value={percentValue}  className="form-select mb-3 w-100" aria-label="Default select example" id="projectStatus"
+                        onChange={(e) => handleSelectChange(e)} >
+                            <option>Select Status</option>
+                            {options.map((option, index) => (
+                                <option key={index} value={option}>{option}</option>
+                            ))}    
+                        </select>
+                    </div> 
                     <div className="mb-3">
                         <label htmlFor="projectDescription" className="form-label">Title</label>
                         <input type='text' className="form-control" name="aboutstitle" value={aboutUs.aboutstitle} onChange={changeHandler} id="aboutstitle"/>

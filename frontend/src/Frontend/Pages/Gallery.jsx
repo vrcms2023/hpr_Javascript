@@ -6,6 +6,7 @@ import GalleryImgThumb from './GalleryImgThumb'
 
 import ModelBg from '../../Common/ModelBg'
 import DynamicCarousel from '../Components/DynamicCarousel'
+import { getBaseURL } from '../../util/ulrUtil'
 
 const Gallery = () => {
     const [all, setAll] = useState([])
@@ -16,8 +17,10 @@ const Gallery = () => {
     const [img, setImg] = useState(null)
     const [btnActiveWord, setBtnActiveWord] = useState("all")
 
+    const backendURL = getBaseURL()
+
     useEffect(() => {
-        fetch("/client/getProjects")
+        fetch(`${backendURL}/api/project/client/getProjects`)
         .then(res => res.json())
         .then(data => {
             setAll(data.imageList)
@@ -74,6 +77,10 @@ const Gallery = () => {
     const closeModel = () => {
         setShowModal(!showModal)
     }
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    },[])
 
   return (
     <>

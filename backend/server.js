@@ -13,6 +13,7 @@ import specificationRoutes from './routes/specificationRoutes.js'
 import amenitieRoutes from './routes/amenitieRoutes.js'
 import contactusRoutes from './routes/contactusRoutes.js'
 import appNewsRoutes from './routes/appNewsRoutes.js'
+import testimonialRoutes from './routes/testimonialRoutes.js'
 import { errorHandler, notFound } from './middleware/errorMiddleware.js'
 
 const __dirname = path.resolve()
@@ -50,6 +51,7 @@ app.use('/api/imageUpload', fileUploaderRoutes)
 app.use('/api/specification', specificationRoutes)
 app.use('/api/amenities', amenitieRoutes)
 app.use('/api/appnews', appNewsRoutes)
+app.use('/api/testimonial', testimonialRoutes)
 app.use('/api/contactus', contactusRoutes)
 
 

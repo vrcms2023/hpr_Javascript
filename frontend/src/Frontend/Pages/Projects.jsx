@@ -9,6 +9,7 @@ import ProjectDetails from '../Components/ProjectsTabs/ProjecTabs'
 // import Amenities from './Amenities'
 
 import './Projects.css'
+import { getBaseURL } from '../../util/ulrUtil'
 
 // import Img1 from '../../Images/ongoing.png'
 // import Img2 from '../../Images/future.png'
@@ -21,8 +22,11 @@ const Projects = () => {
   const [future, setFuture] = useState([])
   const [ongoing, setOngoing] = useState([])
 
+  const backendURL = getBaseURL();
+  
+
   useEffect(() => {
-    fetch("/client/getProjects")
+    fetch(`${backendURL}/api/project/client/getProjects`)
     .then(res => res.json())
     .then(data => {
        const projectList = formatData(data);
@@ -63,12 +67,16 @@ const formatData  = (data)=> {
 }
 
 useEffect(() => {
-  fetch("/client/getSelectedProject/64cb5d5eea535b04d760d664")
+  fetch(`${backendURL}/api/project/client/getSelectedProject/64cb5d5eea535b04d760d664`)
   .then(res => res.json())
   .then(data => {
-    //  console.log(data)
+      console.log(data)
   }).catch(err => console.log(err))
   
+},[])
+
+useEffect(() => {
+  window.scrollTo(0,0)
 },[])
   return (
     <>

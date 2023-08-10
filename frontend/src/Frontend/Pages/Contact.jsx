@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 import Title from '../../Common/Title'
 import Alert from '../../Common/Alert'
 import { useCookies } from "react-cookie";
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import './Contact.css'
 
 import contactImg from '../../Images/contact.png'
+import { getBaseURL } from '../../util/ulrUtil';
 
 const Contact = () => {
   const formObject = {firstName: "", email: "",phone:"",message: ""};
@@ -16,6 +17,8 @@ const Contact = () => {
   const [formerror, setFormerror] = useState({});
   const [cookies, setCookie, removeCookie] = useCookies(["clientInformation"]);
   const navigate = useNavigate()
+
+  const backendURL = getBaseURL();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,7 +36,7 @@ const Contact = () => {
     setFormerror(errors)
     if(Object.keys(errors).length > 0) return;
 
-    fetch('updateContactDetails/', {
+    fetch(`${backendURL}/api/contactus/updateContactDetails`, {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
@@ -86,6 +89,10 @@ const Contact = () => {
 
     return errors;
 }
+
+useEffect(() => {
+  window.scrollTo(0,0)
+},[])
 
   return (
     <div className='container-fluid'>
@@ -174,10 +181,7 @@ const Contact = () => {
         </div>
         
       </div>
-
-      
     </div>
   )
 }
-
 export default Contact

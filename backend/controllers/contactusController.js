@@ -4,6 +4,7 @@ import ContactusModel from '../models/contactusModel.js'
 
 const saveContactusDetails = asyncHandler(async (req, res) => {
     const project = req.body; 
+    console.log("contact us")
 
     const dbContactUS = new ContactusModel({
         firstName: project.firstName,
@@ -13,7 +14,7 @@ const saveContactusDetails = asyncHandler(async (req, res) => {
         message :project.message
     })
     dbContactUS.save();
-    return res.json({message: "Success", contactus: dbContactUS})
+    return res.json({message: "Success"})
 
 })
 

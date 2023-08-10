@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import Title from '../../Common/Title'
 import Model from '../../Common/Model'
@@ -12,7 +12,7 @@ const NewsAndUpdates = () => {
 
     const [showModal, setShowModal] = useState(false)
     const [news, setNews] = useState([
-        {id: 1, img: "NewsImg1", title: "News Title One", description:"HPR Infra Projects has instantly made a distinctive mark on the cityscape of Hyderabad: the city in which the group is headquartered, as it understands the city with an instinctive ease sharing with it a glorious past and a promising future. Abibaltla had become prominent because of IT SEZ & Aero Space SEZ. TCS, CTS, and small other companies had been allotted land in IT SEZ. TCS, which is about to complete the construction is expected to generate an employment of 27,000 employees in Adibatla Campus. Tata Advanced Systems, a group company of Tata’s started their manufacturing facility for Helicopter units, wings manufacturing in collaboration with LOCKHEED MARTIN and SIKORSKY AIRCRAFT CORPORATION in the Aerospace SEZ, Adibatla." },
+        {id: 1, img: "NewsImg1", title: "News Title One", description:"HPR Infra Projects has instantly made a distinctive mark on the cityscape of Hyderabad: the city in which the group is headquartered, as it understands the city with an instinctive ease sharing with it a glorious past and a promising future. \n Abibaltla had become prominent because of IT SEZ & Aero Space SEZ. TCS, CTS, and small other companies had been allotted land in IT SEZ. TCS, which is about to complete the construction is expected to generate an employment of 27,000 employees in Adibatla Campus. Tata Advanced Systems, a group company of Tata’s started their manufacturing facility for Helicopter units, wings manufacturing in collaboration with LOCKHEED MARTIN and SIKORSKY AIRCRAFT CORPORATION in the Aerospace SEZ, Adibatla." },
         {id: 2, img: "NewsImg2", title: "News Title Two", description:"HPR has ventured in the real estate world with a humble beginning in the year 2004, with Director D. Hari Srinivas who has vision and has successfully completed several projects in Hyderabad. Riding on the growth wave of real-estate, the group has diversified strategically into the development of land." },
         {id: 3, img: "NewsImg3", title: "News Title Three", description:"Abibaltla had become prominent because of IT SEZ & Aero Space SEZ. TCS, CTS, and small other companies had been allotted land in IT SEZ. TCS, which is about to complete the construction is expected to generate an employment of 27,000 employees in Adibatla Campus." },
         {id: 4, img: "NewsImg1", title: "News Title Four", description:"Tata Advanced Systems, a group company of Tata’s started their manufacturing facility for Helicopter units, wings manufacturing in collaboration with LOCKHEED MARTIN and SIKORSKY AIRCRAFT CORPORATION in the Aerospace SEZ, Adibatla." },
@@ -34,6 +34,10 @@ const NewsAndUpdates = () => {
     const closeModel = () => {
         setShowModal(!showModal)
     }
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    },[])
 
   return (
     <>

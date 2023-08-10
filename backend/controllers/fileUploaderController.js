@@ -4,13 +4,13 @@ import multer from 'multer';
 import fs from 'fs';
 import promisify from 'promisify'
 
-//const unlinkAsync = promisify(fs.unlink)
+
 
 
 const storage = multer.diskStorage({
   //multers disk storage settings
   destination: function (req, file, cb) {
-       cb(null, "public");
+       cb(null, "frontend/public");
   },
   filename: function (req, file, cb) {
     var datetimestamp = Date.now();
@@ -30,6 +30,7 @@ const uploadImage = asyncHandler(async (req, res) => {
           return;
         }
 
+        const path = req["file"].path;
         const dbimagesModel = await imagesModel.create({
             projectID: req.params.id,
             updatedBy: req.params.name,
@@ -67,6 +68,7 @@ const deleteSelectedImageById = asyncHandler(async(req, res) => {
 
     const data = await imagesModel.find({_id :req.params.id}).findOneAndDelete(); 
 
+    const unlinkAsync = promisify(fs.unlink)
     
     await unlinkAsync("public/"+data.path)
 

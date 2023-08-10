@@ -34,7 +34,7 @@ const CatageoryImgC = ({title, catategoryImgs, catategoryImgState, cssClass,  pr
       getSelectedImages();
     }
     
-  }, []);
+  }, [project]);
 
   const thumbDelete = (id) => {
 

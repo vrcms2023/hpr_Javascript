@@ -68,7 +68,7 @@ const Dashboard = () => {
      */
 
     const handleProjectDelete = (project, id) => {
-        console.log(project, "project")
+       
       const deleteDashBoardProject = () => {
         fetch(`${backendURL}/api/project/deleteDashboardProject/${id}`,{
             headers: {

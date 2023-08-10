@@ -1,10 +1,13 @@
 import asyncHandler from 'express-async-handler'
 import RealEstateProjectModel from '../models/realEstateProjectModel.js'
 import { porjectValidation } from '../common/validation.js'
+import ImagesModel from '../models/imagesModel.js';
+import Specification from '../models/specificationModel.js';
+import Amenities from '../models/amenitiesModel.js';
 
 const dashboardProject = async () => {
 
-    const dashBoardFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive';
+    const dashBoardFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive percentValue';
     return await RealEstateProjectModel.find({ isActive: true }).select(dashBoardFields);
    
 }
@@ -27,23 +30,24 @@ const addNewProject = asyncHandler(async (req, res) => {
 
     const validationError = porjectValidation(projectCategoryID, projectCategoryName, projectCategoryValue, projectTitle, createdBy, userID).error;
 
-    if (validationError) {
-        return res.status(404).json({ message: validationError.details[0].message })
-    }
-
+    // if (validationError) {
+    //     return res.status(404).json({ message: validationError.details[0].message })
+    // }
+    console.log("validationError")
     const project = await RealEstateProjectModel.create({
-        projectCategoryID,
-        projectCategoryName,
-        projectCategoryValue,
-        projectTitle,
-        createdBy,
-        userID,
-        description,
-        description: '',
+        projectCategoryID:projectCategoryID,
+        projectCategoryName:projectCategoryName,
+        projectCategoryValue:projectCategoryValue,
+        projectTitle:projectTitle,
+        createdBy:createdBy,
+        userID:userID,
+        description:'',
+        percentValue:'',
         isActive: true
     })
+    console.log(project)
     if (project) {
-        res.status(200).json({ project })
+        res.status(200).json({message: "Success", project:  project })
     } else {
         res.status(404).json({ message: "project not save" })
         throw new Error('project not save')
@@ -65,6 +69,7 @@ const updateProject = asyncHandler(async (req, res) => {
             "projectCategoryID": project.projectCategoryID,
             "projectCategoryName": project.projectCategoryName,
             "projectCategoryValue": project.projectCategoryValue,
+            "percentValue": project.percentValue
 
         }
     };
@@ -107,29 +112,28 @@ const deleteSelectedProject = asyncHandler(async (req, res) => {
 })
 
 const getClientProjects = asyncHandler(async (req, res) => {
-
-    const clientViewFields = 'projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive ';
-    const projectData = await RealEstateProjectModel.find({ isActive: true }).select(clientViewFields);
-
+   
+    const projectList = await dashboardProject();
+   
     let projectIDs = []
-    projectData.map((d, k) => {
+    projectList.map((d, k) => {
         projectIDs.push(d._id);
     })
-    return res.status(200);
 
-    //const data = await imagesModel.find({ projectID: { $in: projectIDs }, "category":'images' })
-    //return res.json({message: data.length > 0 ? "Success" :  "Record not found" , projectList:projectData, imageList : data}) 
+    const data = await ImagesModel.find({ projectID: { $in: projectIDs }, "category":'images' })
+    return res.json({message: data.length > 0 ? "Success" :  "Record not found" , projectList:projectList, imageList : data}) 
 })
 
 const getClientSelectedProject = asyncHandler(async (req, res) => {
     const query = { "projectID": req.params.id };
+    console.log(query)
     const projectData = await RealEstateProjectModel.findById(req.params.id)
-    return res.status(200);
-    //const imageData = await imagesModel.find(query); 
-    //const specificationData = await Specification.find(query);
-    //const amenitie = await Amenitie.find(query);  
 
-    //return res.json({message: "Success" , project:projectData ,imageData:imageData, specificationData:specificationData, amenitie:amenitie[0] }) 
+    const imageData = await ImagesModel.find(query); 
+    const specificationData = await Specification.find(query);
+    const amenitie = await Amenities.find(query);  
+
+    return res.json({message: "Success" , project:projectData ,imageData:imageData, specificationData:specificationData, amenitie:amenitie[0] }) 
 })
 
 export { getDashboardProject, addNewProject, updateProject, getSelectedProject, deleteSelectedProject, getClientProjects, getClientSelectedProject }
