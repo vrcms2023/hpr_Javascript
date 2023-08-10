@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import { Link, useNavigate  } from 'react-router-dom'
 import Title from '../../Common/Title'
 import ProjectDetails from '../Components/ProjectsTabs/ProjecTabs'
 // import Specifications from '../Components/Specifications'
@@ -15,19 +15,22 @@ import './Projects.css'
 // import Img3 from '../../Images/completed.png'
 
 const Projects = () => {
-
+  const navigate = useNavigate()
+  // const history = useHistory
   const[projects, setProjects] = useState([])
   const [completed, setCompleted] = useState([])
   const [future, setFuture] = useState([])
   const [ongoing, setOngoing] = useState([])
 
-  
+
 
   useEffect(() => {
     fetch("/client/getProjects")
     .then(res => res.json())
     .then(data => {
        const projectList = formatData(data);
+       console.log(projectList, "projects List")
+       setProjects(projectList)
        setCompleted(projectList.completed)
        setFuture(projectList.future)
        setOngoing(projectList.ongoing)
@@ -68,14 +71,21 @@ useEffect(() => {
   fetch("/client/getSelectedProject/64cb5d5eea535b04d760d664")
   .then(res => res.json())
   .then(data => {
-    //  console.log(data)
+     console.log(data, "project")
   }).catch(err => console.log(err))
   
 },[])
 
-useEffect(() => {
-  window.scrollTo(0,0)
-},[])
+  useEffect(() => {
+    window.scrollTo(0,0)
+  },[])
+
+  // const selectProjectHandler = (obj) => {
+  //   setSelectedProject(obj)
+  //   navigate('/projectDetails', { obj } )
+  // }
+
+
   return (
     <>
       <div className='row p-0 pt-5'>
@@ -117,7 +127,7 @@ useEffect(() => {
               <div className='position-relative box'>
               <div className='infoStrip'>
                 <Title title={project.projectTitle} cssClass="text-white fs-5"/>
-                <Link to=""  className='blue-900'>more details</Link> 
+                <button  className='blue-900' onClick={() => navigate('/projectDetails', {state: ongoing })}>more details</button> 
               </div>
               <img src={project.imgs[0].path} alt="" />
               </div>
