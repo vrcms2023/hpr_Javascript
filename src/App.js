@@ -5,6 +5,7 @@ import Header from './Common/Header/Header';
 import Home from './Frontend/Pages/Home';
 import About from './Frontend/Pages/About'
 import Projects from './Frontend/Pages/Projects';
+import ProjectTabs from './Frontend/Components/ProjectsTabs/ProjecTabs';
 import Gallery from './Frontend/Pages/Gallery';
 import Contact from './Frontend/Pages/Contact';
 import Login from './Admin/Pages/Login/Login';
@@ -30,6 +31,8 @@ function App() {
               <Route exact path='/' element={ <Home/> } />
               <Route exact path='/about' element={ <About /> } />
               <Route exact  path='/projects' element={ <Projects /> } />
+              <Route exact  path='/projectDetails' element={ <ProjectTabs /> } />
+              
               <Route exact  path='/gallery' element={ <Gallery /> } />
               <Route exact  path='/contact' element={ <Contact /> } />
               <Route exact  path='/news' element={ <NewsAndUpdates /> } />
