@@ -127,7 +127,7 @@ useEffect(() => {
               <div className='position-relative box'>
               <div className='infoStrip'>
                 <Title title={project.projectTitle} cssClass="text-white fs-5"/>
-                <button  className='blue-900' onClick={() => navigate('/projectDetails', {state: ongoing })}>more details</button> 
+                <button  className='blue-900' onClick={() => navigate('/projectDetails', {state: {selectedPorject:ongoing, projectid:project._id} })}>more details</button> 
               </div>
               <img src={project.imgs[0].path} alt="" />
               </div>

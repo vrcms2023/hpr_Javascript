@@ -9,12 +9,20 @@ import Gallery from '../../Pages/Gallery'
 const ProjectTabs = () => {
   const location = useLocation();
 
-  const [projectType, setProjectType] = useState(location.state)
+
+  const [projectType, setProjectType] = useState(location.state.selectedPorject)
+  const [projectid, setprojectid] = useState(location.state.projectid)
 
   useEffect(() => {
-  }, [location.state])
-  // setProjectType(location.state)
-  console.log(projectType)
+    fetch(`/client/getSelectedProject/${projectid}`)
+    .then(res => res.json())
+    .then(data => {
+       console.log(data, "project")
+    }).catch(err => console.log(err))
+    
+  },[])
+
+
   return (
     <div className='container mt-5 pt-5'>
       <div className='row p-0 pt-4 projectTabs'>
@@ -23,7 +31,7 @@ const ProjectTabs = () => {
             <Title title={projectType[0].projectCategoryName} cssClass="blue-900 fs-5 fw-bold" />
             <select  className="form-select shadow-lg border border-1 rounded-0 border-success w-25" aria-label="Default select example" id="projectStatus">
                   <option>Select Project</option>
-                  {projectType.length > 0 ? projectType.map(project => <option value={project.projectTitle} key={project._id}>{project.projectTitle}</option>) : ""}
+                  {projectType.length > 0 ? projectType.map(project => <option value={project._id} key={project._id}>{project.projectTitle}</option>) : ""}
                   {/* <option>Project 1</option>
                   <option>Project 2</option>
                   <option>Project 3</option>
