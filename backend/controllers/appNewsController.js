@@ -62,4 +62,6 @@ const getAllNews = asyncHandler(async (req, res) => {
 })
 
 
+
+
 export { addNews, getAllNews, updateNews, deleteNewsById }

@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const UserAdmin = () => {
   const [cookies] = useCookies(["token", "userName"]);
   const [userDetails, setUserDetails] = useState([])
+  const [isSuperAdmin, setisSuperAdmin] = useState(JSON.parse(cookies.isSuperAdmin))
+
 
   const navigate = useNavigate();
   const backendURL = getBaseURL();
@@ -67,7 +69,8 @@ const UserAdmin = () => {
       </div>
 
       <div className="row bg-light px-5 py-4">
-        <table class="table table-striped">
+        {isSuperAdmin ? (
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>UserName</th>
@@ -81,11 +84,14 @@ const UserAdmin = () => {
                 <td>{user.userName}</td>
                 <td>{user.email}</td>
                 <td>{user.isActive.toString()} </td>
-                <td>{!user.isSuperAdmin ? (<input type='checkbox' checked={user.isActive} onClick={() => { activeDeactiveUser(user) }} />) : ('')}</td>
+                <td>{user._id !== cookies.userId ? (<input type='checkbox' checked={user.isActive} readOnly onClick={() => { activeDeactiveUser(user) }} />):('')}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        ): (
+          <h3>Not authorized to view this page </h3>
+        )}
       </div>
     </div>
   );

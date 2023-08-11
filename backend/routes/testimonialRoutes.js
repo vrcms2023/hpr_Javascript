@@ -8,6 +8,6 @@ router.route('/addTestimonial').post(protect, testimonialController.addTestimoni
 router.route('/getTestimonialList').get(protect, testimonialController.getAllTestimonial )
 router.route('/updateTestimonial').post(protect, testimonialController.updateTestimonial )
 router.route('/deleteSelectedTestimonial/:id').get(protect, testimonialController.deleteTestimonialById)
-
+router.get('/client/getTestimonial', testimonialController.getAllTestimonial)
 
 export default router

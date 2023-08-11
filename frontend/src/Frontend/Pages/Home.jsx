@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Banner from '../Components/Banner'
 import Title from '../../Common/Title'
 import { Link  } from 'react-router-dom'
@@ -11,8 +11,19 @@ import imgFuture from '../../Images/future.png'
 import testimonialUser from '../../Images/testimonial.jpg'
 import leftArrow from '../../Images/left.png'
 import rightArrow from '../../Images/right.png'
+import { getBaseURL } from '../../util/ulrUtil'
 
 const Home = () => {
+    const backendURL = getBaseURL();
+
+    useEffect(() => {
+        fetch(`${backendURL}/api/testimonial/client/getTestimonial`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        }).catch(err => console.log(err))
+    }, []);
+
   return (
     <div className='container-fluid'>
         <div className='row'>

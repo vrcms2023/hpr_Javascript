@@ -4,6 +4,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 import Logo from '../../../../src/Images/hpr-infra-logo.png'
 import testimonialUser from '../../../../src/Images/testimonial.jpg'
+import { removeAllCookies } from '../../../util/cookieUtil';
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../../features/auth/authSlice'
 
 const Header = () => {
 
@@ -11,22 +14,15 @@ const Header = () => {
   const [cookies,removeCookie] = useCookies(["token","userName"]);
   const [userName, setUserName] = useState('')
   const [loginState, setLoginState] = useState(false);
-
-  const removeAllCookies =() => {
-    removeCookie("token");
-    removeCookie("userName");
-    removeCookie("isSuperAdmin");
-    removeCookie("userId");
-    removeCookie("clientInformation");
-    removeCookie("previousPath");
-  }
+  const { userInfo } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
   
   useEffect(()=>{
-    let token = cookies.token;
+    let userToken = cookies.userToken;
     setUserName(cookies.userName);
-    console.log(cookies.userName)
+   
   
-    if(token && userName) {
+    if(userToken && userName) {
       setLoginState(true)
     }
   }, [userName, cookies]);
@@ -34,6 +30,7 @@ const Header = () => {
   function logOutHandler(){
     removeAllCookies();
     setLoginState(false)
+    dispatch(logout())
     navigate("/login");
   }
   return (

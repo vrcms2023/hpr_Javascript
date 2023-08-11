@@ -7,8 +7,19 @@ import NewsImg1 from '../../Images/future.png'
 import ModelBg from '../../Common/ModelBg'
 
 import './NewsAndUpdates.css'
+import { getBaseURL } from '../../util/ulrUtil'
 
 const NewsAndUpdates = () => {
+
+    const backendURL = getBaseURL();
+
+    useEffect(() => {
+        fetch(`${backendURL}/api/appnews/client/getNews`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        }).catch(err => console.log(err))
+    }, []);
 
     const [showModal, setShowModal] = useState(false)
     const [news, setNews] = useState([

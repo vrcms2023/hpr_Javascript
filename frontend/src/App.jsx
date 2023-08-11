@@ -1,8 +1,8 @@
-
+import React, { useEffect, useState } from 'react'
 import './App.css';
 import Footer from './Common/Footer/Footer';
 import Header from './Common/Header/Header';
-
+import { useCookies } from "react-cookie";
 import Home from './Frontend/Pages/Home';
 import About from './Frontend/Pages/About'
 import Projects from './Frontend/Pages/Projects';
@@ -15,6 +15,7 @@ import ProtectedRoute from './Frontend/Components/ProtectedRoute';
 import UserAdmin from './Admin/Pages/Login/UserAdmin';
 import MainPage from './Admin/Pages/Login/MainPage'
 import NewsAndUpdates from './Frontend/Pages/NewsAndUpdates';
+import { useSelector } from 'react-redux'
 
 import AdminHeader from './Admin/Components/Header/AdminHeader'
 
@@ -25,11 +26,23 @@ import AuthForm from './Admin/Pages/Login/AuthForm';
 import AdminNews from './Admin/Pages/Login/AdminNews';
 
 function App() {
+  const { userInfo } = useSelector((state) => state.auth)
+  const [cookies] = useCookies(["userToken"]);
+  const [loginState, setLoginState] = useState(cookies.userToken ? true : false);
+ 
+
+  useEffect(()=>{
+    if(userInfo){
+      setLoginState(true)
+    }else{
+      setLoginState(false)
+    }
+  },[userInfo])
+
   return (
         <>
           <BrowserRouter>
-          {window.location.pathname === "/login" || window.location.pathname === "/dashboard"  || window.location.pathname === "/main" || window.location.pathname === "/addproject" ? <AdminHeader /> : <Header /> }
-          {/* <Header /> */}
+          {loginState ? <AdminHeader /> : <Header /> }
             <Routes>
               <Route exact path='/' element={ <Home/> } />
               <Route exact path='/about' element={ <About /> } />
@@ -48,8 +61,7 @@ function App() {
               <Route exact path='/adminNews' element={ <ProtectedRoute> <AdminNews/> </ProtectedRoute>} />
               <Route exact path='/testimonial' element={ <ProtectedRoute> <AdminTestimonial/></ProtectedRoute>} />
             </Routes>
-          {/* <Footer /> */}
-          {window.location.pathname === "/login" || window.location.pathname === "/dashboard" || window.location.pathname === "/main"  || window.location.pathname === "/addproject" ? null : <Footer /> }
+          {loginState ? null : <Footer /> }
           </BrowserRouter>
         </>
   );

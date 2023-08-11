@@ -6,11 +6,12 @@ import Title from '../../../Common/Title'
 import Button from '../../../Common/Button'
 import { useNavigate } from 'react-router-dom'
 import Error from '../../Components/Error'
-import { useCookies } from "react-cookie";
+import { setCookie } from '../../../util/cookieUtil'
+
 
 
 const Login = () => {
-  const [cookies, setCookie,removeCookie] = useCookies(["token"]);
+ 
   const { userInfo, error } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
@@ -25,7 +26,7 @@ const Login = () => {
         setCookie("email", userInfo.email)
         setCookie("userName", userInfo.userName)
         setCookie("userId", userInfo._id)
-        setCookie("isSuperAdmin", userInfo.isSuperAdmin)
+        setCookie("isSuperAdmin", JSON.parse(userInfo.isSuperAdmin))
         navigate('/main')
     }
   }, [navigate, userInfo])
