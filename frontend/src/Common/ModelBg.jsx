@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const ModelBg = ({closeModel}) => {
-  return (
-    <div className='modelBg' onClick={closeModel}></div>
-  )
-}
+const ModelBg = ({ closeModel }) => {
+  return <div className="modelBg" onClick={closeModel}></div>;
+};
 
-export default ModelBg
+export default ModelBg;

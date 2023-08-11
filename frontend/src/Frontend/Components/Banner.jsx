@@ -1,10 +1,8 @@
-import React from 'react'
-import Carousel from './Carousel'
+import React from "react";
+import Carousel from "./Carousel";
 
 const Banner = () => {
-  return (
-    <Carousel />
-    )
-}
+  return <Carousel />;
+};
 
-export default Banner
+export default Banner;

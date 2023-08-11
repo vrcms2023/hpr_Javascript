@@ -1,4 +1,3 @@
-
 ## Environment Variables
 
 Environment variables are shown in `.env.example` files.
@@ -8,8 +7,8 @@ Environment variables are shown in `.env.example` files.
 Run this command to install dependencies in both the backend & frontend folders:
 
 ```
-  npm install && cd frontend && npm install 
-  
+  npm install && cd frontend && npm install
+
 ```
 
 ## Start development server
@@ -24,4 +23,3 @@ Run this command to install dependencies in both the backend & frontend folders:
   # Run frontend only
   npm run client
 ```
-

@@ -3,11 +3,7 @@ import Title from "../../Common/Title";
 import { useCookies } from "react-cookie";
 import { getBaseURL } from "../../util/ulrUtil";
 
-export const AmenitiesList = ({  
-  project,
-  amenities,
-  setAmenities,
-}) => {
+export const AmenitiesList = ({ project, amenities, setAmenities }) => {
   const [cookies] = useCookies(["token"]);
 
   const backendURL = getBaseURL();
@@ -19,9 +15,9 @@ export const AmenitiesList = ({
     const getSelectedAmenities = () => {
       fetch(`${backendURL}/api/amenities/getAmenitiesById/${project?._id}`, {
         headers: {
-          "authorization": `Bearer ${cookies.userToken}`,
+          authorization: `Bearer ${cookies.userToken}`,
           "Content-type": "application/json",
-      },
+        },
       })
         .then((res) => res.json())
         .then((data) => {
@@ -31,10 +27,9 @@ export const AmenitiesList = ({
         })
         .catch((err) => console.log(err));
     };
-    if(project?._id) {
+    if (project?._id) {
       getSelectedAmenities();
     }
-    
   }, []);
 
   return (
@@ -57,13 +52,7 @@ export const AmenitiesList = ({
   );
 };
 
-export const Amenities = ({
-  title,
-  value,
-  amenities,
-  setAmenities,
-  name,
-}) => {
+export const Amenities = ({ title, value, amenities, setAmenities, name }) => {
   const handleChange = (e, i) => {
     const { name, value } = e.target;
     const onchangeVal = { ...amenities };
