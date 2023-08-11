@@ -8,9 +8,9 @@ const addNews = asyncHandler(async (req, res) => {
     projectID: news.projectID,
     newstitle: news.newstitle,
     description: news.description,
-    imageId: news.imageId,
-    originalname: news.originalname,
-    imageUrl: news.imageUrl,
+    imageIds: news.imageIds,
+    originalnames: news.originalnames,
+    imageUrls: news.imageUrls,
     updateBy: news.updateBy,
   });
 
@@ -27,9 +27,9 @@ const updateNews = asyncHandler(async (req, res) => {
       projectID: news.projectID,
       newstitle: news.newstitle,
       description: news.description,
-      imageId: news.imageId,
-      originalname: news.originalname,
-      imageUrl: news.imageUrl,
+      imageIds: news.imageIds,
+      originalnames: news.originalnames,
+      imageUrls: news.imageUrls,
       updateBy: news.updateBy,
     },
   };

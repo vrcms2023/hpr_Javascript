@@ -6,9 +6,9 @@ const appNewsModelSchema = mongoose.Schema(
     updateBy: String,
     newstitle: String,
     description: String,
-    imageUrl: String,
-    imageId: String,
-    originalname: String,
+    imageUrls: Array,
+    imageIds: Array,
+    originalnames: Array,
   },
   {
     timestamps: true,

@@ -23,6 +23,7 @@ const addTestimonial = asyncHandler(async (req, res) => {
 
 const updateTestimonial = asyncHandler(async (req, res) => {
   const testimonial = req.body;
+  
   const query = { _id: testimonial._id };
   const update = {
     $set: {
@@ -35,10 +36,13 @@ const updateTestimonial = asyncHandler(async (req, res) => {
       updateBy: testimonial.updateBy,
     },
   };
+  const options = { returnNewDocument: true };
   const updateTestimonial = await TestimonialModel.findOneAndUpdate(
     query,
     update,
+    options
   );
+  
   if (updateTestimonial) {
     res
       .status(200)
