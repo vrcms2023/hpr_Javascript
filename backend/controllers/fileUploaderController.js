@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler";
 import imagesModel from "../models/imagesModel.js";
 import multer from "multer";
 import fs from "fs";
-import promisify from "promisify";
+
 
 const storage = multer.diskStorage({
   //multers disk storage settings
@@ -60,9 +60,12 @@ const deleteSelectedImageById = asyncHandler(async (req, res) => {
     .find({ _id: req.params.id })
     .findOneAndDelete();
 
-  const unlinkAsync = promisify(fs.unlink);
-
-  await unlinkAsync("public/" + data.path);
+  try {
+    fs.unlinkSync("frontend/public/" + data.path);
+    console.log(`${data.originalname} File Delete successfully.`);
+  } catch (error) {
+    console.log(error);
+  }
 
   if (data) {
     res.json({ message: "Success", imageModel: data });

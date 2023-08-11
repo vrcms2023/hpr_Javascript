@@ -62,9 +62,9 @@ export const AdminTestimonial = () => {
       projectID: testimonialProject._id,
       title: testimonialState.title,
       description: testimonialState.description,
-      imageId: testimonialObject[0]?._id,
-      originalname: testimonialObject[0]?.originalname,
-      imageUrl: testimonialObject[0]?.path,
+      imageId: testimonialObject[0]?._id ? testimonialObject[0]._id :"",
+      originalname: testimonialObject[0]?.originalname ? testimonialObject[0].originalname :"",
+      imageUrl: testimonialObject[0]?.path ? testimonialObject[0].path :"",
       updateBy: cookies.userName,
       _id: id,
     };
