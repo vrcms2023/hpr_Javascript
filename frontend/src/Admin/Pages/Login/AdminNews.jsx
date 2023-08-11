@@ -56,9 +56,15 @@ export const AdminNews = () => {
       projectID: newProject._id,
       newstitle: newsState.newstitle,
       description: newsState.description,
-      imageIds: newsObject.map(function(item){ return item._id}),
-      originalnames: newsObject.map(function(item){ return item.originalname}),
-      imageUrls: newsObject.map(function(item){ return item.path}),
+      imageIds: newsObject.map(function (item) {
+        return item._id;
+      }),
+      originalnames: newsObject.map(function (item) {
+        return item.originalname;
+      }),
+      imageUrls: newsObject.map(function (item) {
+        return item.path;
+      }),
       updateBy: cookies.userName,
       _id: id,
     };
@@ -240,7 +246,7 @@ export const AdminNews = () => {
                           <td>{news.description}</td>
                           <td>
                             {" "}
-                            {news?.imageUrls  ? (
+                            {news?.imageUrls ? (
                               <img
                                 width={"100"}
                                 height={"100"}

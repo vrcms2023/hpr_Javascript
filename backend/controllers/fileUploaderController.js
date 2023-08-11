@@ -3,7 +3,6 @@ import imagesModel from "../models/imagesModel.js";
 import multer from "multer";
 import fs from "fs";
 
-
 const storage = multer.diskStorage({
   //multers disk storage settings
   destination: function (req, file, cb) {

@@ -28,16 +28,15 @@ import AdminNews from "./Admin/Pages/Login/AdminNews";
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
   const [cookies] = useCookies(["userToken"]);
-  const [loginState, setLoginState] = useState('');
+  const [loginState, setLoginState] = useState("");
 
   useEffect(() => {
-    
     if (userInfo || cookies.userToken) {
       setLoginState(true);
     } else {
       setLoginState(false);
     }
-  }, [userInfo,cookies.userToken]);
+  }, [userInfo, cookies.userToken]);
 
   return (
     <>
