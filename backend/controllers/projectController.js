@@ -30,10 +30,10 @@ const addNewProject = asyncHandler(async (req, res) => {
 
     const validationError = porjectValidation(projectCategoryID, projectCategoryName, projectCategoryValue, projectTitle, createdBy, userID).error;
 
-    // if (validationError) {
-    //     return res.status(404).json({ message: validationError.details[0].message })
-    // }
-    console.log("validationError")
+    if (validationError) {
+        return res.status(404).json({ message: validationError.details[0].message })
+    }
+
     const project = await RealEstateProjectModel.create({
         projectCategoryID:projectCategoryID,
         projectCategoryName:projectCategoryName,
@@ -45,7 +45,7 @@ const addNewProject = asyncHandler(async (req, res) => {
         percentValue:'',
         isActive: true
     })
-    console.log(project)
+
     if (project) {
         res.status(200).json({message: "Success", project:  project })
     } else {
@@ -126,7 +126,7 @@ const getClientProjects = asyncHandler(async (req, res) => {
 
 const getClientSelectedProject = asyncHandler(async (req, res) => {
     const query = { "projectID": req.params.id };
-    console.log(query)
+
     const projectData = await RealEstateProjectModel.findById(req.params.id)
 
     const imageData = await ImagesModel.find(query); 
