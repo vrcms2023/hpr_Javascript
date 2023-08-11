@@ -1,9 +1,11 @@
-import express from 'express'
-import { protect } from '../middleware/authMiddleware.js'
-import * as projectCategoryController from '../controllers/projectCategoryController.js'
+import express from "express";
+import { protect } from "../middleware/authMiddleware.js";
+import * as projectCategoryController from "../controllers/projectCategoryController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.route('/projectCategoryList').get(protect, projectCategoryController.getAllProjectCategoryList)
+router
+  .route("/projectCategoryList")
+  .get(protect, projectCategoryController.getAllProjectCategoryList);
 
-export default router
+export default router;

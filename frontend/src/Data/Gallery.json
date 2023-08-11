@@ -1,24 +1,23 @@
 {
-    "ongoing" : [
-        {"id": 1, "category": "ongoing", "imgsrc": "../images/img1.jpg"},
-        {"id": 2, "category": "ongoing", "imgsrc": "../images/img2.jpg"},
-        {"id": 3, "category": "ongoing", "imgsrc": "../images/img3.jpg"},
-        {"id": 4, "category": "ongoing", "imgsrc": "../images/img4.jpg"},
-        {"id": 5, "category": "ongoing", "imgsrc": "../images/img5.jpg"}
-    ],
-    "future": [
-        {"id": 1, "category": "future", "imgsrc": "../images/img1.jpg"},
-        {"id": 2, "category": "future", "imgsrc": "../images/img2.jpg"},
-        {"id": 3, "category": "future", "imgsrc": "../images/img3.jpg"},
-        {"id": 4, "category": "future", "imgsrc": "../images/img4.jpg"},
-        {"id": 5, "category": "future", "imgsrc": "../images/img5.jpg"}
-    ],
-    "completed": [
-        {"id": 1, "category": "completed", "imgsrc": "../images/img1.jpg"},
-        {"id": 2, "category": "completed", "imgsrc": "../images/img2.jpg"},
-        {"id": 3, "category": "completed", "imgsrc": "../images/img3.jpg"},
-        {"id": 4, "category": "completed", "imgsrc": "../images/img4.jpg"},
-        {"id": 5, "category": "completed", "imgsrc": "../images/img5.jpg"}
-    ]
+  "ongoing": [
+    { "id": 1, "category": "ongoing", "imgsrc": "../images/img1.jpg" },
+    { "id": 2, "category": "ongoing", "imgsrc": "../images/img2.jpg" },
+    { "id": 3, "category": "ongoing", "imgsrc": "../images/img3.jpg" },
+    { "id": 4, "category": "ongoing", "imgsrc": "../images/img4.jpg" },
+    { "id": 5, "category": "ongoing", "imgsrc": "../images/img5.jpg" }
+  ],
+  "future": [
+    { "id": 1, "category": "future", "imgsrc": "../images/img1.jpg" },
+    { "id": 2, "category": "future", "imgsrc": "../images/img2.jpg" },
+    { "id": 3, "category": "future", "imgsrc": "../images/img3.jpg" },
+    { "id": 4, "category": "future", "imgsrc": "../images/img4.jpg" },
+    { "id": 5, "category": "future", "imgsrc": "../images/img5.jpg" }
+  ],
+  "completed": [
+    { "id": 1, "category": "completed", "imgsrc": "../images/img1.jpg" },
+    { "id": 2, "category": "completed", "imgsrc": "../images/img2.jpg" },
+    { "id": 3, "category": "completed", "imgsrc": "../images/img3.jpg" },
+    { "id": 4, "category": "completed", "imgsrc": "../images/img4.jpg" },
+    { "id": 5, "category": "completed", "imgsrc": "../images/img5.jpg" }
+  ]
 }
-

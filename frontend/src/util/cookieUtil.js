@@ -1,23 +1,23 @@
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 export function setCookie(name, value) {
-    Cookies.set(name, value, {secure: true, sameSite: "Strict"})
+  Cookies.set(name, value, { secure: true, sameSite: "Strict" });
 }
 
 export function setCookieWithExpire(name, value, expire) {
-    Cookies.set(name, value, {secure: true, sameSite: "Strict", expire})
+  Cookies.set(name, value, { secure: true, sameSite: "Strict", expire });
 }
 
 export function getCookie(name) {
-    return Cookies.get(name);
+  return Cookies.get(name);
 }
 
 export function removeCookie(name) {
-    Cookies.remove(name)
+  Cookies.remove(name);
 }
 
 export function removeAllCookies() {
-    Object.keys(Cookies.get()).forEach((cookieName)=>{
-        Cookies.remove(cookieName);
-    })
+  Object.keys(Cookies.get()).forEach((cookieName) => {
+    Cookies.remove(cookieName);
+  });
 }

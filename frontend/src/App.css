@@ -1,9 +1,6 @@
-
-
 label {
   font-weight: bold;
 }
-
 
 button.nav-link {
   border: 1px solid #198754 !important;
@@ -21,12 +18,12 @@ background: linear-gradient(350deg, rgba(218,87,0,0.9332107843137255) 0%, rgba(2
 
 .thumb75 {
   width: 100px;
-  height:100px;
+  height: 100px;
   margin: 5px;
 }
 
 .thumb75:hover {
-  opacity: .8 
+  opacity: 0.8;
 }
 
 .categoryContainer {
@@ -50,5 +47,5 @@ background: linear-gradient(350deg, rgba(218,87,0,0.9332107843137255) 0%, rgba(2
 } */
 
 .error {
-  color: red
+  color: red;
 }

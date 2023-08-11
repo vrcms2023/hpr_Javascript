@@ -1,11 +1,14 @@
-import express from 'express'
-import { protect } from '../middleware/authMiddleware.js'
-import * as amenitiesController from '../controllers/amenitieController.js'
+import express from "express";
+import { protect } from "../middleware/authMiddleware.js";
+import * as amenitiesController from "../controllers/amenitieController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-    router.route('/addAndUpdateAmenities').post(protect, amenitiesController.addAndUpdateAmenities)
-    router.route('/getAmenitiesById/:id').get(protect, amenitiesController.getAmenitiesById)
+router
+  .route("/addAndUpdateAmenities")
+  .post(protect, amenitiesController.addAndUpdateAmenities);
+router
+  .route("/getAmenitiesById/:id")
+  .get(protect, amenitiesController.getAmenitiesById);
 
-
-export default router
+export default router;

@@ -1,17 +1,52 @@
 {
-    "ongoingProjectsObj": [
-        {"id": 1, "category":"ongoing", "projectName": "HPR Infra Bhumi", "status": "40% Completed"},
-        {"id": 2, "category":"ongoing", "projectName": "HPR Infra Avani", "status": "70% Completed"}
-    ],
-    
-    "futureProjectsObj": [
-        {"id": 3, "category":"future", "projectName": "HPR Infra Hitech", "status": "To start"},
-        {"id": 4, "category":"future", "projectName": "HPR Infra Gachibouli", "status": "In Progress"},
-        {"id": 5, "category":"future", "projectName": "HPR Infra Gachibouli", "status": "In Progress"}
-    ],
-    
-    "completedProjectsObj": [
-        {"id": 6, "category":"completed", "projectName": "HPR Infra Airport", "status": "Completed"},
-        {"id": 7, "category":"completed", "projectName": "HPR Infra Housing", "status": "Completed"}
-    ]
+  "ongoingProjectsObj": [
+    {
+      "id": 1,
+      "category": "ongoing",
+      "projectName": "HPR Infra Bhumi",
+      "status": "40% Completed"
+    },
+    {
+      "id": 2,
+      "category": "ongoing",
+      "projectName": "HPR Infra Avani",
+      "status": "70% Completed"
+    }
+  ],
+
+  "futureProjectsObj": [
+    {
+      "id": 3,
+      "category": "future",
+      "projectName": "HPR Infra Hitech",
+      "status": "To start"
+    },
+    {
+      "id": 4,
+      "category": "future",
+      "projectName": "HPR Infra Gachibouli",
+      "status": "In Progress"
+    },
+    {
+      "id": 5,
+      "category": "future",
+      "projectName": "HPR Infra Gachibouli",
+      "status": "In Progress"
+    }
+  ],
+
+  "completedProjectsObj": [
+    {
+      "id": 6,
+      "category": "completed",
+      "projectName": "HPR Infra Airport",
+      "status": "Completed"
+    },
+    {
+      "id": 7,
+      "category": "completed",
+      "projectName": "HPR Infra Housing",
+      "status": "Completed"
+    }
+  ]
 }

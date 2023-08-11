@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const Alert = ({mesg, cssClass}) => {
+const Alert = ({ mesg, cssClass }) => {
   return (
-    <div className={cssClass} role="alert">{mesg}</div>
-  )
-}
+    <div className={cssClass} role="alert">
+      {mesg}
+    </div>
+  );
+};
 
-export default Alert
+export default Alert;

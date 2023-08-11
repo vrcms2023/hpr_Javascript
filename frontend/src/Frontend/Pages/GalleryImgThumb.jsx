@@ -1,17 +1,21 @@
-import React from 'react'
+import React from "react";
 
-const GalleryImgThumb = ({imgs, findThumbHandler}) => {
+const GalleryImgThumb = ({ imgs, findThumbHandler }) => {
   return (
     <>
-    {imgs.length > 0 ? 
-        imgs.map(project => (
+      {imgs.length > 0
+        ? imgs.map((project) => (
             <li key={project._id}>
-                <img src={project.path} alt=" " onClick={() => findThumbHandler(project._id)}/>
+              <img
+                src={project.path}
+                alt=" "
+                onClick={() => findThumbHandler(project._id)}
+              />
             </li>
-        ))
-    : null }
+          ))
+        : null}
     </>
-  )
-}
+  );
+};
 
-export default GalleryImgThumb
+export default GalleryImgThumb;
