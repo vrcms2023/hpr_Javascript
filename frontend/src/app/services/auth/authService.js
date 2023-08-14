@@ -1,9 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getBaseURL } from "../../../util/ulrUtil";
 
-const baseUrl =
-  process.env.NODE_ENV !== "production"
-    ? "http://127.0.0.1:5000/"
-    : import.meta.env.VITE_SERVER_URL;
+const baseUrl = getBaseURL();
 
 export const authApi = createApi({
   reducerPath: "authApi",

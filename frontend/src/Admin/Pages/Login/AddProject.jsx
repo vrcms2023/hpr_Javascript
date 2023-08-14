@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../../Common/Title";
-import Alert from "../../../Common/Alert";
 import Button from "../../../Common/Button";
 import { useNavigate } from "react-router-dom";
 import FileUpload from "../../Components/FileUpload";
 import Specifications from "../../Components/Specifications";
 import { Amenities, AmenitiesList } from "../../Components/Amenities";
-import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import CatageoryImgC from "../../../Common/CatageoryImgC";
-import { getBaseURL } from "../../../util/ulrUtil";
+import { axiosServiceApi } from "../../../util/axiosUtil";
+import { getCookie } from "../../../util/cookieUtil";
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const AddProject = () => {
   const [projectType, setProjectType] = useState({});
   const [projectName, setProjectName] = useState("");
   const [defaultProjectType, setDefaultProjectType] = useState([]);
-  const [cookies] = useCookies(["token", "userName"]);
+
   const [errorMessage, setErrorMessage] = useState("");
   const [newProject, setNewProject] = useState({});
   const [readOnlyTitle, setreadOnlyTitle] = useState("");
@@ -35,6 +35,7 @@ const AddProject = () => {
   const [priceObject, setPriceObject] = useState([]);
   const [imgGallery, setImgGallery] = useState([]);
   const [projectStatus, setProjectStatus] = useState("");
+  const [userName, setUserName] = useState("");
   const { id } = useParams();
 
   const [percentValue, setPercentValue] = useState("");
@@ -44,31 +45,26 @@ const AddProject = () => {
     setPercentValue(event.target.value);
   };
 
-  const backendURL = getBaseURL();
-
   /**
    * Get project type object
    */
   useEffect(() => {
-    const getPorjectCategory = () => {
-      fetch(`${backendURL}/api/projectCategory/projectCategoryList`, {
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.length > 0) {
-            setDefaultProjectType(data);
-          } else {
-            navigate("/login");
-          }
-        })
-        .catch((err) => console.log(err));
+    const getPorjectCategory = async () => {
+      const response = await axiosServiceApi.get(
+        `/api/projectCategory/projectCategoryList`,
+      );
+      if (response?.status == 200) {
+        setDefaultProjectType(response.data);
+      } else {
+        navigate("/login");
+      }
     };
     getPorjectCategory();
-  }, [cookies]);
+  }, []);
+
+  useEffect(() => {
+    setUserName(getCookie("userName"));
+  }, []);
 
   /**
    * Select Porject type handler
@@ -125,32 +121,27 @@ const AddProject = () => {
    * Add project handler
    */
   async function addNewProject(event) {
-    const project = {
-      ...getProjectStatus(),
-      projectTitle: projectName,
-      createdBy: cookies.userName,
-      userID: cookies.userId,
-      status: projectType[0].label,
-      isActive: true,
-    };
-
     try {
-      const res = await fetch(`${backendURL}/api/project/addProject`, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(project),
+      const response = await axiosServiceApi.post(`/api/project/addProject`, {
+        ...getProjectStatus(),
+        projectTitle: projectName,
+        createdBy: userName,
+        userID: getCookie("userId"),
+        status: projectType[0].label,
+        isActive: true,
       });
-      const data = await res.json();
-      setNewProject(data.project);
-      setProjectStatus(data.project.projectCategoryName);
-      setreadOnlyTitle(data.project.projectTitle);
-      setShow(true);
-      setErrorMessage(data.message);
-    } catch (err) {
-      setErrorMessage(err);
+      if (response?.status == 200) {
+        const project = response.data.project;
+        toast(`${project.projectTitle} Project created`);
+        setNewProject(project);
+        setProjectStatus(project.projectCategoryName);
+        setreadOnlyTitle(project.projectTitle);
+        setShow(true);
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      toast("Unable to Process your request");
     }
   }
 
@@ -158,43 +149,43 @@ const AddProject = () => {
    * get selected Project for edit
    */
   useEffect(() => {
-    const getSelectedProject = () => {
-      fetch(`${backendURL}/api/project/findById/${id}`, {
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setProjectType([
-            {
-              label: data.project.projectCategoryName,
-              value: data.project.projectCategoryValue,
-              _id: data.project.projectCategoryID,
-            },
-          ]);
-          setProjectStatus(data.project.projectCategoryName);
-          setNewProject(data.project);
-          const title = data.project.projectTitle;
-          setreadOnlyTitle(title);
-          setProjectName(title);
-          const aboutus = {
-            aboutstitle: data.project.aboutstitle,
-            aboutussubtitle: data.project.aboutussubtitle,
-            description: data.project.description,
-          };
-          setAboutUs(aboutus);
-          setPercentValue(Number(data.project.percentValue));
-          setShow(true);
-          setErrorMessage(data.message);
-        })
-        .catch((err) => console.log(err));
+    const getSelectedProject = async () => {
+      const response = await axiosServiceApi.get(`/api/project/findById/${id}`);
+
+      if (response.status !== 200) {
+        setErrorMessage(data.message);
+        toast("Unable to Process your request");
+      }
+      if (response.status == 200) {
+        const project = response.data.project;
+        setProjectType([
+          {
+            label: project.projectCategoryName,
+            value: project.projectCategoryValue,
+            _id: project.projectCategoryID,
+          },
+        ]);
+        setProjectStatus(project.projectCategoryName);
+        setNewProject(project);
+
+        setreadOnlyTitle(project.projectTitle);
+        setProjectName(project.projectTitle);
+        const aboutus = {
+          aboutstitle: project.aboutstitle,
+          aboutussubtitle: project.aboutussubtitle,
+          description: project.description,
+        };
+        setAboutUs(aboutus);
+        setPercentValue(Number(project.percentValue));
+        setShow(true);
+      } else {
+        setErrorMessage(response.data.message);
+      }
     };
     if (id) {
       getSelectedProject();
     }
-  }, [cookies, id]);
+  }, [id]);
 
   function saveProject() {
     updateProjectBasicDetails();
@@ -207,28 +198,28 @@ const AddProject = () => {
    * update Project Basic details
    */
   async function updateProjectBasicDetails(event) {
-    const projectProps = {
-      ...newProject,
-      ...getProjectStatus(),
-      ...getAboutUsStatus(),
-      projectTitle: projectName,
-      updatedBy: cookies.userName,
-      percentValue: percentValue,
-    };
-
     try {
-      const res = await fetch(`${backendURL}/api/project/updateProject`, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
+      const response = await axiosServiceApi.post(
+        `/api/project/updateProject`,
+        {
+          ...newProject,
+          ...getProjectStatus(),
+          ...getAboutUsStatus(),
+          projectTitle: projectName,
+          updatedBy: userName,
+          percentValue: percentValue,
         },
-        body: JSON.stringify(projectProps),
-      });
-      setProjectName("");
-      setAboutUs({ about });
-    } catch (err) {
-      setErrorMessage(err);
+      );
+      if (response?.status == 200) {
+        const project = response.data.project;
+        toast(`${project.projectTitle} Project Update`);
+        setProjectName("");
+        setAboutUs({ about });
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      toast("Unable to Process your request");
     }
   }
 
@@ -236,30 +227,22 @@ const AddProject = () => {
    * Save specification
    */
   async function saveSpecifications() {
-    const specification = {
-      projectID: newProject._id,
-      updatedBy: cookies.userName,
-      specifications: specifications,
-    };
     try {
-      const res = await fetch(
-        `${backendURL}/api/specification/addAndUpdateSpecifications`,
+      const response = await axiosServiceApi.post(
+        `/api/specification/addAndUpdateSpecifications`,
         {
-          method: "POST",
-          headers: {
-            authorization: `Bearer ${cookies.userToken}`,
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(specification),
+          projectID: newProject._id,
+          updatedBy: userName,
+          specifications: specifications,
         },
       );
-      const data = await res.json();
-      if (data.message === "Success") {
+      if (response?.status == 200) {
         setSpecifications([specificationKeys]);
+      } else {
+        setErrorMessage(response.data.message);
       }
-      setErrorMessage(data.message);
-    } catch (err) {
-      setErrorMessage(err);
+    } catch (error) {
+      toast("Unable to Process your request");
     }
   }
 
@@ -267,30 +250,22 @@ const AddProject = () => {
    * Save Amenities
    */
   async function saveAmenities() {
-    const amenitiesObj = {
-      projectID: newProject._id,
-      updatedBy: cookies.userName,
-      amenitieslist: amenities,
-    };
     try {
-      const res = await fetch(
-        `${backendURL}/api/amenities/addAndUpdateAmenities`,
+      const response = await axiosServiceApi.post(
+        `/api/amenities/addAndUpdateAmenities`,
         {
-          method: "POST",
-          headers: {
-            authorization: `Bearer ${cookies.userToken}`,
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(amenitiesObj),
+          projectID: newProject._id,
+          updatedBy: userName,
+          amenitieslist: amenities,
         },
       );
-      const data = await res.json();
-      if (data.message === "Success") {
+      if (response?.status == 200) {
         setAmenities(amenitieKeys);
+      } else {
+        setErrorMessage(response.data.message);
       }
-      setErrorMessage(data.message);
-    } catch (err) {
-      setErrorMessage(err);
+    } catch (error) {
+      toast("Unable to Process your request");
     }
   }
 
@@ -593,7 +568,7 @@ const AddProject = () => {
                     <label className="form-label">Add PDF's</label>
                     <FileUpload
                       project={newProject}
-                      updatedBy={cookies.userName}
+                      updatedBy={userName}
                       category="PDF"
                       gallerysetState={setPdfObject}
                       galleryState={pdfObject}
@@ -613,7 +588,7 @@ const AddProject = () => {
                     <label className="form-label">Add Plan</label>
                     <FileUpload
                       project={newProject}
-                      updatedBy={cookies.userName}
+                      updatedBy={userName}
                       category="Plans"
                       gallerysetState={setPlanObject}
                       galleryState={planObject}
@@ -633,7 +608,7 @@ const AddProject = () => {
                     <label className="form-label">Add Availability</label>
                     <FileUpload
                       project={newProject}
-                      updatedBy={cookies.userName}
+                      updatedBy={userName}
                       category="availability"
                       gallerysetState={setAvailabileObject}
                       galleryState={availabileObject}
@@ -654,7 +629,7 @@ const AddProject = () => {
                     <FileUpload
                       title=""
                       project={newProject}
-                      updatedBy={cookies.userName}
+                      updatedBy={userName}
                       category="price"
                       gallerysetState={setPriceObject}
                       galleryState={priceObject}
@@ -719,7 +694,7 @@ const AddProject = () => {
                   <FileUpload
                     title="Add Images"
                     project={newProject}
-                    updatedBy={cookies.userName}
+                    updatedBy={userName}
                     category="images"
                     gallerysetState={setImgGallery}
                     galleryState={imgGallery}

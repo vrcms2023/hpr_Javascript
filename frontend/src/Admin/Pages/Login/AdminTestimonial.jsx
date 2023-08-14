@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import CatageoryImgC from "../../../Common/CatageoryImgC";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import FileUpload from "../../Components/FileUpload";
 import Button from "../../../Common/Button";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
-import { getBaseURL } from "../../../util/ulrUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import Title from "../../../Common/Title";
 import Error from "../../Components/Error";
+import { axiosServiceApi } from "../../../util/axiosUtil";
+import { toast } from "react-toastify";
+import { getCookie } from "../../../util/cookieUtil";
 
 export const AdminTestimonial = () => {
   const navigate = useNavigate();
@@ -20,10 +21,14 @@ export const AdminTestimonial = () => {
   });
   const testimonialKeys = { title: "", description: "" };
   const [testimonialState, setTestimonialState] = useState(testimonialKeys);
-  const [cookies] = useCookies(["token", "userName"]);
   const [errorMessage, setErrorMessage] = useState("");
   const [editState, setEditState] = useState(false);
   const [id, setID] = useState("");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    setUserName(getCookie("userName"));
+  }, []);
 
   const changeHandler = (e) => {
     setTestimonialState({
@@ -33,29 +38,21 @@ export const AdminTestimonial = () => {
   };
 
   const [testimonialList, setTestimonialList] = useState([]);
-  const backendURL = getBaseURL();
 
-  const getTestimonialList = () => {
-    fetch(`${backendURL}/api/testimonial/getTestimonialList`, {
-      headers: {
-        authorization: `Bearer ${cookies.userToken}`,
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.testimonial?.length > 0) {
-          setTestimonialList(data.testimonial);
-        } else {
-          setTestimonialList([]);
-        }
-      })
-      .catch((err) => console.log(err));
+  const getTestimonialList = async () => {
+    const response = await axiosServiceApi.get(
+      `/api/testimonial/getTestimonialList`,
+    );
+    if (response?.status == 200 && response.data?.testimonial?.length > 0) {
+      setTestimonialList(response.data.testimonial);
+    } else {
+      setTestimonialList([]);
+    }
   };
 
   useEffect(() => {
     getTestimonialList();
-  }, [cookies]);
+  }, []);
 
   const saveTestimonial = async () => {
     const testimonial = {
@@ -67,33 +64,30 @@ export const AdminTestimonial = () => {
         ? testimonialObject[0].originalname
         : "",
       imageUrl: testimonialObject[0]?.path ? testimonialObject[0].path : "",
-      updateBy: cookies.userName,
+      updateBy: userName,
       _id: id,
     };
     const testimonialURL = editState
-      ? `${backendURL}/api/testimonial/updateTestimonial`
-      : `${backendURL}/api/testimonial/addTestimonial`;
+      ? `/api/testimonial/updateTestimonial`
+      : `/api/testimonial/addTestimonial`;
 
     try {
-      const res = await fetch(testimonialURL, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(testimonial),
+      const response = await axiosServiceApi.post(testimonialURL, {
+        ...testimonial,
       });
-      const data = await res.json();
-      if (data?.testimonial) {
+      if (response?.status == 200) {
+        toast(
+          `${testimonialState.title} news ${editState ? "Update" : "created"}`,
+        );
         setEditState(false);
         setTestimonialState(testimonialKeys);
         setTestimonialObject([]);
         getTestimonialList();
       } else {
-        setErrorMessage("Unable to save the news");
+        setErrorMessage(response.data.message);
       }
-    } catch (err) {
-      setErrorMessage(err);
+    } catch (error) {
+      toast("Unable to save the testimonial");
     }
   };
 
@@ -122,26 +116,21 @@ export const AdminTestimonial = () => {
 
   const handleNewsDelete = (event, testimonial) => {
     event.preventDefault();
-    const deleteSelectedNews = () => {
-      fetch(
-        `${backendURL}/api/testimonial/deleteSelectedTestimonial/${testimonial._id}`,
-        {
-          headers: {
-            authorization: `Bearer ${cookies.userToken}`,
-            "Content-type": "application/json",
-          },
-        },
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.testimonial?.acknowledged) {
-            setEditState(false);
-            setTestimonialState(testimonialKeys);
-            setTestimonialObject([]);
-            getTestimonialList();
-          }
-        })
-        .catch((err) => console.log(err));
+    const deleteSelectedNews = async () => {
+      const response = await axiosServiceApi.get(
+        `/api/testimonial/deleteSelectedTestimonial/${testimonial._id}`,
+      );
+      if (response.status !== 200) {
+        setErrorMessage(data.message);
+        toast("Unable to Delete testimonial");
+      }
+      if (response.status == 200 && response?.data?.testimonial?.acknowledged) {
+        toast(`${testimonial.title} testimonial deleted`);
+        setEditState(false);
+        setTestimonialState(testimonialKeys);
+        setTestimonialObject([]);
+        getTestimonialList();
+      }
     };
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -179,7 +168,7 @@ export const AdminTestimonial = () => {
             aria-labelledby="v-pills-news-tab"
           >
             <div className="border border-3 p-5 mb-4 shadow-lg">
-              {/* {errorMessage && <Error>{errorMessage}</Error>} */}
+              {errorMessage && <Error>{errorMessage}</Error>}
               <div className="mb-3">
                 <label htmlFor="projectDescription" className="form-label  ">
                   Testimonial Title
@@ -210,7 +199,7 @@ export const AdminTestimonial = () => {
                 <FileUpload
                   title="Testimonial Images"
                   project={testimonialProject}
-                  updatedBy={cookies.userName}
+                  updatedBy={userName}
                   category="testimonial"
                   gallerysetState={setTestimonialObject}
                   galleryState={testimonialObject}

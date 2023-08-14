@@ -1,60 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+
 import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
-import { getBaseURL } from "../../../util/ulrUtil";
 import { useNavigate } from "react-router-dom";
+import { axiosServiceApi } from "../../../util/axiosUtil";
+import { toast } from "react-toastify";
+import { getCookie } from "../../../util/cookieUtil";
 
 const UserAdmin = () => {
-  const [cookies] = useCookies(["token", "userName"]);
   const [userDetails, setUserDetails] = useState([]);
-  const [isSuperAdmin, setisSuperAdmin] = useState(
-    JSON.parse(cookies.isSuperAdmin),
-  );
+  const [isSuperAdmin, setisSuperAdmin] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    setUserName(getCookie("userName"));
+    setisSuperAdmin(JSON.parse(getCookie("isSuperAdmin")));
+    setUserId(getCookie("userId"));
+  }, []);
 
   const navigate = useNavigate();
-  const backendURL = getBaseURL();
 
   /**
    * get User details
    */
-  const getAllUserDetails = () => {
-    fetch(`${backendURL}/api/user/getAllUsers`, {
-      headers: { authorization: `Bearer ${cookies.userToken}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserDetails(data.users);
-      })
-      .catch((err) => console.log(err));
+  const getAllUserDetails = async () => {
+    const response = await axiosServiceApi.get(`/api/user/getAllUsers`);
+    if (response?.status == 200 && response.data?.users?.length > 0) {
+      setUserDetails(response.data.users);
+    } else {
+      setUserDetails([]);
+    }
   };
   useEffect(() => {
     getAllUserDetails();
-  }, [cookies]);
+  }, []);
 
   /**
    * user activation
    * @param {*} user
    */
-  const activeDeactiveUser = (user) => {
-    const dbuser = {
+  const activeDeactiveUser = async (user) => {
+    const response = await axiosServiceApi.post(`/api/user/activeAdminUser`, {
       id: user._id,
       isActive: !user.isActive,
-    };
+    });
 
-    fetch(`${backendURL}/api/user/activeAdminUser`, {
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${cookies.userToken}`,
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(dbuser),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        getAllUserDetails();
-      })
-      .catch((err) => console.log(err));
+    if (response.status !== 200) {
+      setErrorMessage(data.message);
+      toast("Unable to active user");
+    }
+    if (response.status == 200) {
+      toast(`${user.userName} is status updated`);
+      getAllUserDetails();
+    }
   };
 
   return (
@@ -88,7 +87,7 @@ const UserAdmin = () => {
                   <td>{user.email}</td>
                   <td>{user.isActive.toString()} </td>
                   <td>
-                    {user._id !== cookies.userId ? (
+                    {user._id !== userId ? (
                       <input
                         type="checkbox"
                         checked={user.isActive}
