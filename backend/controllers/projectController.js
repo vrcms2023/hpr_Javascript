@@ -25,23 +25,9 @@ const getDashboardProject = asyncHandler(async (req, res) => {
 });
 
 const addNewProject = asyncHandler(async (req, res) => {
-  const {
-    projectCategoryID,
-    projectCategoryName,
-    projectCategoryValue,
-    projectTitle,
-    createdBy,
-    userID,
-  } = req.body;
+  const bodyObject = req.body;
 
-  const validationError = porjectValidation(
-    projectCategoryID,
-    projectCategoryName,
-    projectCategoryValue,
-    projectTitle,
-    createdBy,
-    userID,
-  ).error;
+  const validationError = porjectValidation(bodyObject).error;
 
   if (validationError) {
     return res
@@ -50,12 +36,12 @@ const addNewProject = asyncHandler(async (req, res) => {
   }
 
   const project = await RealEstateProjectModel.create({
-    projectCategoryID: projectCategoryID,
-    projectCategoryName: projectCategoryName,
-    projectCategoryValue: projectCategoryValue,
-    projectTitle: projectTitle,
-    createdBy: createdBy,
-    userID: userID,
+    projectCategoryID: bodyObject.projectCategoryID,
+    projectCategoryName: bodyObject.projectCategoryName,
+    projectCategoryValue: bodyObject.projectCategoryValue,
+    projectTitle: bodyObject.projectTitle,
+    createdBy: bodyObject.createdBy,
+    userID: bodyObject.userID,
     description: "",
     percentValue: "",
     isActive: true,

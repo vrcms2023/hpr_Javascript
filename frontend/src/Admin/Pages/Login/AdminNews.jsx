@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CatageoryImgC from "../../../Common/CatageoryImgC";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import FileUpload from "../../Components/FileUpload";
 import Button from "../../../Common/Button";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
-import { getBaseURL } from "../../../util/ulrUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import Title from "../../../Common/Title";
+import { axiosServiceApi } from "../../../util/axiosUtil";
+import { toast } from "react-toastify";
+import { getCookie } from "../../../util/cookieUtil";
 
 export const AdminNews = () => {
   const navigate = useNavigate();
@@ -17,39 +18,33 @@ export const AdminNews = () => {
   const [newProject, setNewProject] = useState({ _id: uuidv4() });
   const newsKeys = { newstitle: "", description: "" };
   const [newsState, setnewsState] = useState(newsKeys);
-  const [cookies] = useCookies(["token", "userName"]);
   const [errorMessage, setErrorMessage] = useState("");
   const [editState, setEditState] = useState(false);
   const [id, setID] = useState("");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    setUserName(getCookie("userName"));
+  }, []);
 
   const changeHandler = (e) => {
     setnewsState({ ...newsState, [e.target.name]: e.target.value });
   };
 
   const [newsList, setNewsList] = useState([]);
-  const backendURL = getBaseURL();
 
-  const getNewList = () => {
-    fetch(`${backendURL}/api/appnews/getNewsList`, {
-      headers: {
-        authorization: `Bearer ${cookies.userToken}`,
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.appNews?.length > 0) {
-          setNewsList(data.appNews);
-        } else {
-          setNewsList([]);
-        }
-      })
-      .catch((err) => console.log(err));
+  const getNewList = async () => {
+    const response = await axiosServiceApi.get(`/api/appnews/getNewsList`);
+    if (response?.status == 200 && response.data?.appNews?.length > 0) {
+      setNewsList(response.data.appNews);
+    } else {
+      setNewsList([]);
+    }
   };
 
   useEffect(() => {
     getNewList();
-  }, [cookies]);
+  }, []);
 
   const saveProject = async () => {
     const news = {
@@ -65,33 +60,31 @@ export const AdminNews = () => {
       imageUrls: newsObject.map(function (item) {
         return item.path;
       }),
-      updateBy: cookies.userName,
+      updateBy: userName,
       _id: id,
     };
+
     const newsURL = editState
-      ? `${backendURL}/api/appnews/updateNews`
-      : `${backendURL}/api/appnews/addNews`;
+      ? `/api/appnews/updateNews`
+      : `/api/appnews/addNews`;
 
     try {
-      const res = await fetch(newsURL, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(news),
+      const response = await axiosServiceApi.post(newsURL, {
+        ...news,
       });
-      const data = await res.json();
-      if (data?.appNews) {
+      if (response?.status == 200) {
+        toast(
+          `${newsState.newstitle} news ${editState ? "Update" : "created"}`,
+        );
         setEditState(false);
         setnewsState(newsKeys);
         setNewsObject([]);
         getNewList();
       } else {
-        setErrorMessage("Unable to save the news");
+        setErrorMessage(response.data.message);
       }
-    } catch (err) {
-      setErrorMessage(err);
+    } catch (error) {
+      toast("Unable to save the news");
     }
   };
 
@@ -120,23 +113,22 @@ export const AdminNews = () => {
 
   const handleNewsDelete = (event, news) => {
     event.preventDefault();
-    const deleteSelectedNews = () => {
-      fetch(`${backendURL}/api/appnews/deleteSelectedNews/${news._id}`, {
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.appNews?.acknowledged) {
-            setEditState(false);
-            setnewsState(newsKeys);
-            setNewsObject([]);
-            getNewList();
-          }
-        })
-        .catch((err) => console.log(err));
+    const deleteSelectedNews = async () => {
+      const response = await axiosServiceApi.get(
+        `/api/appnews/deleteSelectedNews/${news._id}`,
+      );
+
+      if (response.status !== 200) {
+        setErrorMessage(data.message);
+        toast("Unable to Delete news");
+      }
+      if (response.status == 200 && response?.data?.appNews?.acknowledged) {
+        toast(`${newsState.newstitle} news deleted`);
+        setEditState(false);
+        setnewsState(newsKeys);
+        setNewsObject([]);
+        getNewList();
+      }
     };
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -205,7 +197,7 @@ export const AdminNews = () => {
                 <FileUpload
                   title="News Images"
                   project={newProject}
-                  updatedBy={cookies.userName}
+                  updatedBy={userName}
                   category="news"
                   gallerysetState={setNewsObject}
                   galleryState={newsObject}

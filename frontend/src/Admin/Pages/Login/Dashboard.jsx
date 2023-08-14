@@ -4,45 +4,34 @@ import Button from "../../../Common/Button";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import Projects from "../../Components/Projects";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { getBaseURL } from "../../../util/ulrUtil";
+
+import { axiosServiceApi } from "../../../util/axiosUtil";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
-  const [cookies] = useCookies(["userName"]);
-  const [userName, setUserName] = useState("");
-
-  const backendURL = getBaseURL();
-
-  /**
-   * set user name
-   */
-  useEffect(() => {
-    setUserName(cookies.userName);
-  }, [cookies.userName]);
 
   /**
    * Get Dash borad projects
    */
   useEffect(() => {
-    fetch(`${backendURL}/api/project/getDashboardProject`, {
-      headers: {
-        authorization: `Bearer ${cookies.userToken}`,
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.projectList?.length > 0) {
-          const finalObj = formatData(data.projectList);
-          setProjects(finalObj);
-        }
-      })
-      .catch((err) => console.log(err));
+    const getProjectList = async () => {
+      const response = await axiosServiceApi.get(
+        `/api/project/getDashboardProject`,
+      );
+      if (response.status !== 200) {
+        toast("Unable to Process your request");
+      }
+      if (response?.data?.projectList?.length > 0) {
+        const finalObj = formatData(response.data.projectList);
+        setProjects(finalObj);
+      }
+    };
+    getProjectList();
   }, []);
 
   /**
@@ -69,24 +58,16 @@ const Dashboard = () => {
    */
 
   const handleProjectDelete = (project, id) => {
-    const deleteDashBoardProject = () => {
-      fetch(`${backendURL}/api/project/deleteDashboardProject/${id}`, {
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.projectList?.length > 0) {
-            const finalObj = formatData(data.projectList);
-            setProjects(finalObj);
-          } else {
-            setProjects([]);
-          }
-        })
-        .catch((err) => console.log(err));
+    const deleteDashBoardProject = async () => {
+      const data = await axiosServiceApi.get(
+        `/api/project/deleteDashboardProject/${id}`,
+      );
+      if (data?.projectList?.length > 0) {
+        const finalObj = formatData(data.projectList);
+        setProjects(finalObj);
+      }
     };
+
     confirmAlert({
       customUI: ({ onClose }) => {
         return (

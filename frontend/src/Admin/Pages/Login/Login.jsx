@@ -24,6 +24,12 @@ const Login = () => {
       setCookie("userName", userInfo.userName);
       setCookie("userId", userInfo._id);
       setCookie("isSuperAdmin", JSON.parse(userInfo.isSuperAdmin));
+
+      setCookie("userToken", userInfo.userToken);
+      setCookie("email", userInfo.email);
+      setCookie("userName", userInfo.userName);
+      setCookie("userId", userInfo._id);
+      setCookie("isSuperAdmin", JSON.parse(userInfo.isSuperAdmin));
       navigate("/main");
     }
   }, [navigate, userInfo]);

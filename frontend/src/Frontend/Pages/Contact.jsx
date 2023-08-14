@@ -3,7 +3,7 @@ import Title from "../../Common/Title";
 import Alert from "../../Common/Alert";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import "./Contact.css";
 
 import contactImg from "../../Images/contact.png";
@@ -44,6 +44,7 @@ const Contact = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        toast("Your request is submit succuessfully");
         setMesg(data.message);
         setShow(true);
         setTimeout(() => {
@@ -51,7 +52,7 @@ const Contact = () => {
         }, 4000);
 
         removeCookie("clientInformation");
-        setCookie("clientInformation", data.contactus.email, { maxAge: 86400 });
+        setCookie("clientInformation", formData.email, { maxAge: 86400 });
         setFormData(formObject);
         setFormerror("");
         // if(cookies.previousPath !== undefined) {

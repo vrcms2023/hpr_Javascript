@@ -16,6 +16,8 @@ import UserAdmin from "./Admin/Pages/Login/UserAdmin";
 import MainPage from "./Admin/Pages/Login/MainPage";
 import NewsAndUpdates from "./Frontend/Pages/NewsAndUpdates";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 import AdminHeader from "./Admin/Components/Header/AdminHeader";
 
@@ -121,6 +123,7 @@ function App() {
         </Routes>
         {loginState ? null : <Footer />}
       </BrowserRouter>
+      <ToastContainer />
     </>
   );
 }

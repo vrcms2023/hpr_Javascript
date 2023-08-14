@@ -48,6 +48,12 @@ const FileUpload = ({
     }
   };
 
+  const onerror = (error) => {
+    if (error.type) {
+      console.log("error upload fil");
+    }
+  };
+
   return (
     <>
       <Title title={title} cssClass="fs-5 fw-bold" />
@@ -58,6 +64,7 @@ const FileUpload = ({
           name="file"
           files={files}
           onprocessfile={onprocessfile}
+          onerror={onerror}
           onupdatefiles={setFiles}
           allowMultiple={true}
           maxFiles={2}

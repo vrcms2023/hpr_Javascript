@@ -3,10 +3,9 @@ import ContactusModel from "../models/contactusModel.js";
 
 const saveContactusDetails = asyncHandler(async (req, res) => {
   const project = req.body;
-
+  console.log(project);
   const dbContactUS = new ContactusModel({
     firstName: project.firstName,
-    lastName: project.lastName,
     email: project.email,
     phone: project.phone,
     message: project.message,
