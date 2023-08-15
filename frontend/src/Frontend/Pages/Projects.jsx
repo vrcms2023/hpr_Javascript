@@ -135,7 +135,7 @@ const Projects = () => {
                         more details
                       </Link>
                     </div>
-                    <img src={project.imgs[0].path} alt="" />
+                    {project.imgs.length > 0 ? (<img src={project.imgs[0].path} alt="" />) : ('')}
                   </div>
                 </div>
               ))
@@ -191,7 +191,7 @@ const Projects = () => {
                         more details
                       </Link>
                     </div>
-                    <img src={project.imgs[3].path} alt="" />
+                    {project.imgs.length > 0 ? (<img src={project.imgs[0].path} alt="" />) : ('')}
                   </div>
                 </div>
               ))
@@ -246,7 +246,7 @@ const Projects = () => {
                         more details
                       </Link>
                     </div>
-                    <img src={project.imgs[3].path} alt="" />
+                    {project.imgs.length > 0 ? (<img src={project.imgs[0].path} alt="" />) : ('')}
                   </div>
                 </div>
               ))
