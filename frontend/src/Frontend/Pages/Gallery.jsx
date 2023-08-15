@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../Common/Button";
-
+import { useDispatch, useSelector } from "react-redux";
 import "./Gallery.css";
 import GalleryImgThumb from "./GalleryImgThumb";
 
 import ModelBg from "../../Common/ModelBg";
 import DynamicCarousel from "../Components/DynamicCarousel";
-import { getBaseURL } from "../../util/ulrUtil";
+import { getClientProjects } from "../../features/project/clientProjectActions";
 
 const Gallery = () => {
   const [all, setAll] = useState([]);
@@ -16,21 +16,24 @@ const Gallery = () => {
   const [showModal, setShowModal] = useState(false);
   const [img, setImg] = useState(null);
   const [btnActiveWord, setBtnActiveWord] = useState("all");
+  const { clientProjects, error } = useSelector((state) => state.clientProjects);
 
-  const backendURL = getBaseURL();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${backendURL}/api/project/client/getProjects`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAll(data.imageList);
-        const projectList = formatData(data);
+    if(clientProjects?.projectList?.length > 0){
+        setAll(clientProjects.imageList);
+        const projectList = formatData(clientProjects);
         setCompleted(projectList.completed[0].imgs);
         setFuture(projectList.future[0].imgs);
         setOngoing(projectList.ongoing[0].imgs);
-        //    const projectList = formatData(data);
-      })
-      .catch((err) => console.log(err));
+    }
+  },[clientProjects])
+
+  useEffect(() => {
+    if(clientProjects.length === 0) {
+      dispatch(getClientProjects());
+    }
   }, []);
 
   const formatData = (data) => {

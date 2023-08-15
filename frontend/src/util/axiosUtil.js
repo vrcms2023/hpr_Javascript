@@ -3,6 +3,9 @@ import { getBaseURL } from "./ulrUtil";
 import { getCookie } from "./cookieUtil";
 import { toast } from "react-toastify";
 
+/**
+ * Axios API call with Access token
+ */
 export const axiosServiceApi = axios.create({
   baseURL: getBaseURL(),
   headers: {
@@ -11,9 +14,15 @@ export const axiosServiceApi = axios.create({
   },
 });
 
-const requestInterceptorRequestHanler = async (config) => {
-  //const navigate = useNavigate();
+export const axiosClientServiceApi = axios.create({
+  baseURL: getBaseURL(),
+  headers: {
+    Accept: "application/json",
+    "Content-type": "application/json",
+  },
+});
 
+const requestInterceptorRequestHanler = async (config) => {
   try {
     const accessToken = getCookie("userToken");
     if (!accessToken) return false;
@@ -22,6 +31,10 @@ const requestInterceptorRequestHanler = async (config) => {
   } catch (error) {
     window.location = "/login";
   }
+};
+
+const requestInterceptorClientRequestHanler = async (config) => {
+  return config;
 };
 
 const requestInterceptorErrortHanler = async (error) => {
@@ -38,11 +51,6 @@ const responseInterceptorErrortHanler = async (error) => {
     return Promise.reject(error.response.data.message);
   }
   return Promise.reject(error);
-  //   if (error.config) {
-  //     window.location = "/login";
-  //   } else {
-  //     Promise.reject(error);
-  //   }
 };
 
 axiosServiceApi.interceptors.request.use(
@@ -50,6 +58,15 @@ axiosServiceApi.interceptors.request.use(
   requestInterceptorErrortHanler,
 );
 axiosServiceApi.interceptors.response.use(
+  responseInterceptorResponseHanler,
+  responseInterceptorErrortHanler,
+);
+
+axiosClientServiceApi.interceptors.request.use(
+  requestInterceptorClientRequestHanler,
+  requestInterceptorErrortHanler,
+);
+axiosClientServiceApi.interceptors.response.use(
   responseInterceptorResponseHanler,
   responseInterceptorErrortHanler,
 );

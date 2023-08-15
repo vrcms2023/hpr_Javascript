@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
 import DeleteDialog from "../../../Common/DeleteDialog";
@@ -10,29 +11,26 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 import { axiosServiceApi } from "../../../util/axiosUtil";
+import { getDashBoardProjects } from "../../../features/project/projectActions";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [projects, setProjects] = useState([]);
-
+  const { projects, error } = useSelector((state) => state.dashBoardProjects);
+  const [projectStatus, setProjectStatus] = useState("");
+  const dispatch = useDispatch();
   /**
    * Get Dash borad projects
    */
   useEffect(() => {
-    const getProjectList = async () => {
-      const response = await axiosServiceApi.get(
-        `/api/project/getDashboardProject`,
-      );
-      if (response.status !== 200) {
-        toast("Unable to Process your request");
-      }
-      if (response?.data?.projectList?.length > 0) {
-        const finalObj = formatData(response.data.projectList);
-        setProjects(finalObj);
-      }
-    };
-    getProjectList();
+    dispatch(getDashBoardProjects());
   }, []);
+
+  useEffect(() => {
+    if (projects && projects?.projectList?.length > 0) {
+      const finalObj = formatData(projects.projectList);
+      setProjectStatus(finalObj);
+    }
+  }, [projects]);
 
   /**
    * Format dashboard data
@@ -63,6 +61,7 @@ const Dashboard = () => {
         `/api/project/deleteDashboardProject/${id}`,
       );
       if (data?.projectList?.length > 0) {
+        toast(`${project.projectCategoryName}  Deleted`);
         const finalObj = formatData(data.projectList);
         setProjects(finalObj);
       }
@@ -109,8 +108,8 @@ const Dashboard = () => {
       </div>
 
       <div className="row bg-light p-5 pt-0">
-        {projects &&
-          projects.map((project, index) => (
+        {projectStatus &&
+          projectStatus.map((project, index) => (
             <div className="col-md-4" key={index}>
               <Projects
                 key={index}

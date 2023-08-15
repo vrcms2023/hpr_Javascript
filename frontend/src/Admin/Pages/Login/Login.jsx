@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../../features/auth/authActions";
@@ -19,12 +19,6 @@ const Login = () => {
   // redirect authenticated user to Main screen
   useEffect(() => {
     if (userInfo) {
-      setCookie("userToken", userInfo.userToken);
-      setCookie("email", userInfo.email);
-      setCookie("userName", userInfo.userName);
-      setCookie("userId", userInfo._id);
-      setCookie("isSuperAdmin", JSON.parse(userInfo.isSuperAdmin));
-
       setCookie("userToken", userInfo.userToken);
       setCookie("email", userInfo.email);
       setCookie("userName", userInfo.userName);
