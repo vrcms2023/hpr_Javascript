@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Title from "../../Common/Title";
+import { useDispatch, useSelector } from "react-redux";
+import { getClientProjects } from "../../features/project/clientProjectActions";
 import ProjectDetails from "../Components/ProjectsTabs/ProjecTabs";
 // import Specifications from '../Components/Specifications'
 // import Carousel from '../Components/Carousel'
@@ -20,20 +22,39 @@ const Projects = () => {
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
   const [ongoing, setOngoing] = useState([]);
+  const { clientProjects, error } = useSelector(
+    (state) => state.clientProjects,
+  );
+  const dispatch = useDispatch();
 
   const backendURL = getBaseURL();
 
   useEffect(() => {
-    fetch(`${backendURL}/api/project/client/getProjects`)
-      .then((res) => res.json())
-      .then((data) => {
-        const projectList = formatData(data);
+    if(clientProjects.length === 0) {
+      dispatch(getClientProjects());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (clientProjects?.projectList?.length > 0) {
+        const projectList = formatData(clientProjects);
         setCompleted(projectList.completed);
         setFuture(projectList.future);
         setOngoing(projectList.ongoing);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    }
+  }, [clientProjects]);
+
+  // useEffect(() => {
+  //   fetch(`${backendURL}/api/project/client/getProjects`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const projectList = formatData(data);
+  //       setCompleted(projectList.completed);
+  //       setFuture(projectList.future);
+  //       setOngoing(projectList.ongoing);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   // console.log(completed[0].imgs)
   // console.log(future)
@@ -135,7 +156,11 @@ const Projects = () => {
                         more details
                       </Link>
                     </div>
-                    {project.imgs.length > 0 ? (<img src={project.imgs[0].path} alt="" />) : ('')}
+                    {project.imgs.length > 0 ? (
+                      <img src={project.imgs[0].path} alt="" />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               ))
@@ -191,7 +216,11 @@ const Projects = () => {
                         more details
                       </Link>
                     </div>
-                    {project.imgs.length > 0 ? (<img src={project.imgs[0].path} alt="" />) : ('')}
+                    {project.imgs.length > 0 ? (
+                      <img src={project.imgs[0].path} alt="" />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               ))
@@ -246,7 +275,11 @@ const Projects = () => {
                         more details
                       </Link>
                     </div>
-                    {project.imgs.length > 0 ? (<img src={project.imgs[0].path} alt="" />) : ('')}
+                    {project.imgs.length > 0 ? (
+                      <img src={project.imgs[0].path} alt="" />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               ))
