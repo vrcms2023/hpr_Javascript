@@ -7,18 +7,20 @@ import NewsImg1 from "../../Images/future.png";
 import ModelBg from "../../Common/ModelBg";
 
 import "./NewsAndUpdates.css";
-import { getBaseURL } from "../../util/ulrUtil";
+import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 const NewsAndUpdates = () => {
-  const backendURL = getBaseURL();
+
 
   useEffect(() => {
-    fetch(`${backendURL}/api/appnews/client/getNews`)
-      .then((res) => res.json())
-      .then((data) => {
+
+    const getNews = async() => {
+      const response = await  axiosClientServiceApi.get(`/api/appnews/client/getNews`);
+      if (response?.status == 200){
         console.log(data);
-      })
-      .catch((err) => console.log(err));
+      }
+    }
+    getNews();
   }, []);
 
   const [showModal, setShowModal] = useState(false);
