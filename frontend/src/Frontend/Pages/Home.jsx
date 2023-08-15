@@ -11,18 +11,18 @@ import imgFuture from "../../Images/future.png";
 import testimonialUser from "../../Images/testimonial.jpg";
 import leftArrow from "../../Images/left.png";
 import rightArrow from "../../Images/right.png";
-import { getBaseURL } from "../../util/ulrUtil";
+import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 const Home = () => {
-  const backendURL = getBaseURL();
 
   useEffect(() => {
-    fetch(`${backendURL}/api/testimonial/client/getTestimonial`)
-      .then((res) => res.json())
-      .then((data) => {
+    const getTestimonial = async() => {
+      const response = await  axiosClientServiceApi.get(`/api/testimonial/client/getTestimonial`);
+      if (response?.status == 200){
         console.log(data);
-      })
-      .catch((err) => console.log(err));
+      }
+    }
+    getTestimonial();
   }, []);
 
   return (

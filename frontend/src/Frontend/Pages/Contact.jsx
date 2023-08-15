@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Contact.css";
+import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 import contactImg from "../../Images/contact.png";
 import { getBaseURL } from "../../util/ulrUtil";
@@ -29,44 +30,34 @@ const Contact = () => {
   /**
    * contactus form submit
    */
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async(e) => {
     e.preventDefault();
     const errors = validationform(formData);
     setFormerror(errors);
     if (Object.keys(errors).length > 0) return;
 
-    fetch(`${backendURL}/api/contactus/updateContactDetails`, {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        toast("Your request is submit succuessfully");
-        setMesg(data.message);
+    const response = await  axiosClientServiceApi.post(`/api/contactus/updateContactDetails`,{
+      ...formData
+    });
+    if(response.status === 200){
+      toast("Your request is submit succuessfully");
+        setMesg(response.data.message);
         setShow(true);
         setTimeout(() => {
           setShow(false);
         }, 4000);
-
         removeCookie("clientInformation");
         setCookie("clientInformation", formData.email, { maxAge: 86400 });
         setFormData(formObject);
         setFormerror("");
-        // if(cookies.previousPath !== undefined) {
-        //   navigate(`/${cookies.previousPath}`)
-        // }
-      })
-      .catch((err) => {
-        setMesg(err.message);
-        setShow(true);
-        setTimeout(() => {
-          setShow(false);
-        }, 4000);
-        // console.log(err)
-      });
+    } else{
+      setMesg("unable to process your request");
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 4000);
+    }
+
   };
   const validationform = (value) => {
     const errors = {};
