@@ -10,16 +10,15 @@ import "./NewsAndUpdates.css";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 const NewsAndUpdates = () => {
-
-
   useEffect(() => {
-
-    const getNews = async() => {
-      const response = await  axiosClientServiceApi.get(`/api/appnews/client/getNews`);
-      if (response?.status == 200){
+    const getNews = async () => {
+      const response = await axiosClientServiceApi.get(
+        `/api/appnews/client/getNews`,
+      );
+      if (response?.status == 200) {
         console.log(data);
       }
-    }
+    };
     getNews();
   }, []);
 

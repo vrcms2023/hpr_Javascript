@@ -25,6 +25,7 @@ export const AdminTestimonial = () => {
   const [editState, setEditState] = useState(false);
   const [id, setID] = useState("");
   const [userName, setUserName] = useState("");
+  const [disabledFile, setDisabledFile] = useState(false);
 
   useEffect(() => {
     setUserName(getCookie("userName"));
@@ -53,6 +54,14 @@ export const AdminTestimonial = () => {
   useEffect(() => {
     getTestimonialList();
   }, []);
+
+  useEffect(() => {
+    if (testimonialObject.length > 0) {
+      setDisabledFile(true);
+    } else {
+      setDisabledFile(false);
+    }
+  }, [testimonialObject]);
 
   const saveTestimonial = async () => {
     const testimonial = {
@@ -204,7 +213,9 @@ export const AdminTestimonial = () => {
                   gallerysetState={setTestimonialObject}
                   galleryState={testimonialObject}
                   validTypes="image/png,image/jpeg"
+                  disabledFile={disabledFile}
                 />
+
                 <CatageoryImgC
                   title={`Testimonial Image`}
                   catategoryImgs={testimonialObject}

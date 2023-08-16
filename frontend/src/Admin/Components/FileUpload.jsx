@@ -23,6 +23,7 @@ const FileUpload = ({
   gallerysetState,
   galleryState,
   validTypes,
+  disabledFile = false,
 }) => {
   const [files, setFiles] = useState([]);
   const [extTypes, setExtTypes] = useState([]);
@@ -67,7 +68,9 @@ const FileUpload = ({
           onerror={onerror}
           onupdatefiles={setFiles}
           allowMultiple={true}
-          maxFiles={2}
+          maxFiles={4}
+          maxParallelUploads={4}
+          disabled={disabledFile}
           credits={false}
           acceptedFileTypes={extTypes}
           server={`${backendURL}/api/imageUpload/fileUploader/${project?._id}/${updatedBy}/${category}`}
