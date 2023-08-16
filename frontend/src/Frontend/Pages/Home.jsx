@@ -14,14 +14,15 @@ import rightArrow from "../../Images/right.png";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 const Home = () => {
-
   useEffect(() => {
-    const getTestimonial = async() => {
-      const response = await  axiosClientServiceApi.get(`/api/testimonial/client/getTestimonial`);
-      if (response?.status == 200){
+    const getTestimonial = async () => {
+      const response = await axiosClientServiceApi.get(
+        `/api/testimonial/client/getTestimonial`,
+      );
+      if (response?.status == 200) {
         console.log(data);
       }
-    }
+    };
     getTestimonial();
   }, []);
 

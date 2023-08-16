@@ -30,17 +30,17 @@ const Projects = () => {
   const backendURL = getBaseURL();
 
   useEffect(() => {
-    if(clientProjects.length === 0) {
+    if (clientProjects.length === 0) {
       dispatch(getClientProjects());
     }
   }, []);
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
-        const projectList = formatData(clientProjects);
-        setCompleted(projectList.completed);
-        setFuture(projectList.future);
-        setOngoing(projectList.ongoing);
+      const projectList = formatData(clientProjects);
+      setCompleted(projectList.completed);
+      setFuture(projectList.future);
+      setOngoing(projectList.ongoing);
     }
   }, [clientProjects]);
 

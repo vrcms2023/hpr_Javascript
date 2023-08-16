@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import Title from "../../Common/Title";
 import Button from "../../Common/Button";
-import { useCookies } from "react-cookie";
-import { getBaseURL } from "../../util/ulrUtil";
+import { axiosServiceApi } from "../../util/axiosUtil";
 
 const Specifications = ({
   title,
@@ -10,10 +9,6 @@ const Specifications = ({
   specifications,
   setSpecifications,
 }) => {
-  const [cookies] = useCookies(["token"]);
-
-  const backendURL = getBaseURL();
-
   const handleClick = () => {
     setSpecifications([...specifications, { title: "", feature: "" }]);
   };
@@ -35,23 +30,16 @@ const Specifications = ({
    * get selected Specification for edit
    */
   useEffect(() => {
-    const getSelectedSpecification = () => {
-      fetch(
-        `${backendURL}/api/specification/getSpecificationsById/${project._id}`,
-        {
-          headers: {
-            authorization: `Bearer ${cookies.userToken}`,
-            "Content-type": "application/json",
-          },
-        },
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.specification !== undefined) {
-            setSpecifications(data.specification.specifications);
-          }
-        })
-        .catch((err) => console.log(err));
+    const getSelectedSpecification = async () => {
+      const response = await axiosServiceApi.get(
+        `api/specification/getSpecificationsById/${project._id}`,
+      );
+      if (
+        response?.status == 200 &&
+        response.data?.specification !== undefined
+      ) {
+        setSpecifications(response?.data?.specification?.specifications);
+      }
     };
     if (project?._id) {
       getSelectedSpecification();
@@ -73,7 +61,7 @@ const Specifications = ({
 
         <table className="table m-0">
           <tbody>
-            {specifications.length > 0 ? (
+            {specifications?.length > 0 ? (
               specifications.map((val, i) => (
                 <tr key={i}>
                   <td className="border border-1 p-4 bg-transparent">

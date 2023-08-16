@@ -1,31 +1,19 @@
 import React, { useEffect } from "react";
 import Title from "../../Common/Title";
-import { useCookies } from "react-cookie";
-import { getBaseURL } from "../../util/ulrUtil";
+import { axiosServiceApi } from "../../util/axiosUtil";
 
 export const AmenitiesList = ({ project, amenities, setAmenities }) => {
-  const [cookies] = useCookies(["token"]);
-
-  const backendURL = getBaseURL();
-
   /**
    * get selected Specification for edit
    */
   useEffect(() => {
-    const getSelectedAmenities = () => {
-      fetch(`${backendURL}/api/amenities/getAmenitiesById/${project?._id}`, {
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.amenitie !== undefined) {
-            setAmenities(data.amenitie);
-          }
-        })
-        .catch((err) => console.log(err));
+    const getSelectedAmenities = async () => {
+      const response = await axiosServiceApi.get(
+        `api/amenities/getAmenitiesById/${project?._id}`,
+      );
+      if (response?.status == 200) {
+        setAmenities(response.data.amenitie);
+      }
     };
     if (project?._id) {
       getSelectedAmenities();

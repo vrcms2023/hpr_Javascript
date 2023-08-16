@@ -16,22 +16,24 @@ const Gallery = () => {
   const [showModal, setShowModal] = useState(false);
   const [img, setImg] = useState(null);
   const [btnActiveWord, setBtnActiveWord] = useState("all");
-  const { clientProjects, error } = useSelector((state) => state.clientProjects);
+  const { clientProjects, error } = useSelector(
+    (state) => state.clientProjects,
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(clientProjects?.projectList?.length > 0){
-        setAll(clientProjects.imageList);
-        const projectList = formatData(clientProjects);
-        setCompleted(projectList.completed[0].imgs);
-        setFuture(projectList.future[0].imgs);
-        setOngoing(projectList.ongoing[0].imgs);
+    if (clientProjects?.projectList?.length > 0) {
+      setAll(clientProjects.imageList);
+      const projectList = formatData(clientProjects);
+      setCompleted(projectList.completed[0].imgs);
+      setFuture(projectList.future[0].imgs);
+      setOngoing(projectList.ongoing[0].imgs);
     }
-  },[clientProjects])
+  }, [clientProjects]);
 
   useEffect(() => {
-    if(clientProjects.length === 0) {
+    if (clientProjects.length === 0) {
       dispatch(getClientProjects());
     }
   }, []);

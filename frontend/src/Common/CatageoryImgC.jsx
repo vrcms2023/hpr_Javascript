@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteDialog from "./DeleteDialog";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { getBaseURL } from "../util/ulrUtil";
+import { axiosServiceApi } from "../util/axiosUtil";
 
 const CatageoryImgC = ({
   title,
@@ -21,27 +21,17 @@ const CatageoryImgC = ({
   ]);
   const navigate = useNavigate();
 
-  const backendURL = getBaseURL();
-
   /**
    * get selected Images for edit
    */
   useEffect(() => {
-    const getSelectedImages = () => {
-      fetch(
-        `${backendURL}/api/imageUpload/getSelectedImagesById/${project?._id}/${category}`,
-        {
-          headers: {
-            authorization: `Bearer ${cookies.userToken}`,
-            "Content-type": "application/json",
-          },
-        },
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          catategoryImgState(data.fileData);
-        })
-        .catch((err) => console.log(err));
+    const getSelectedImages = async () => {
+      const response = await axiosServiceApi.get(
+        `/api/imageUpload/getSelectedImagesById/${project?._id}/${category}`,
+      );
+      if (response.status == 200) {
+        catategoryImgState(response.data.fileData);
+      }
     };
     if (project?._id) {
       getSelectedImages();
@@ -49,22 +39,16 @@ const CatageoryImgC = ({
   }, [project]);
 
   const thumbDelete = (id) => {
-    const deleteImageByID = () => {
-      fetch(`${backendURL}/api/imageUpload/deleteImageById/${id}`, {
-        method: "DELETE",
-        headers: {
-          authorization: `Bearer ${cookies.userToken}`,
-          "Content-type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data?.imageModel?._id) {
-            catategoryImgState((values) => {
-              return values.filter((item) => item._id !== data.imageModel._id);
-            });
-          }
+    const deleteImageByID = async () => {
+      const response = await axiosServiceApi.delete(
+        `/api/imageUpload/deleteImageById/${id}`,
+      );
+      if (response.status == 200) {
+        const deletedObj = response.data.imageModel;
+        catategoryImgState((values) => {
+          return values.filter((item) => item._id !== deletedObj._id);
         });
+      }
     };
     confirmAlert({
       customUI: ({ onClose }) => {

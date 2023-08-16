@@ -732,7 +732,7 @@ const AddProject = () => {
               <Button
                 type="submit"
                 cssClass="btn  btn-success"
-                label="Save Project"
+                label={id ? "Update Project" : "Save Project"}
                 handlerChange={saveProject}
               />
             </div>
