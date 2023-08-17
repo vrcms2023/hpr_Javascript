@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Footer from "./Common/Footer/Footer";
 import Header from "./Common/Header/Header";
-import { useCookies } from "react-cookie";
 import Home from "./Frontend/Pages/Home";
 import About from "./Frontend/Pages/About";
 import Projects from "./Frontend/Pages/Projects";
@@ -27,19 +26,20 @@ import Registration from "./Admin/Pages/Login/Registration";
 import AuthForm from "./Admin/Pages/Login/AuthForm";
 import AdminNews from "./Admin/Pages/Login/AdminNews";
 import ProjectTabs from "./Frontend/Components/ProjectsTabs/ProjecTabs";
+import { getCookie } from "./util/cookieUtil";
+
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
-  const [cookies] = useCookies(["userToken"]);
   const [loginState, setLoginState] = useState("");
 
   useEffect(() => {
-    if (userInfo || cookies.userToken) {
+    if (userInfo || getCookie("userToken")) {
       setLoginState(true);
     } else {
       setLoginState(false);
     }
-  }, [userInfo, cookies.userToken]);
+  }, [userInfo]);
 
   return (
     <>

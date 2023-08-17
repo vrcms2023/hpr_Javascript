@@ -8,7 +8,7 @@ import "./Contact.css";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 import contactImg from "../../Images/contact.png";
-import { getBaseURL } from "../../util/ulrUtil";
+import { removeCookie, setCookie } from "../../util/cookieUtil";
 
 const Contact = () => {
   const formObject = { firstName: "", email: "", phone: "", message: "" };
@@ -16,10 +16,7 @@ const Contact = () => {
   const [mesg, setMesg] = useState("");
   const [show, setShow] = useState(false);
   const [formerror, setFormerror] = useState({});
-  const [cookies, setCookie, removeCookie] = useCookies(["clientInformation"]);
   const navigate = useNavigate();
-
-  const backendURL = getBaseURL();
 
   const handleChange = (event) => {
     const { name, value } = event.target;

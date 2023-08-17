@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../../Common/Button";
 import { useNavigate, Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import Logo from "../../../../src/Images/hpr-infra-logo.png";
 import testimonialUser from "../../../../src/Images/testimonial.jpg";
-import { removeAllCookies } from "../../../util/cookieUtil";
+import { getCookie, removeAllCookies } from "../../../util/cookieUtil";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../features/auth/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["token", "userName"]);
   const [userName, setUserName] = useState("");
   const [loginState, setLoginState] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let userToken = cookies.userToken;
-    setUserName(cookies.userName);
-
-    if (userToken && userName) {
+    if (userInfo || getCookie("userToken")) {
       setLoginState(true);
+      const uName = userInfo ? userInfo.userName : getCookie("userName");
+      setUserName(uName);
+    } else {
+      setLoginState(false);
+      setUserName("");
     }
-  }, [userName, cookies]);
+  }, [userInfo]);
 
   function logOutHandler() {
     removeAllCookies();
@@ -53,14 +53,6 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {loginState ? (
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <Button
-                    type="submit"
-                    cssClass="btn btn-secondary"
-                    label="User Admin"
-                    handlerChange={() => navigate("/userAdmin")}
-                  />
-                </li>
                 <li className="nav-item mx-3">
                   {loginState ? (
                     <Button

@@ -15,13 +15,13 @@ import Testimonials from "../Components/Testimonials";
 const Home = () => {
   const [testimonis, setTestmonis] = useState([]);
 
+
   useEffect(() => {
     const getTestimonial = async () => {
       const response = await axiosClientServiceApi.get(
         `/api/testimonial/client/getTestimonial`,
       );
       if (response?.status == 200) {
-        // console.log(response.data.testimonial)
         setTestmonis(response.data.testimonial);
       }
     };

@@ -19,7 +19,6 @@ const NewsAndUpdates = () => {
         `/api/appnews/client/getNews`,
       );
       if (response?.status == 200) {
-        // console.log(response.data.appNews);
         setNews(response.data.appNews);
       }
     };

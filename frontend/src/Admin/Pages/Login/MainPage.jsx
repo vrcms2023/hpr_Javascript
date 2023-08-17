@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Title from "../../../Common/Title";
+import { getCookie } from "../../../util/cookieUtil";
 
 const MainPage = () => {
+  const [isSuperAdmin, setisSuperAdmin] = useState("");
+  useEffect(() => {
+    setisSuperAdmin(JSON.parse(getCookie("isSuperAdmin")));
+  }, []);
   return (
     <div
       className="d-flex flex-column justify-content-center align-items-center"
@@ -31,19 +36,26 @@ const MainPage = () => {
             Testimonials
           </Link>
         </li>
-        <li className="list-group-item list-group-item-action text-center py-4 bg-info">
+        <li className="list-group-item list-group-item-action text-center py-4">
           <Link
             to="/dashboard"
-            className="text-decoration-none blue-900 fs-4 text-uppercase"
+            className="blue-500 text-decoration-none fs-4 text-uppercase"
           >
             Dashboard
           </Link>
         </li>
-        <li className="list-group-item list-group-item-action text-center">
-          <Link to="/userAdmin" className="text-decoration-none blue-900 fs-4 ">
-            User Administration
-          </Link>
-        </li>
+        {isSuperAdmin ? (
+          <li className="list-group-item list-group-item-action text-center py-4">
+            <Link
+              to="/userAdmin"
+              className="blue-500 text-decoration-none fs-4"
+            >
+              User Administration
+            </Link>
+          </li>
+        ) : (
+          ""
+        )}
       </ul>
     </div>
   );
