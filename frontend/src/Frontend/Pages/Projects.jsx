@@ -19,7 +19,7 @@ import { getBaseURL } from "../../util/ulrUtil";
 
 const Projects = () => {
   const navigate = useNavigate()
-  const [projects, setProjects] = useState([]);
+  // const [projects, setProjects] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
   const [ongoing, setOngoing] = useState([]);
@@ -35,6 +35,8 @@ const Projects = () => {
       dispatch(getClientProjects());
     }
   }, []);
+
+  console.log(ongoing, "ongoing")
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
@@ -85,16 +87,16 @@ const Projects = () => {
     return projList;
   };
 
-  useEffect(() => {
-    fetch(
-      `${backendURL}/api/project/client/getSelectedProject/64cb5d5eea535b04d760d664`,
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   fetch(
+  //     `${backendURL}/api/project/client/getSelectedProject/64cb5d5eea535b04d760d664`,
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("projects", data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -132,15 +134,11 @@ const Projects = () => {
         ongoing.map(project => <div><img src={project.imgs[0].path} alt="" width="300" /></div>)
       : ""} */}
 
-      <div className="container pt-5 pb-3">
+      <div className="container my-5 pb-3">
         <div className="row">
           <div className="col-md-12 ">
-            <Title title="Ongoing Projects" cssClass="blue-900" />
-            <p>
-              We believe that construction is a man made wonder. The thought of
-              bringing imagination to real life structures excites us, each day
-              the passion in us grows as we contribute to this industry.
-            </p>
+            
+            <Title title={ongoing.length > 0 ? ongoing[0].projectCategoryName : "Ongoing Projects" }  cssClass="blue-900 fs-5 mb-3" />
           </div>
         </div>
         <div className="row">
@@ -156,7 +154,7 @@ const Projects = () => {
                       {/* <Link to="" className="blue-900">
                         more details
                       </Link> */}
-                      <button  className='blue-900' onClick={() => navigate('/projectDetails', {state: {selectedPorject:ongoing, projectid:project._id} })}>more details</button> 
+                      <button  className='loadMore' onClick={() => navigate('/projectDetails', {state: {selectedPorject:ongoing, projectid:project._id} })}>more details</button> 
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />
@@ -193,15 +191,12 @@ const Projects = () => {
 
       {/* Completed Projects */}
 
-      <div className="container pt-5 pb-3">
+      <div className="container my-5 pb-3">
         <div className="row">
           <div className="col-md-12 ">
-            <Title title="Completed Projects" cssClass="blue-900" />
-            <p>
-              We believe that construction is a man made wonder. The thought of
-              bringing imagination to real life structures excites us, each day
-              the passion in us grows as we contribute to this industry.
-            </p>
+            <Title title={completed.length > 0 ? completed[0].projectCategoryName : "Completed Projects" } cssClass="blue-900 fs-5 mb-3" />
+            
+          
           </div>
         </div>
         <div className="row">
@@ -214,9 +209,7 @@ const Projects = () => {
                         title={project.projectTitle}
                         cssClass="text-white fs-5"
                       />
-                      <Link to="" className="blue-900">
-                        more details
-                      </Link>
+                      <button  className='loadMore' onClick={() => navigate('/projectDetails', {state:  {selectedPorject:completed, projectid:project._id} })}>more details</button> 
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />
@@ -252,15 +245,15 @@ const Projects = () => {
       </div>
 
       {/* Future Projects */}
-      <div className="container pt-5 pb-3">
+      <div className="container my-5 pb-3">
         <div className="row">
           <div className="col-md-12 ">
-            <Title title="Future Projects" cssClass="blue-900" />
-            <p>
+            <Title title={future.length > 0 ? future[0].projectCategoryName : "Future Projects" } cssClass="blue-900 fs-5 mb-3" />
+            {/* <p>
               We believe that construction is a man made wonder. The thought of
               bringing imagination to real life structures excites us, each day
               the passion in us grows as we contribute to this industry.
-            </p>
+            </p> */}
           </div>
         </div>
         <div className="row">
@@ -273,9 +266,7 @@ const Projects = () => {
                         title={project.projectTitle}
                         cssClass="text-white fs-5"
                       />
-                      <Link to="" className="blue-900">
-                        more details
-                      </Link>
+                      <button  className='loadMore' onClick={() => navigate('/projectDetails', {state:  {selectedPorject:future, projectid:project._id} })}>more details</button> 
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />
