@@ -28,7 +28,6 @@ import AdminNews from "./Admin/Pages/Login/AdminNews";
 import ProjectTabs from "./Frontend/Components/ProjectsTabs/ProjecTabs";
 import { getCookie } from "./util/cookieUtil";
 
-
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
   const [loginState, setLoginState] = useState("");
@@ -49,7 +48,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/projects" element={<Projects />} />
-          <Route exact  path='/projectDetails' element={ <ProjectTabs /> } />
+          <Route exact path="/projectDetails" element={<ProjectTabs />} />
           <Route exact path="/gallery" element={<Gallery />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/news" element={<NewsAndUpdates />} />

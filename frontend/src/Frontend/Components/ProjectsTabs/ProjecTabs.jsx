@@ -11,29 +11,26 @@ import Spefifications from "./Spefifications";
 import Location from "./Location";
 import Cost from "./Cost";
 
-
 const ProjectTabs = () => {
   const location = useLocation();
 
-  const [projects, setProjects] = useState(
-    location.state.selectedPorject,
-  );
+  const [projects, setProjects] = useState(location.state.selectedPorject);
   const [projectid, setprojectid] = useState(location.state.projectid);
   // const [selectedProject, setSelectedProject] = useState(null)
-  const [amenities, setAmenities] = useState({})
-  const [projectImages, setProjectImages] = useState([])
-  const [projectHome, setProjectHome] = useState({})
-  const [specifications, setSpecifications] = useState([])
-  const [pdfs, setPdfs] = useState([])
-  const [priceImg, setPriceImg] = useState([])
-  const [planImg, setPlanImg] = useState([])
-  const [avlImg, setAvlImg] = useState([])
-  
+  const [amenities, setAmenities] = useState({});
+  const [projectImages, setProjectImages] = useState([]);
+  const [projectHome, setProjectHome] = useState({});
+  const [specifications, setSpecifications] = useState([]);
+  const [pdfs, setPdfs] = useState([]);
+  const [priceImg, setPriceImg] = useState([]);
+  const [planImg, setPlanImg] = useState([]);
+  const [avlImg, setAvlImg] = useState([]);
+
   // console.log("projects", projects)
 
   useEffect(() => {
-    getProjects(projectid)
-  }, [])
+    getProjects(projectid);
+  }, []);
 
   const getProjects = async (projectid) => {
     // const {value} = e.target
@@ -43,43 +40,43 @@ const ProjectTabs = () => {
     if (response?.status == 200) {
       // setSelectedProject("response", response.data);
       // console.log("Response Data images", response.data.imageData)
-      setAmenities(response.data.amenitie)
-      filtersImgPdfs(response.data.imageData, "images")
-      filtersImgPdfs(response.data.imageData, "pdfs")
-      filtersImgPdfs(response.data.imageData, "price")
-      filtersImgPdfs(response.data.imageData, "plan")
-      filtersImgPdfs(response.data.imageData, "avl")
+      setAmenities(response.data.amenitie);
+      filtersImgPdfs(response.data.imageData, "images");
+      filtersImgPdfs(response.data.imageData, "pdfs");
+      filtersImgPdfs(response.data.imageData, "price");
+      filtersImgPdfs(response.data.imageData, "plan");
+      filtersImgPdfs(response.data.imageData, "avl");
       setProjectHome(response.data.project);
       setSpecifications(response.data.specificationData[0].specifications);
     }
   };
 
   const filtersImgPdfs = (data, type) => {
-    if(type === "images") {
+    if (type === "images") {
       // const imgs = data.filter( item => item.contentType === "jpg" || item.contentType === "jpeg" || item.contentType === "png");
-      const imgs = data.filter( item => item.category === "images");
+      const imgs = data.filter((item) => item.category === "images");
       setProjectImages(imgs);
     }
-    if(type === "pdfs") {
-      const pdfs = data.filter( item => item.category === "PDF");
-      setPdfs(pdfs)
+    if (type === "pdfs") {
+      const pdfs = data.filter((item) => item.category === "PDF");
+      setPdfs(pdfs);
     }
 
-    if(type === "price") {
-      const priceImgs = data.filter( item => item.category === "price");
-      setPriceImg(priceImgs)
+    if (type === "price") {
+      const priceImgs = data.filter((item) => item.category === "price");
+      setPriceImg(priceImgs);
     }
 
-    if(type === "plan") {
-      const planImgs = data.filter( item => item.category === "Plans");
-      setPlanImg(planImgs)
+    if (type === "plan") {
+      const planImgs = data.filter((item) => item.category === "Plans");
+      setPlanImg(planImgs);
     }
 
-    if(type === "avl") {
-      const avlImgs = data.filter( item => item.category === "availability");
-      setAvlImg(avlImgs)
+    if (type === "avl") {
+      const avlImgs = data.filter((item) => item.category === "availability");
+      setAvlImg(avlImgs);
     }
-  }
+  };
 
   return (
     <div className="container mt-5 pt-5">
@@ -107,7 +104,6 @@ const ProjectTabs = () => {
             </select>
           </div>
 
-          
           <div className="col-md-12 mb-4">
             <nav>
               <div className="nav nav-tabs" id="nav-tab" role="tablist">
@@ -217,7 +213,11 @@ const ProjectTabs = () => {
                 role="tabpanel"
                 aria-labelledby="nav-home-tab"
               >
-                <HomeTab project={projectHome} projectImages={projectImages} pdfs={pdfs}/>
+                <HomeTab
+                  project={projectHome}
+                  projectImages={projectImages}
+                  pdfs={pdfs}
+                />
               </div>
               <div
                 className="tab-pane fade"
@@ -225,7 +225,7 @@ const ProjectTabs = () => {
                 role="tabpanel"
                 aria-labelledby="nav-gallery-tab"
               >
-                <Gallery projectImages={projectImages} projTab="gallery"/>
+                <Gallery projectImages={projectImages} projTab="gallery" />
               </div>
               <div
                 className="tab-pane fade"
@@ -233,7 +233,7 @@ const ProjectTabs = () => {
                 role="tabpanel"
                 aria-labelledby="nav-specifications-tab"
               >
-                <Spefifications specifications={specifications}/>
+                <Spefifications specifications={specifications} />
               </div>
               <div
                 className="tab-pane fade"
@@ -241,8 +241,7 @@ const ProjectTabs = () => {
                 role="tabpanel"
                 aria-labelledby="nav-availability-tab"
               >
-                <Cost data={avlImg}/>
-                
+                <Cost data={avlImg} />
               </div>
               <div
                 className="tab-pane fade"
@@ -250,7 +249,7 @@ const ProjectTabs = () => {
                 role="tabpanel"
                 aria-labelledby="nav-cost-tab"
               >
-                <Cost data={priceImg}/>
+                <Cost data={priceImg} />
               </div>
               <div
                 className="tab-pane fade"
@@ -258,7 +257,7 @@ const ProjectTabs = () => {
                 role="tabpanel"
                 aria-labelledby="nav-plan-tab"
               >
-                <Cost data={planImg}/>
+                <Cost data={planImg} />
               </div>
               <div
                 className="tab-pane fade"
@@ -278,7 +277,6 @@ const ProjectTabs = () => {
               </div>
             </div>
           </div>
-           
         </div>
       </div>
     </div>

@@ -122,7 +122,9 @@ const Footer = () => {
         Copyrights 2023 - All rights reserved
       </footer>
 
-      {show && <Model obj={privacyPolacyObj} closeModel={closeModel} />}
+      {show && (
+        <Model pri={privacyPolacyObj} closeModel={closeModel} flag="privacy" />
+      )}
       {show && <ModelBg />}
     </>
   );
