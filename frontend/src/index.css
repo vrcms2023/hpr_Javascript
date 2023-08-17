@@ -4,6 +4,7 @@ body {
   font-size: 16px !important;
   background-color: #fff !important;
   color: #666666 !important;
+  /* white-space: pre-line; */
   /* background-image: url('https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); */
 
   /* background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)), 
@@ -58,8 +59,12 @@ body {
   z-index: 9999 !important;
 }
 
-.modal-body {
+.modal-body, .tab-content, .amenities {
   white-space: pre-line;
+}
+
+.amenities {
+  line-height: 2rem;
 }
 
 .modelBg {

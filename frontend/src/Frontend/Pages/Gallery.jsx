@@ -8,7 +8,8 @@ import ModelBg from "../../Common/ModelBg";
 import DynamicCarousel from "../Components/DynamicCarousel";
 import { getClientProjects } from "../../features/project/clientProjectActions";
 
-const Gallery = () => {
+const Gallery = ({projectImages, projTab}) => {
+  // console.log("Gallery", projTab)
   const [all, setAll] = useState([]);
   const [ongoing, setOngoing] = useState([]);
   const [completed, setCompleted] = useState([]);
@@ -23,12 +24,19 @@ const Gallery = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    {projTab === "gallery" ? setAll(projectImages) : null}
+  }, [projectImages])
+
+  useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
       setAll(clientProjects.imageList);
       const projectList = formatData(clientProjects);
       setCompleted(projectList.completed[0].imgs);
       setFuture(projectList.future[0].imgs);
       setOngoing(projectList.ongoing[0].imgs);
+    }
+    if (projectImages?.length > 0) {
+      setAll(projectImages);
     }
   }, [clientProjects]);
 
@@ -70,6 +78,7 @@ const Gallery = () => {
     if (word === "ongoing") setAll(ongoing);
     if (word === "completed") setAll(completed);
     if (word === "future") setAll(future);
+    if (word === "selected") setAll(projectImages);
   };
 
   const findThumbHandler = (id) => {
@@ -89,6 +98,8 @@ const Gallery = () => {
   return (
     <>
       <div className="py-5 mt-5">
+      {projTab === "gallery" ? null : 
+        <>
         <div className="text-center pb-2 mt-5">
           <Button
             type=""
@@ -122,8 +133,10 @@ const Gallery = () => {
             label="Future Projects"
             handlerChange={thumbHandler}
           />
+          
         </div>
-        <hr />
+        <hr /></>
+          }
         <div>
           <ul className="list-unstyled gallery d-flex justify-content-center align-items-center flex-wrap">
             <GalleryImgThumb imgs={all} findThumbHandler={findThumbHandler} />

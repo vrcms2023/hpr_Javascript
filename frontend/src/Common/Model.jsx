@@ -6,9 +6,6 @@ const Model = ({ obj, closeModel }) => {
     imageUrls,
     description,
     title,
-    dec1,
-    dec2,
-    dec3,
     cr,
     crm,
   } = obj;
