@@ -32,6 +32,7 @@ const NewsAndUpdates = () => {
   const articleHandler = (id) => {
     const searchObj = news.find((newsItem) => newsItem._id === id);
     // console.log("Search Object", searchObj);
+    console.log(searchObj, "obj");
     setObj(searchObj);
     setShowModal(!showModal);
   };
@@ -68,7 +69,7 @@ const NewsAndUpdates = () => {
             ))}
         </div>
       </div>
-      {showModal && <Model obj={obj} closeModel={closeModel} />}
+      {showModal && <Model obj={obj} closeModel={closeModel} flag="news" />}
       {showModal && <ModelBg closeModel={closeModel} />}
     </>
   );

@@ -8,7 +8,7 @@ import ModelBg from "../../Common/ModelBg";
 import DynamicCarousel from "../Components/DynamicCarousel";
 import { getClientProjects } from "../../features/project/clientProjectActions";
 
-const Gallery = ({projectImages, projTab}) => {
+const Gallery = ({ projectImages, projTab }) => {
   // console.log("Gallery", projTab)
   const [all, setAll] = useState([]);
   const [ongoing, setOngoing] = useState([]);
@@ -24,8 +24,10 @@ const Gallery = ({projectImages, projTab}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    {projTab === "gallery" ? setAll(projectImages) : null}
-  }, [projectImages])
+    {
+      projTab === "gallery" ? setAll(projectImages) : null;
+    }
+  }, [projectImages]);
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
@@ -98,45 +100,45 @@ const Gallery = ({projectImages, projTab}) => {
   return (
     <>
       <div className="py-5 mt-5">
-      {projTab === "gallery" ? null : 
-        <>
-        <div className="text-center pb-2 mt-5">
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "all" ? "active" : ""
-            }`}
-            label="All"
-            handlerChange={thumbHandler}
-          />
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "ongoing" ? "active" : ""
-            }`}
-            label="Ongoing Projects"
-            handlerChange={thumbHandler}
-          />
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "completed" ? "active" : ""
-            }`}
-            label="Completed Projects"
-            handlerChange={thumbHandler}
-          />
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "future" ? "active" : ""
-            }`}
-            label="Future Projects"
-            handlerChange={thumbHandler}
-          />
-          
-        </div>
-        <hr /></>
-          }
+        {projTab === "gallery" ? null : (
+          <>
+            <div className="text-center pb-2 mt-5">
+              <Button
+                type=""
+                cssClass={`loadMore me-2 ${
+                  btnActiveWord === "all" ? "active" : ""
+                }`}
+                label="All"
+                handlerChange={thumbHandler}
+              />
+              <Button
+                type=""
+                cssClass={`loadMore me-2 ${
+                  btnActiveWord === "ongoing" ? "active" : ""
+                }`}
+                label="Ongoing Projects"
+                handlerChange={thumbHandler}
+              />
+              <Button
+                type=""
+                cssClass={`loadMore me-2 ${
+                  btnActiveWord === "completed" ? "active" : ""
+                }`}
+                label="Completed Projects"
+                handlerChange={thumbHandler}
+              />
+              <Button
+                type=""
+                cssClass={`loadMore me-2 ${
+                  btnActiveWord === "future" ? "active" : ""
+                }`}
+                label="Future Projects"
+                handlerChange={thumbHandler}
+              />
+            </div>
+            <hr />
+          </>
+        )}
         <div>
           <ul className="list-unstyled gallery d-flex justify-content-center align-items-center flex-wrap">
             <GalleryImgThumb imgs={all} findThumbHandler={findThumbHandler} />

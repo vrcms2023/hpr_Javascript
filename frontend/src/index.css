@@ -59,7 +59,9 @@ body {
   z-index: 9999 !important;
 }
 
-.modal-body, .tab-content, .amenities {
+.modal-body,
+.tab-content,
+.amenities {
   white-space: pre-line;
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate  } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 import Title from "../../Common/Title";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientProjects } from "../../features/project/clientProjectActions";
@@ -18,7 +18,7 @@ import { getBaseURL } from "../../util/ulrUtil";
 // import Img3 from '../../Images/completed.png'
 
 const Projects = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const [projects, setProjects] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
@@ -36,7 +36,7 @@ const Projects = () => {
     }
   }, []);
 
-  console.log(ongoing, "ongoing")
+  console.log(ongoing, "ongoing");
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
@@ -137,8 +137,14 @@ const Projects = () => {
       <div className="container my-5 pb-3">
         <div className="row">
           <div className="col-md-12 ">
-            
-            <Title title={ongoing.length > 0 ? ongoing[0].projectCategoryName : "Ongoing Projects" }  cssClass="blue-900 fs-5 mb-3" />
+            <Title
+              title={
+                ongoing.length > 0
+                  ? ongoing[0].projectCategoryName
+                  : "Ongoing Projects"
+              }
+              cssClass="blue-900 fs-5 mb-3"
+            />
           </div>
         </div>
         <div className="row">
@@ -154,7 +160,19 @@ const Projects = () => {
                       {/* <Link to="" className="blue-900">
                         more details
                       </Link> */}
-                      <button  className='loadMore' onClick={() => navigate('/projectDetails', {state: {selectedPorject:ongoing, projectid:project._id} })}>more details</button> 
+                      <button
+                        className="loadMore"
+                        onClick={() =>
+                          navigate("/projectDetails", {
+                            state: {
+                              selectedPorject: ongoing,
+                              projectid: project._id,
+                            },
+                          })
+                        }
+                      >
+                        more details
+                      </button>
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />
@@ -194,9 +212,14 @@ const Projects = () => {
       <div className="container my-5 pb-3">
         <div className="row">
           <div className="col-md-12 ">
-            <Title title={completed.length > 0 ? completed[0].projectCategoryName : "Completed Projects" } cssClass="blue-900 fs-5 mb-3" />
-            
-          
+            <Title
+              title={
+                completed.length > 0
+                  ? completed[0].projectCategoryName
+                  : "Completed Projects"
+              }
+              cssClass="blue-900 fs-5 mb-3"
+            />
           </div>
         </div>
         <div className="row">
@@ -209,7 +232,19 @@ const Projects = () => {
                         title={project.projectTitle}
                         cssClass="text-white fs-5"
                       />
-                      <button  className='loadMore' onClick={() => navigate('/projectDetails', {state:  {selectedPorject:completed, projectid:project._id} })}>more details</button> 
+                      <button
+                        className="loadMore"
+                        onClick={() =>
+                          navigate("/projectDetails", {
+                            state: {
+                              selectedPorject: completed,
+                              projectid: project._id,
+                            },
+                          })
+                        }
+                      >
+                        more details
+                      </button>
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />
@@ -248,7 +283,14 @@ const Projects = () => {
       <div className="container my-5 pb-3">
         <div className="row">
           <div className="col-md-12 ">
-            <Title title={future.length > 0 ? future[0].projectCategoryName : "Future Projects" } cssClass="blue-900 fs-5 mb-3" />
+            <Title
+              title={
+                future.length > 0
+                  ? future[0].projectCategoryName
+                  : "Future Projects"
+              }
+              cssClass="blue-900 fs-5 mb-3"
+            />
             {/* <p>
               We believe that construction is a man made wonder. The thought of
               bringing imagination to real life structures excites us, each day
@@ -266,7 +308,19 @@ const Projects = () => {
                         title={project.projectTitle}
                         cssClass="text-white fs-5"
                       />
-                      <button  className='loadMore' onClick={() => navigate('/projectDetails', {state:  {selectedPorject:future, projectid:project._id} })}>more details</button> 
+                      <button
+                        className="loadMore"
+                        onClick={() =>
+                          navigate("/projectDetails", {
+                            state: {
+                              selectedPorject: future,
+                              projectid: project._id,
+                            },
+                          })
+                        }
+                      >
+                        more details
+                      </button>
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />

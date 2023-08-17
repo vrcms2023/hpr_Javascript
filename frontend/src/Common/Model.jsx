@@ -1,14 +1,20 @@
 import React from "react";
 
 const Model = ({ obj, closeModel }) => {
-  const {
-    newstitle,
-    imageUrls,
-    description,
-    title,
-    cr,
-    crm,
-  } = obj;
+  const { newstitle, imageUrls, description, title, cr, crm } = obj;
+
+  const newImages =
+    imageUrls.length > 0 ? (
+      <div className="">
+        <h5 className="text-dark text-center ">Images</h5>
+        <hr className="m-0 mb-3" />
+        {imageUrls.map((img) => (
+          <img src={img} key={img} alt="" width="250" className="m-2" />
+        ))}
+      </div>
+    ) : (
+      ""
+    );
   return (
     <div className="modal d-block modal-lg" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
@@ -25,24 +31,8 @@ const Model = ({ obj, closeModel }) => {
           </div>
           <div className="modal-body px-4 py-3">
             {description && <p>{description}</p>}
+            {newImages}
 
-            {imageUrls.length > 0 ? (
-              <>
-                <div className="">
-                  <h5 className="text-dark text-center ">Images</h5>
-                  <hr className="m-0 mb-3" />
-                  {imageUrls.map((img) => (
-                    <img
-                      src={img}
-                      key={img}
-                      alt=""
-                      width="250"
-                      className="m-2"
-                    />
-                  ))}
-                </div>
-              </>
-            ) : null}
             {cr && <p className="px-4 pb-1">{cr}</p>}
             {crm && <p className="px-4 pb-1">{crm}</p>}
           </div>

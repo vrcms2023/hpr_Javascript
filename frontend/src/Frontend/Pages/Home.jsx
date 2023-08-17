@@ -15,7 +15,6 @@ import Testimonials from "../Components/Testimonials";
 const Home = () => {
   const [testimonis, setTestmonis] = useState([]);
 
-
   useEffect(() => {
     const getTestimonial = async () => {
       const response = await axiosClientServiceApi.get(
