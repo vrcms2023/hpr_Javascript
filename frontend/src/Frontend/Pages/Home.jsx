@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../Components/Banner";
 import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
@@ -8,20 +8,23 @@ import "./Home.css";
 import imgOngoing from "../../Images/ongoing.png";
 import imgCompleted from "../../Images/completed.png";
 import imgFuture from "../../Images/future.png";
-import testimonialUser from "../../Images/testimonial.jpg";
-import leftArrow from "../../Images/left.png";
-import rightArrow from "../../Images/right.png";
+
 import { axiosClientServiceApi } from "../../util/axiosUtil";
+import Testimonials from "../Components/Testimonials";
 
 const Home = () => {
+  const [testimonis, setTestmonis] = useState([]);
 
   useEffect(() => {
-    const getTestimonial = async() => {
-      const response = await  axiosClientServiceApi.get(`/api/testimonial/client/getTestimonial`);
-      if (response?.status == 200){
-        console.log(data);
+    const getTestimonial = async () => {
+      const response = await axiosClientServiceApi.get(
+        `/api/testimonial/client/getTestimonial`,
+      );
+      if (response?.status == 200) {
+        // console.log(response.data.testimonial)
+        setTestmonis(response.data.testimonial);
       }
-    }
+    };
     getTestimonial();
   }, []);
 
@@ -238,34 +241,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-6 p-5 testimonials text-center">
-          <Title
-            title="Testimonials"
-            cssClass="mb-2 fw-normal fs-2 text-uppercase text-white"
-          />
-          <img
-            src={testimonialUser}
-            className="rounded-circle my-4 testimonialImg"
-            alt="User"
-          ></img>
-          <p className="text-white px-0 px-md-5">
-            In our company, we attain to serve you as best as we can in a timely
-            fashion and with assurance that your needs will be satisfied.From
-            initial site studies, to design, to construction and commissioning,
-            we stand by our clients as technical experts throughout the
-            development cycle.
-          </p>
-          <div className="text-center">
-            <Link to="">
-              {" "}
-              <img src={leftArrow} alt="Previous" width="42" height="42" />
-            </Link>
-            <Link to="">
-              {" "}
-              <img src={rightArrow} alt="Next" width="42" height="42" />
-            </Link>
-          </div>
-        </div>
+        <Testimonials testimonis={testimonis} />
       </div>
       {/* <div className='row shadow-lg' style={{margin: "70px"}}>
         <div className='col-md-7' style={{background: "url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'"}}></div>

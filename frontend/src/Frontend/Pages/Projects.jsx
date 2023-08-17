@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from 'react-router-dom'
 import Title from "../../Common/Title";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientProjects } from "../../features/project/clientProjectActions";
@@ -18,6 +18,7 @@ import { getBaseURL } from "../../util/ulrUtil";
 // import Img3 from '../../Images/completed.png'
 
 const Projects = () => {
+  const navigate = useNavigate()
   const [projects, setProjects] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
@@ -30,17 +31,17 @@ const Projects = () => {
   const backendURL = getBaseURL();
 
   useEffect(() => {
-    if(clientProjects.length === 0) {
+    if (clientProjects.length === 0) {
       dispatch(getClientProjects());
     }
   }, []);
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
-        const projectList = formatData(clientProjects);
-        setCompleted(projectList.completed);
-        setFuture(projectList.future);
-        setOngoing(projectList.ongoing);
+      const projectList = formatData(clientProjects);
+      setCompleted(projectList.completed);
+      setFuture(projectList.future);
+      setOngoing(projectList.ongoing);
     }
   }, [clientProjects]);
 
@@ -152,9 +153,10 @@ const Projects = () => {
                         title={project.projectTitle}
                         cssClass="text-white fs-5"
                       />
-                      <Link to="" className="blue-900">
+                      {/* <Link to="" className="blue-900">
                         more details
-                      </Link>
+                      </Link> */}
+                      <button  className='blue-900' onClick={() => navigate('/projectDetails', {state: {selectedPorject:ongoing, projectid:project._id} })}>more details</button> 
                     </div>
                     {project.imgs.length > 0 ? (
                       <img src={project.imgs[0].path} alt="" />

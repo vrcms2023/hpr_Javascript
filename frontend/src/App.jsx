@@ -26,6 +26,7 @@ import AdminTestimonial from "./Admin/pages/Login/AdminTestimonial";
 import Registration from "./Admin/Pages/Login/Registration";
 import AuthForm from "./Admin/Pages/Login/AuthForm";
 import AdminNews from "./Admin/Pages/Login/AdminNews";
+import ProjectTabs from "./Frontend/Components/ProjectsTabs/ProjecTabs";
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -48,6 +49,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/projects" element={<Projects />} />
+          <Route exact  path='/projectDetails' element={ <ProjectTabs /> } />
           <Route exact path="/gallery" element={<Gallery />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/news" element={<NewsAndUpdates />} />

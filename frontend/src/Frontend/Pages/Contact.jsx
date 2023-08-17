@@ -30,34 +30,36 @@ const Contact = () => {
   /**
    * contactus form submit
    */
-  const onFormSubmit = async(e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
     const errors = validationform(formData);
     setFormerror(errors);
     if (Object.keys(errors).length > 0) return;
 
-    const response = await  axiosClientServiceApi.post(`/api/contactus/updateContactDetails`,{
-      ...formData
-    });
-    if(response.status === 200){
+    const response = await axiosClientServiceApi.post(
+      `/api/contactus/updateContactDetails`,
+      {
+        ...formData,
+      },
+    );
+    if (response.status === 200) {
       toast("Your request is submit succuessfully");
-        setMesg(response.data.message);
-        setShow(true);
-        setTimeout(() => {
-          setShow(false);
-        }, 4000);
-        removeCookie("clientInformation");
-        setCookie("clientInformation", formData.email, { maxAge: 86400 });
-        setFormData(formObject);
-        setFormerror("");
-    } else{
+      setMesg(response.data.message);
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 4000);
+      removeCookie("clientInformation");
+      setCookie("clientInformation", formData.email, { maxAge: 86400 });
+      setFormData(formObject);
+      setFormerror("");
+    } else {
       setMesg("unable to process your request");
       setShow(true);
       setTimeout(() => {
         setShow(false);
       }, 4000);
     }
-
   };
   const validationform = (value) => {
     const errors = {};
