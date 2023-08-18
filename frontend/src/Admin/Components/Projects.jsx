@@ -9,9 +9,7 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
         title={title}
         cssClass="text-start fw-bold pt-4 mb-3 fs-6 text-dark"
       />
-      <table
-        className={`table shadow-lg border border-1 table-striped table-secondary border-secondary`}
-      >
+      <table className={`table table-hover border `}>
         <thead>
           <tr className="">
             <th scope="col" className="py-2 bg-light fw-normal text-dark">
@@ -51,13 +49,24 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                   </span>
                 </td>
                 <td className="align-middle">
-                  {project.percentValue} % completed
+                  <span
+                    class={`badge fw-normal ${
+                      project.percentValue === "0"
+                        ? "bg-info"
+                        : project.percentValue === "100"
+                        ? "bg-success"
+                        : "bg-warning"
+                    }`}
+                  >
+                    {project.percentValue} %
+                  </span>
                 </td>
                 <td className="align-middle">
                   <Link to={`/editproject/${project._id}`}>
                     <i
-                      className="fa fa-pencil fs-4 text-secondary me-2"
+                      className="fa fa-pencil-square-o fs-4 text-muted me-4"
                       aria-hidden="true"
+                      title="Edit"
                     ></i>
                   </Link>
                   <Link
@@ -67,6 +76,7 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                     <i
                       className="fa fa-trash-o fs-4 text-danger"
                       aria-hidden="true"
+                      title="Delete"
                     ></i>
                   </Link>
                 </td>

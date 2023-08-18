@@ -32,7 +32,7 @@ const NewsAndUpdates = () => {
   const articleHandler = (id) => {
     const searchObj = news.find((newsItem) => newsItem._id === id);
     // console.log("Search Object", searchObj);
-    console.log(searchObj, "obj");
+    // console.log(searchObj, "obj");
     setObj(searchObj);
     setShowModal(!showModal);
   };
