@@ -57,7 +57,7 @@ const Login = () => {
                 type="text"
                 {...register("email")}
                 name="email"
-                className="form-control bg-light border border-secondary"
+                className="form-control bg-light"
                 id="userName"
                 aria-describedby="emailHelp"
               />
@@ -74,7 +74,7 @@ const Login = () => {
                 type="password"
                 {...register("password")}
                 name="password"
-                className="form-control bg-light border border-secondary"
+                className="form-control bg-light"
                 id="signPassord"
               />
             </div>
