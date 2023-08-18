@@ -15,40 +15,38 @@ const MainPage = () => {
     >
       <Title
         title="Page Content's Customization"
-        cssClass="text-dark fs-5 mb-4"
+        cssClass="text-dark fs-5 mb-4 fw-bold"
       />
       <ul className="list-group w-25">
         <li className="list-group-item list-group-item-action text-center py-4">
-          <Link to="/addproject" className="text-decoration-none blue-500 fs-4">
+          <Link to="/dashboard" className="blue-500 text-decoration-none fs-5">
+            Dashboard
+          </Link>
+        </li>
+        <li className="list-group-item list-group-item-action text-center py-4">
+          <Link to="/addproject" className="text-decoration-none blue-500 fs-5">
             Add Project
           </Link>
         </li>
         <li className="list-group-item list-group-item-action text-center py-4">
-          <Link to="/adminNews" className="blue-500 text-decoration-none fs-4">
+          <Link to="/adminNews" className="blue-500 text-decoration-none fs-5">
             New & Updates
           </Link>
         </li>
         <li className="list-group-item list-group-item-action text-center py-4">
           <Link
             to="/testimonial"
-            className="blue-500 text-decoration-none fs-4"
+            className="blue-500 text-decoration-none fs-5"
           >
             Testimonials
           </Link>
         </li>
-        <li className="list-group-item list-group-item-action text-center py-4">
-          <Link
-            to="/dashboard"
-            className="blue-500 text-decoration-none fs-4 text-uppercase"
-          >
-            Dashboard
-          </Link>
-        </li>
+
         {isSuperAdmin ? (
           <li className="list-group-item list-group-item-action text-center py-4">
             <Link
               to="/userAdmin"
-              className="blue-500 text-decoration-none fs-4"
+              className="blue-500 text-decoration-none fs-5"
             >
               User Administration
             </Link>
