@@ -1,6 +1,6 @@
 .login {
   background: #e6e6e6;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
   margin-top: 100px;
 }
 
@@ -14,5 +14,24 @@
 @media (max-width: 768px) {
   .login form {
     width: 80%;
+  }
+}
+
+.authForm form {
+  width: 75%;
+}
+
+.authForm .login .bg-light {
+  background: #fff !important;
+}
+
+@media (max-width: 991px) {
+  .authForm form {
+    width: 80%;
+    margin: 0;
+  }
+
+  .authForm .register .login {
+    margin: 10px !important;
   }
 }
