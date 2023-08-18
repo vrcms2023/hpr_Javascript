@@ -12,7 +12,7 @@
 .infoStrip {
   position: absolute;
   z-index: 999;
-  background-color: rgba(0, 152, 218, 0.95);
+  background-color: rgba(0, 152, 218, 0.75);
   bottom: 0;
   width: 100%;
   display: flex;
@@ -41,5 +41,6 @@
 
 .infoStrip + img {
   width: 100%;
+  height: 200px;
   object-fit: cover;
 }
