@@ -150,7 +150,7 @@ const Projects = () => {
         <div className="row">
           {ongoing.length > 0
             ? ongoing.map((project) => (
-                <div className="col-md-4 mb-3" key={project._id}>
+                <div className="col-md-3 mb-3" key={project._id}>
                   <div className="position-relative box">
                     <div className="infoStrip">
                       <Title
@@ -161,7 +161,7 @@ const Projects = () => {
                         more details
                       </Link> */}
                       <button
-                        className="loadMore"
+                        className="btn btn-primary btn-sm"
                         onClick={() =>
                           navigate("/projectDetails", {
                             state: {
@@ -225,7 +225,7 @@ const Projects = () => {
         <div className="row">
           {completed.length > 0
             ? completed.map((project) => (
-                <div className="col-md-4 mb-3 mb-md-0" key={project._id}>
+                <div className="col-md-3 mb-3 mb-md-0" key={project._id}>
                   <div className="position-relative box">
                     <div className="infoStrip">
                       <Title
@@ -233,7 +233,7 @@ const Projects = () => {
                         cssClass="text-white fs-5"
                       />
                       <button
-                        className="loadMore"
+                        className="btn btn-primary btn-sm"
                         onClick={() =>
                           navigate("/projectDetails", {
                             state: {
@@ -301,7 +301,7 @@ const Projects = () => {
         <div className="row">
           {future.length > 0
             ? future.map((project) => (
-                <div className="col-md-4 mb-3 mb-md-0" key={project._id}>
+                <div className="col-md-3 mb-3 mb-md-0" key={project._id}>
                   <div className="position-relative box">
                     <div className="infoStrip">
                       <Title
