@@ -1,26 +1,27 @@
 import React from "react";
 
-const Model = ({ obj, closeModel }) => {
-  const { newstitle, imageUrls, description, title, cr, crm } = obj;
+const Model = ({ obj, closeModel, privacy, flag }) => {
+  // const { newstitle, imageUrls, description, } = obj;
+  // const { dec, title, cr, crm } = privacy;
 
-  const newImages =
-    imageUrls.length > 0 ? (
-      <div className="">
-        <h5 className="text-dark text-center ">Images</h5>
-        <hr className="m-0 mb-3" />
-        {imageUrls.map((img) => (
-          <img src={img} key={img} alt="" width="250" className="m-2" />
-        ))}
-      </div>
-    ) : (
-      ""
-    );
+  // const newImages = obj.imageUrls.length > 0 ? (
+  //     <div className="">
+  //       <h5 className="text-dark text-center ">Images</h5>
+  //       <hr className="m-0 mb-3" />
+  //       {imageUrls.map((img) => (
+  //         <img src={img} key={img} alt="" width="250" className="m-2" />
+  //       ))}
+  //     </div>
+  //   ) : null;
+
   return (
     <div className="modal d-block modal-lg" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title text-dark">{newstitle || title}</h5>
+            <h5 className="modal-title text-dark fw-bold">
+              {flag === "footer" ? privacy.title : obj.newstitle}
+            </h5>
             <button
               type="button"
               className="btn-close"
@@ -29,13 +30,35 @@ const Model = ({ obj, closeModel }) => {
               onClick={closeModel}
             ></button>
           </div>
-          <div className="modal-body px-4 py-3">
-            {description && <p>{description}</p>}
-            {newImages}
+          {flag === "footer" ? (
+            <div className="modal-body px-4 py-3">
+              {privacy.dec && <p className="text-dark">{privacy.dec}</p>}
+              {privacy.cr && <p className="m-0 text-primary">{privacy.cr}</p>}
+              {privacy.crm && <p className="pb-1 text-dark">{privacy.crm}</p>}
+            </div>
+          ) : (
+            <div className="modal-body px-4 py-3">
+              {obj.description && (
+                <p className="text-dark">{obj.description}</p>
+              )}
+              {obj.imageUrls.length > 0 ? (
+                <div className="">
+                  <h5 className="text-dark text-center ">Images</h5>
+                  <hr className="m-0 mb-3" />
+                  {obj.imageUrls.map((img) => (
+                    <img
+                      src={img}
+                      key={img}
+                      alt=""
+                      width="250"
+                      className="m-2"
+                    />
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          )}
 
-            {cr && <p className="px-4 pb-1">{cr}</p>}
-            {crm && <p className="px-4 pb-1">{crm}</p>}
-          </div>
           {/* <div className="modal-footer text-center">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={closeModel}>Close</button>
                 <button type="button" className="btn btn-primary">Save changes</button>

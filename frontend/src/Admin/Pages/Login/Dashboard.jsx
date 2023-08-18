@@ -81,12 +81,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-light pt-5" style={{ marginTop: "90px" }}>
+    <div className="" style={{ marginTop: "150px" }}>
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}
-      <div className="row bg-light px-5">
-        <div className="text-end d-flex justify-content-between">
+      <div className="row px-5">
+        <div className="text-end d-flex justify-content-between align-items-center">
           <Title title="Dashboard" cssClass="text-center fs-3" />
           <div>
             <Button
@@ -106,8 +106,9 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      {/* <hr /> */}
 
-      <div className="row bg-light p-5 pt-0">
+      <div className="row p-5 pt-0">
         {projectStatus &&
           projectStatus.map((project, index) => (
             <div className="col-md-4" key={index}>

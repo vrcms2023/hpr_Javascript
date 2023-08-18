@@ -270,7 +270,7 @@ const AddProject = () => {
   }
 
   return (
-    <div className="bg-light pt-5" style={{ marginTop: "90px" }}>
+    <div className="bg-light pt-5" style={{ marginTop: "120px" }}>
       <div className="row bg-light px-5">
         <div className="text-end d-flex justify-content-between">
           <Title
@@ -442,7 +442,7 @@ const AddProject = () => {
                 <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-availability" type="button" role="tab" aria-controls="v-pills-availability" aria-selected="false">Availability</button> */}
               </div>
             </div>
-            <div className="col-md-9 bg-light pb-3">
+            <div className="col-md-9 shadow-lg p-5 mb-5">
               <div className="tab-content" id="v-pills-tabContent">
                 <div
                   className="tab-pane fade show active"
@@ -450,7 +450,7 @@ const AddProject = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-home-tab"
                 >
-                  <div className="border border-3 p-5 mb-4 shadow-lg">
+                  <div className="">
                     <div className="mb-3">
                       <label htmlFor="projectName" className="form-label  ">
                         Project Name

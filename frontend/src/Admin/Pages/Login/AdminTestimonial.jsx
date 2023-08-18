@@ -32,6 +32,7 @@ export const AdminTestimonial = () => {
   }, []);
 
   const changeHandler = (e) => {
+    setErrorMessage("");
     setTestimonialState({
       ...testimonialState,
       [e.target.name]: e.target.value,
@@ -45,7 +46,8 @@ export const AdminTestimonial = () => {
       `/api/testimonial/getTestimonialList`,
     );
     if (response?.status == 200 && response.data?.testimonial?.length > 0) {
-      setTestimonialList(response.data.testimonial);
+      const listReverseOrder = response.data.testimonial;
+      setTestimonialList(listReverseOrder.reverse());
     } else {
       setTestimonialList([]);
     }
@@ -64,6 +66,16 @@ export const AdminTestimonial = () => {
   }, [testimonialObject]);
 
   const saveTestimonial = async () => {
+    if (testimonialState.title === "") {
+      setErrorMessage("Please add testimonial title");
+      return;
+    }
+
+    if (testimonialState.description === "") {
+      setErrorMessage("Please add testimonial description");
+      return;
+    }
+
     const testimonial = {
       projectID: testimonialProject._id,
       title: testimonialState.title,
@@ -155,8 +167,8 @@ export const AdminTestimonial = () => {
   };
 
   return (
-    <div className="bg-light pt-5" style={{ marginTop: "90px" }}>
-      <div className="row bg-light px-5">
+    <div className="pt-5" style={{ marginTop: "120px" }}>
+      <div className="row px-5">
         <div className="text-end d-flex justify-content-between">
           <Title title={"Testimonial"} cssClass="text-center fs-3" />
           <Button
@@ -168,130 +180,133 @@ export const AdminTestimonial = () => {
         </div>
       </div>
 
-      <div className="row bg-light px-5 mt-3 pt-5 shadow-lg">
-        <div className="tab-content" id="v-pills-tabContent">
-          <div
-            className="tab-pane fade show active"
-            id="v-pills-news"
-            role="tabpanel"
-            aria-labelledby="v-pills-news-tab"
-          >
-            <div className="border border-3 p-5 mb-4 shadow-lg">
-              {errorMessage && <Error>{errorMessage}</Error>}
-              <div className="mb-3">
-                <label htmlFor="projectDescription" className="form-label  ">
-                  Testimonial Title
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="title"
-                  value={testimonialState.title}
-                  onChange={changeHandler}
-                  id="title"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="projectDescription" className="form-label  ">
-                  Testimonial Description
-                </label>
-                <textarea
-                  className="form-control"
-                  name="description"
-                  value={testimonialState.description}
-                  onChange={changeHandler}
-                  id="projectDescription"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div className="mb-3">
-                <FileUpload
-                  title="Testimonial Images"
-                  project={testimonialProject}
-                  updatedBy={userName}
-                  category="testimonial"
-                  gallerysetState={setTestimonialObject}
-                  galleryState={testimonialObject}
-                  validTypes="image/png,image/jpeg"
-                  disabledFile={disabledFile}
-                />
+      <div className="row px-5 mt-4">
+        <div className="col-12 col-md-3">
+          <div className="border border-1 p-4 mb-4 bg-light shadow-lg">
+            {errorMessage && <Error>{errorMessage}</Error>}
+            <div className="mb-3">
+              <label
+                htmlFor="projectDescription"
+                className="form-label fw-normal "
+              >
+                Testimonial Title <span className="text-danger"> *</span>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="title"
+                value={testimonialState.title}
+                onChange={changeHandler}
+                id="title"
+              />
+            </div>
+            <div className="mb-3">
+              <label
+                htmlFor="projectDescription"
+                className="form-label fw-normal "
+              >
+                Testimonial Description <span className="text-danger">*</span>
+              </label>
+              <textarea
+                className="form-control"
+                name="description"
+                value={testimonialState.description}
+                onChange={changeHandler}
+                id="projectDescription"
+                rows="3"
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <FileUpload
+                title="Testimonial Images"
+                project={testimonialProject}
+                updatedBy={userName}
+                category="testimonial"
+                gallerysetState={setTestimonialObject}
+                galleryState={testimonialObject}
+                validTypes="image/png,image/jpeg"
+                disabledFile={disabledFile}
+              />
 
-                <CatageoryImgC
-                  title={`Testimonial Image`}
-                  catategoryImgs={testimonialObject}
-                  catategoryImgState={setTestimonialObject}
-                  project={testimonialProject}
-                  category="testimonial"
-                  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
-                />
-              </div>
-              <div className="text-center">
-                <Button
-                  type="submit"
-                  cssClass="btn  btn-success"
-                  label={editState ? "Update Testimonial" : "Save Testimonial"}
-                  handlerChange={saveTestimonial}
-                />
-              </div>
-              {testimonialList.length > 0 ? (
-                <div className="row bg-light px-5 py-4">
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>News Title</th>
-                        <th>Description</th>
-                        <th>Image</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {testimonialList?.map((testimonial) => (
-                        <tr key={testimonial._id}>
-                          <td>{testimonial.title}</td>
-                          <td>{testimonial.description}</td>
-                          <td>
-                            {" "}
-                            {testimonial?.imageUrl ? (
-                              <img
-                                width={"100"}
-                                height={"100"}
-                                src={`${testimonial.imageUrl}`}
-                                alt=" "
-                              />
-                            ) : (
-                              ""
-                            )}{" "}
-                          </td>
-                          <td>
-                            <Link
-                              onClick={() => handleNewsEdit(event, testimonial)}
-                            >
-                              <i
-                                className="fa fa-pencil fs-4 text-secondary me-2"
-                                aria-hidden="true"
-                              ></i>
-                            </Link>
-                            <Link
-                              onClick={() =>
-                                handleNewsDelete(event, testimonial)
-                              }
-                            >
-                              <i
-                                className="fa fa-trash-o fs-4 text-danger"
-                                aria-hidden="true"
-                              ></i>
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                ""
-              )}
+              <CatageoryImgC
+                title={`Testimonial Image`}
+                catategoryImgs={testimonialObject}
+                catategoryImgState={setTestimonialObject}
+                project={testimonialProject}
+                category="testimonial"
+                cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5 fs-2"
+              />
+            </div>
+            <div className="text-center">
+              <Button
+                type="submit"
+                cssClass="btn btn-primary w-100"
+                label={editState ? "Update Testimonial" : "Save Testimonial"}
+                handlerChange={saveTestimonial}
+              />
             </div>
           </div>
+        </div>
+        <div className="col-12 col-md-9">
+          {testimonialList.length > 0 ? (
+            <div className="row px-2">
+              <table className="table table-responsive table-hover border align-middle">
+                <thead>
+                  <tr>
+                    <th>News Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {testimonialList?.reverse().map((testimonial) => (
+                    <tr key={testimonial._id}>
+                      <td>{testimonial.title}</td>
+                      <td>{testimonial.description}</td>
+                      <td>
+                        {" "}
+                        {testimonial?.imageUrl ? (
+                          <img
+                            width={"60"}
+                            height={"60"}
+                            src={`${testimonial.imageUrl}`}
+                            alt=" "
+                          />
+                        ) : (
+                          ""
+                        )}{" "}
+                      </td>
+                      <td className="valign-middle">
+                        <Link
+                          onClick={() => handleNewsEdit(event, testimonial)}
+                        >
+                          <i
+                            class="fa fa-pencil-square-o fs-4 text-secondary me-3"
+                            aria-hidden="true"
+                          ></i>
+                          {/* <i
+                                className="fa fa-pencil "
+                                aria-hidden="true"
+                              ></i> */}
+                        </Link>
+                        <Link
+                          onClick={() => handleNewsDelete(event, testimonial)}
+                        >
+                          <i
+                            className="fa fa-trash-o fs-4 text-danger"
+                            aria-hidden="true"
+                          ></i>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
