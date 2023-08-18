@@ -1,0 +1,19 @@
+.login {
+    background: #E6E6E6; 
+    border-bottom: 1px solid #ccc;
+    margin-top: 100px
+}
+
+.login form {
+    width: 40%;
+    margin: 80px 0;
+    padding: 50px;
+    border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    .login form {
+        width: 80%;
+       
+    }
+}

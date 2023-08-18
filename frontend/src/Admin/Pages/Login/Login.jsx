@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import Error from "../../Components/Error";
 import { setCookie } from "../../../util/cookieUtil";
 
+import './Login.css'
+
 const Login = () => {
   const { userInfo, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -35,19 +37,14 @@ const Login = () => {
   const loginHandler = () => {};
 
   return (
-    <div
-      className="mt-5 pt-5 pb-3"
-      style={{ background: "#E6E6E6", borderBottom: "1px solid #ccc" }}
-    >
-      <div className="row py-5 ">
-        <div className="col-lg-6 offset-lg-3 bg-light shadow-lg">
-          <div className="row">
-            <div className="col-lg-6 bg-light d-flex justify-content-center align-items-center">
-              <form onSubmit={handleSubmit(submitForm)}>
+    <div className="login">
+      <div className="row">
+            <div className="bg-light  d-flex justify-content-center align-items-center">
+              <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
                 {error && <Error>{error}</Error>}
                 <Title
                   title="Admin login"
-                  cssClass="text-start text-dark mb-4 fs-4"
+                  cssClass="text-center text-dark mb-4 fw-bold fs-4"
                 />
                 <div className="mb-3">
                   <label
@@ -82,10 +79,10 @@ const Login = () => {
                   />
                 </div>
 
-                <div className="d-grid gap-2">
+                <div className="d-grid gap-2 mt-4">
                   <Button
                     type="submit"
-                    cssClass="btn btn-lg btn-secondary"
+                    cssClass="btn btn-lg btn-primary"
                     handlerChange={loginHandler}
                     label="Login"
                   />
@@ -94,8 +91,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 
