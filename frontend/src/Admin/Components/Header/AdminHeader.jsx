@@ -53,36 +53,51 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {loginState ? (
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li className="text-dark text-capitalize d-flex justify-content-center align-items-center">
+                  {userName ? (
+                    <>
+                      {/* {testimonialUser ?  <img
+                      src={testimonialUser}
+                      className="rounded-circle testimonialImg shadow-md me-2"
+                      alt="User"
+                      width="30px"
+                    /> : <i class="fa fa-user" aria-hidden="true"></i>} */}
+                      <i
+                        class="fa fa-user-circle-o fs-1 text-secondary me-2 "
+                        aria-hidden="true"
+                      ></i>{" "}
+                      {userName}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {/* <h6>{userName ? `${userName}` : ""}</h6> */}
+                </li>
                 <li className="nav-item mx-3">
+                  <Button
+                    type="submit"
+                    cssClass="btn border border-secondary fw-bold ms-3"
+                    label="Logout"
+                    handlerChange={logOutHandler}
+                  />
+                </li>
+                {/* <li className="nav-item mx-3">
                   {loginState ? (
                     <Button
                       type="submit"
-                      cssClass="btn btn-secondary"
+                      cssClass="btn border border-secondary fw-bold ms-3"
                       label="Logout"
                       handlerChange={logOutHandler}
                     />
                   ) : (
                     <Button
                       type="submit"
-                      cssClass="btn btn-secondary"
+                      cssClass="btn"
                       label="Login"
                       handlerChange={() => navigate("/login")}
                     />
                   )}
-                </li>
-                <li className="text-dark text-capitalize text-center">
-                  {userName ? (
-                    <img
-                      src={testimonialUser}
-                      className="rounded-circle testimonialImg shadow-lg"
-                      alt="User"
-                      width="30px"
-                    />
-                  ) : (
-                    ""
-                  )}
-                  <h6>{userName ? `${userName}` : ""}</h6>
-                </li>
+                </li> */}
               </ul>
             ) : null}
           </div>
