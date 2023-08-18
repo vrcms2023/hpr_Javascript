@@ -170,7 +170,7 @@ export const AdminTestimonial = () => {
     <div className="pt-5" style={{ marginTop: "120px" }}>
       <div className="row px-5">
         <div className="text-end d-flex justify-content-between">
-          <Title title={"Testimonial"} cssClass="text-center fs-3" />
+          <Title title={"Testimonial"} cssClass="text-center blue-500 fs-4" />
           <Button
             type="submit"
             cssClass="btn btn-secondary"
@@ -282,7 +282,7 @@ export const AdminTestimonial = () => {
                           onClick={() => handleNewsEdit(event, testimonial)}
                         >
                           <i
-                            class="fa fa-pencil-square-o fs-4 text-secondary me-3"
+                            className="fa fa-pencil-square-o fs-4 text-secondary me-3"
                             aria-hidden="true"
                           ></i>
                           {/* <i

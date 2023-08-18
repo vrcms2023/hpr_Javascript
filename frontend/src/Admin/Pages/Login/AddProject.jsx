@@ -270,12 +270,12 @@ const AddProject = () => {
   }
 
   return (
-    <div className="bg-light pt-5" style={{ marginTop: "120px" }}>
-      <div className="row bg-light px-5">
+    <div className="pt-5" style={{ marginTop: "120px" }}>
+      <div className="row px-5">
         <div className="text-end d-flex justify-content-between">
           <Title
             title={`${id ? "Edit Project" : "Add Project"}`}
-            cssClass="text-center fs-3"
+            cssClass="text-center blue-500 fs-4"
           />
           <div>
             <Button
@@ -731,7 +731,7 @@ const AddProject = () => {
               />
               <Button
                 type="submit"
-                cssClass="btn  btn-success"
+                cssClass="btn btn-success"
                 label={id ? "Update Project" : "Save Project"}
                 handlerChange={saveProject}
               />

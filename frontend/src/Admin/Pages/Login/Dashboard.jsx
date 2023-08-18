@@ -87,7 +87,7 @@ const Dashboard = () => {
         </div> */}
       <div className="row px-5">
         <div className="text-end d-flex justify-content-between align-items-center">
-          <Title title="Dashboard" cssClass="text-center fs-3" />
+          <Title title="Dashboard" cssClass="text-center blue-500 fs-4" />
           <div>
             <Button
               type=""
