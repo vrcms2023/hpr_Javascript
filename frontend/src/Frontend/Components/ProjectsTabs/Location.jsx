@@ -1,7 +1,7 @@
 import React from "react";
 
 const Location = ({ amenities }) => {
-  const { googleMap } = amenities;
+  const { googleMap } = amenities ? amenities : {};
   return (
     <>
       {googleMap === "" ? (

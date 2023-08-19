@@ -18,7 +18,12 @@ const News = ({ item, dateFormat, articleHandler }) => {
           style={{ objectFit: "cover" }}
         />
       ) : (
-        ""
+        <img
+          className="w-100"
+          height={"100"}
+          src="images/dummy-image-square.png"
+          alt=""
+        />
       )}
       <Title title={item.newstitle} cssClass="text-dark fs-6 mt-3 fw-bold" />
       <small>Posted at {dateFormat(item.createdAt)}</small>

@@ -34,7 +34,7 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                 {/* <td className='align-middle fw-bold'>{project._id}</td> */}
                 <td className="align-middle">
                   {project.projectTitle}{" "}
-                  <span
+                  {/* <span
                     className={`badge text-dark bg-${
                       project.projectCategoryValue === "ongoing"
                         ? "warning"
@@ -46,20 +46,24 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                     }`}
                   >
                     {project.status}
-                  </span>
+                  </span> */}
                 </td>
                 <td className="align-middle">
-                  <span
-                    className={`badge fw-normal ${
-                      project.percentValue === "0"
-                        ? "bg-info"
-                        : project.percentValue === "100"
-                        ? "bg-success"
-                        : "bg-warning"
-                    }`}
-                  >
-                    {project.percentValue} %
-                  </span>
+                  {project.percentValue ? (
+                    <span
+                      className={`badge fw-normal ${
+                        parseInt(project.percentValue) === 0
+                          ? "bg-info"
+                          : parseInt(project.percentValue) === 100
+                          ? "bg-success"
+                          : "bg-warning"
+                      }`}
+                    >
+                      {project.percentValue} %
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </td>
                 <td className="align-middle">
                   <Link to={`/editproject/${project._id}`}>

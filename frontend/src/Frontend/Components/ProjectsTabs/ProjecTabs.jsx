@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ProjectTabs.css";
 
 import Title from "../../../Common/Title";
@@ -10,9 +10,11 @@ import Amenities from "./Amenities";
 import Spefifications from "./Spefifications";
 import Location from "./Location";
 import Cost from "./Cost";
+import Button from "../../../Common/Button";
 
 const ProjectTabs = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [projects, setProjects] = useState(location.state.selectedPorject);
   const [projectid, setprojectid] = useState(location.state.projectid);
@@ -25,6 +27,7 @@ const ProjectTabs = () => {
   const [priceImg, setPriceImg] = useState([]);
   const [planImg, setPlanImg] = useState([]);
   const [avlImg, setAvlImg] = useState([]);
+  const [projectTitle, setProjectTitle] = useState("");
 
   // console.log("projects", projects)
 
@@ -38,16 +41,19 @@ const ProjectTabs = () => {
       `/api/project/client/getSelectedProject/${projectid}`,
     );
     if (response?.status == 200) {
+      const projectData = response.data;
+      setProjectTitle(projectData.project.projectTitle);
+      setprojectid(projectData.project._id);
       // setSelectedProject("response", response.data);
       // console.log("Response Data images", response.data.imageData)
-      setAmenities(response.data.amenitie);
-      filtersImgPdfs(response.data.imageData, "images");
-      filtersImgPdfs(response.data.imageData, "pdfs");
-      filtersImgPdfs(response.data.imageData, "price");
-      filtersImgPdfs(response.data.imageData, "plan");
-      filtersImgPdfs(response.data.imageData, "avl");
-      setProjectHome(response.data.project);
-      setSpecifications(response.data.specificationData[0].specifications);
+      setAmenities(projectData.amenitie);
+      filtersImgPdfs(projectData.imageData, "images");
+      filtersImgPdfs(projectData.imageData, "pdfs");
+      filtersImgPdfs(projectData.imageData, "price");
+      filtersImgPdfs(projectData.imageData, "plan");
+      filtersImgPdfs(projectData.imageData, "avl");
+      setProjectHome(projectData.project);
+      setSpecifications(projectData.specificationData[0].specifications);
     }
   };
 
@@ -82,9 +88,18 @@ const ProjectTabs = () => {
     <div className="container mt-5 pt-5">
       <div className="row p-0 pt-4 projectTabs">
         <div className="col-md-12">
+          <Button
+            type=""
+            cssClass={"loadMore"}
+            label="Back to projects"
+            handlerChange={() => {
+              navigate("/projects");
+            }}
+          />
           <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
             <Title
               title={projectHome.projectCategoryName}
+              subTitle={projectTitle}
               cssClass="blue-900 fs-5 fw-bold"
             />
             <select
@@ -120,6 +135,7 @@ const ProjectTabs = () => {
                 >
                   HOME
                 </button>
+
                 <button
                   className="nav-link"
                   id="nav-gallery-tab"

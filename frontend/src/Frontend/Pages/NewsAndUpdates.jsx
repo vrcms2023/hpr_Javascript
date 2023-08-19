@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Title from "../../Common/Title";
 import Model from "../../Common/Model";
 
-import NewsImg1 from "../../Images/future.png";
 import ModelBg from "../../Common/ModelBg";
 
 import "./NewsAndUpdates.css";
