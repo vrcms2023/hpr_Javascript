@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Button from "../../../Common/Button";
 import { useNavigate, Link } from "react-router-dom";
 import Logo from "../../../../src/Images/hpr-infra-logo.png";
-import testimonialUser from "../../../../src/Images/testimonial.jpg";
 import { getCookie, removeAllCookies } from "../../../util/cookieUtil";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const Header = () => {
     removeAllCookies();
     setLoginState(false);
     dispatch(logout());
+    toast.success("Logout successfully");
     navigate("/login");
   }
   return (

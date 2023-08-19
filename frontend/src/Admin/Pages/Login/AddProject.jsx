@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import CatageoryImgC from "../../../Common/CatageoryImgC";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
+import Error from "../../Components/Error";
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const AddProject = () => {
   const [imgGallery, setImgGallery] = useState([]);
   const [projectStatus, setProjectStatus] = useState("");
   const [userName, setUserName] = useState("");
+
   const { id } = useParams();
 
   const [percentValue, setPercentValue] = useState("");
@@ -70,6 +72,7 @@ const AddProject = () => {
    * Select Porject type handler
    */
   const handleChange = (e) => {
+    setErrorMessage("");
     const value = e.target.value.toLowerCase();
     const obj = defaultProjectType.filter((obj) => {
       return obj.value === value;
@@ -77,7 +80,8 @@ const AddProject = () => {
     if (obj.length > 0) {
       setProjectType(obj);
     } else {
-      alert("select status");
+      setProjectType({});
+      setErrorMessage("Please select Project Type");
     }
   };
 
@@ -132,7 +136,7 @@ const AddProject = () => {
       });
       if (response?.status == 200) {
         const project = response.data.project;
-        toast(`${project.projectTitle} Project created`);
+        toast.success(`${project.projectTitle} Project created`);
         setNewProject(project);
         setProjectStatus(project.projectCategoryName);
         setreadOnlyTitle(project.projectTitle);
@@ -141,7 +145,7 @@ const AddProject = () => {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
 
@@ -153,8 +157,8 @@ const AddProject = () => {
       const response = await axiosServiceApi.get(`/api/project/findById/${id}`);
 
       if (response.status !== 200) {
-        setErrorMessage(data.message);
-        toast("Unable to Process your request");
+        setErrorMessage(response.data.message);
+        toast.error("Unable to Process your request");
       }
       if (response.status == 200) {
         const project = response.data.project;
@@ -189,8 +193,18 @@ const AddProject = () => {
 
   function saveProject() {
     updateProjectBasicDetails();
-    saveSpecifications();
-    saveAmenities();
+    if (specifications[0].title !== "") {
+      saveSpecifications();
+    }
+    if (
+      amenities &&
+      (amenities.amenitie !== null ||
+        amenities.feature !== null ||
+        amenities.googleMap !== null)
+    ) {
+      saveAmenities();
+    }
+
     navigate("/dashboard");
   }
 
@@ -212,14 +226,14 @@ const AddProject = () => {
       );
       if (response?.status == 200) {
         const project = response.data.project;
-        toast(`${project.projectTitle} Project Update`);
+        toast.success(`${project.projectTitle} Project Update`);
         setProjectName("");
         setAboutUs({ about });
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
 
@@ -238,11 +252,12 @@ const AddProject = () => {
       );
       if (response?.status == 200) {
         setSpecifications([specificationKeys]);
+        toast.success("specifications is saved");
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
 
@@ -260,12 +275,13 @@ const AddProject = () => {
         },
       );
       if (response?.status == 200) {
+        toast.success("amenitie is saved");
         setAmenities(amenitieKeys);
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
 
@@ -298,6 +314,7 @@ const AddProject = () => {
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
       <div className="py-2">
+        {errorMessage ? <Error>{errorMessage}</Error> : ""}
         {!id && !show ? (
           <select
             className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
@@ -321,9 +338,8 @@ const AddProject = () => {
         )}
       </div>
       <hr />
-      {projectType.length == 0 && !show ? (
+      {projectType.length > 0 && !show ? (
         <div className="row" id="projectTitle">
-          <div> {errorMessage} </div>
           <div className="col-md-4 offset-md-4 my-5 ">
             <div className="">
               {/* <label htmlFor="projectName" className="form-label text-center d-block fs-5 mb-3 fw-normal">Add project name</label> */}

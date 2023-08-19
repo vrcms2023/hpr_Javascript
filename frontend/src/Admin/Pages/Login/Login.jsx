@@ -9,6 +9,7 @@ import Error from "../../Components/Error";
 import { setCookie } from "../../../util/cookieUtil";
 
 import "./Login.css";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { userInfo, error } = useSelector((state) => state.auth);
@@ -21,6 +22,7 @@ const Login = () => {
   // redirect authenticated user to Main screen
   useEffect(() => {
     if (userInfo) {
+      toast.success(`${userInfo.userName} Login successfully `);
       setCookie("userToken", userInfo.userToken);
       setCookie("email", userInfo.email);
       setCookie("userName", userInfo.userName);
