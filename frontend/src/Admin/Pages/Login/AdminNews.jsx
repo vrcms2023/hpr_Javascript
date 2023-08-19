@@ -36,7 +36,8 @@ export const AdminNews = () => {
   const getNewList = async () => {
     const response = await axiosServiceApi.get(`/api/appnews/getNewsList`);
     if (response?.status == 200 && response.data?.appNews?.length > 0) {
-      setNewsList(response.data.appNews);
+      const listReverseOrder = response.data.appNews;
+      setNewsList(response.data.appNews.reverse());
     } else {
       setNewsList([]);
     }
@@ -47,6 +48,16 @@ export const AdminNews = () => {
   }, []);
 
   const saveProject = async () => {
+    // if (newsState.newstitle === "") {
+    //   setErrorMessage("Please add title");
+    //   return;
+    // }
+
+    // if (newsState.description === "") {
+    //   setErrorMessage("Please add description");
+    //   return;
+    // }
+
     const news = {
       projectID: newProject._id,
       newstitle: newsState.newstitle,
@@ -144,10 +155,13 @@ export const AdminNews = () => {
   };
 
   return (
-    <div className="bg-light pt-5" style={{ marginTop: "90px" }}>
-      <div className="row bg-light px-5">
+    <div className="pt-5" style={{ marginTop: "120px" }}>
+      <div className="row px-5">
         <div className="text-end d-flex justify-content-between">
-          <Title title={"News And Update"} cssClass="text-center fs-3" />
+          <Title
+            title={"News And Update"}
+            cssClass="text-center blue-500 fs-4"
+          />
           <Button
             type="submit"
             cssClass="btn btn-secondary"
@@ -157,122 +171,117 @@ export const AdminNews = () => {
         </div>
       </div>
 
-      <div className="row bg-light px-5 mt-3 pt-5 shadow-lg">
-        <div className="tab-content" id="v-pills-tabContent">
-          <div
-            className="tab-pane fade show active"
-            id="v-pills-news"
-            role="tabpanel"
-            aria-labelledby="v-pills-news-tab"
-          >
-            <div className="border border-3 p-5 mb-4 shadow-lg">
-              {errorMessage && <Error>{errorMessage}</Error>}
-              <div className="mb-3">
-                <label htmlFor="projectDescription" className="form-label  ">
-                  News Title
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="newstitle"
-                  value={newsState.newstitle}
-                  onChange={changeHandler}
-                  id="newstitle"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="projectDescription" className="form-label  ">
-                  News Description
-                </label>
-                <textarea
-                  className="form-control"
-                  name="description"
-                  value={newsState.description}
-                  onChange={changeHandler}
-                  id="projectDescription"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div className="mb-3">
-                <FileUpload
-                  title="News Images"
-                  project={newProject}
-                  updatedBy={userName}
-                  category="news"
-                  gallerysetState={setNewsObject}
-                  galleryState={newsObject}
-                  validTypes="image/png,image/jpeg"
-                />
-                <CatageoryImgC
-                  title={`News Image`}
-                  catategoryImgs={newsObject}
-                  catategoryImgState={setNewsObject}
-                  project={newProject}
-                  category="news"
-                  cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
-                />
-              </div>
-              <div className="text-center">
-                <Button
-                  type="submit"
-                  cssClass="btn  btn-success"
-                  label={editState ? "Update News" : "Save News"}
-                  handlerChange={saveProject}
-                />
-              </div>
-              {newsList.length > 0 ? (
-                <div className="row bg-light px-5 py-4">
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>News Title</th>
-                        <th>Description</th>
-                        <th>Image</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {newsList?.map((news) => (
-                        <tr key={news._id}>
-                          <td>{news.newstitle}</td>
-                          <td>{news.description}</td>
-                          <td>
-                            {" "}
-                            {news?.imageUrls ? (
-                              <img
-                                width={"100"}
-                                height={"100"}
-                                src={`${news.imageUrls[0]}`}
-                                alt=" "
-                              />
-                            ) : (
-                              ""
-                            )}{" "}
-                          </td>
-                          <td>
-                            <Link onClick={() => handleNewsEdit(event, news)}>
-                              <i
-                                className="fa fa-pencil fs-4 text-secondary me-2"
-                                aria-hidden="true"
-                              ></i>
-                            </Link>
-                            <Link onClick={() => handleNewsDelete(event, news)}>
-                              <i
-                                className="fa fa-trash-o fs-4 text-danger"
-                                aria-hidden="true"
-                              ></i>
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                ""
-              )}
+      <div className="row px-5 mt-4">
+        <div className="col-12 col-md-3">
+          <div className="border border-1 p-4 mb-4 bg-light shadow-lg">
+            {errorMessage && <Error>{errorMessage}</Error>}
+            <div className="mb-3">
+              <label htmlFor="projectDescription" className="form-label  ">
+                News Title <span className="text-danger"> *</span>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="newstitle"
+                value={newsState.newstitle}
+                onChange={changeHandler}
+                id="newstitle"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="projectDescription" className="form-label  ">
+                News Description <span className="text-danger"> *</span>
+              </label>
+              <textarea
+                className="form-control"
+                name="description"
+                value={newsState.description}
+                onChange={changeHandler}
+                id="projectDescription"
+                rows="3"
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <FileUpload
+                title="News Images"
+                project={newProject}
+                updatedBy={userName}
+                category="news"
+                gallerysetState={setNewsObject}
+                galleryState={newsObject}
+                validTypes="image/png,image/jpeg"
+              />
+              <CatageoryImgC
+                title={`News Image`}
+                catategoryImgs={newsObject}
+                catategoryImgState={setNewsObject}
+                project={newProject}
+                category="news"
+                cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+              />
+            </div>
+            <div className="text-center">
+              <Button
+                type="submit"
+                cssClass="btn btn-primary w-100"
+                label={editState ? "Update News" : "Save News"}
+                handlerChange={saveProject}
+              />
             </div>
           </div>
+        </div>
+        <div className="col-12 col-md-9">
+          {newsList.length > 0 ? (
+            <div className="row px-2">
+              <table className="table table-responsive table-hover border align-middle">
+                <thead>
+                  <tr>
+                    <th>News Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {newsList?.map((news) => (
+                    <tr key={news._id}>
+                      <td>{news.newstitle}</td>
+                      <td>{news.description}</td>
+                      <td>
+                        {" "}
+                        {news?.imageUrls ? (
+                          <img
+                            width={"100"}
+                            height={"100"}
+                            src={`${news.imageUrls[0]}`}
+                            alt=" "
+                          />
+                        ) : (
+                          ""
+                        )}{" "}
+                      </td>
+                      <td>
+                        <Link onClick={() => handleNewsEdit(event, news)}>
+                          <i
+                            className="fa fa-pencil fs-4 text-secondary me-2"
+                            aria-hidden="true"
+                          ></i>
+                        </Link>
+                        <Link onClick={() => handleNewsDelete(event, news)}>
+                          <i
+                            className="fa fa-trash-o fs-4 text-danger"
+                            aria-hidden="true"
+                          ></i>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

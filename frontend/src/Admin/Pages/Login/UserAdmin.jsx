@@ -57,10 +57,13 @@ const UserAdmin = () => {
   };
 
   return (
-    <div className="bg-light pt-5" style={{ marginTop: "90px" }}>
-      <div className="row bg-light px-5">
+    <div className="pt-5" style={{ marginTop: "120px" }}>
+      <div className="row px-5">
         <div className="text-end d-flex justify-content-between">
-          <Title title={"Application Pages"} cssClass="text-center fs-3" />
+          <Title
+            title={"Application Pages"}
+            cssClass="text-center blue-500 fs-4"
+          />
           <Button
             type="submit"
             cssClass="btn btn-secondary"
@@ -70,9 +73,9 @@ const UserAdmin = () => {
         </div>
       </div>
 
-      <div className="row bg-light px-5 py-4">
+      <div className="row px-5 py-4">
         {isSuperAdmin ? (
-          <table className="table table-striped">
+          <table className="table table-striped table-responsive table-hover">
             <thead>
               <tr>
                 <th>UserName</th>

@@ -50,7 +50,7 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                 </td>
                 <td className="align-middle">
                   <span
-                    class={`badge fw-normal ${
+                    className={`badge fw-normal ${
                       project.percentValue === "0"
                         ? "bg-info"
                         : project.percentValue === "100"
