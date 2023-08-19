@@ -63,7 +63,7 @@ const Header = () => {
                       width="30px"
                     /> : <i class="fa fa-user" aria-hidden="true"></i>} */}
                       <i
-                        class="fa fa-user-circle-o fs-1 text-secondary me-2 "
+                        className="fa fa-user-circle-o fs-1 text-secondary me-2 "
                         aria-hidden="true"
                       ></i>{" "}
                       {userName}

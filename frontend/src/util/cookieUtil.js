@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
 
 export function setCookie(name, value) {
-  Cookies.set(name, value, { secure: true, sameSite: "Strict" });
+  Cookies.set(name, value, { sameSite: "Strict" });
 }
 
 export function setCookieWithExpire(name, value, expire) {
-  Cookies.set(name, value, { secure: true, sameSite: "Strict", expire });
+  Cookies.set(name, value, { sameSite: "Strict", expire });
 }
 
 export function getCookie(name) {

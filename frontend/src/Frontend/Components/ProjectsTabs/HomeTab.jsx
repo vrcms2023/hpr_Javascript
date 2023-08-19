@@ -1,10 +1,26 @@
 import React from "react";
 import Title from "../../../Common/Title";
 import HomeImg from "../../../Images/project1.png";
+import { getCookie, removeCookie, setCookie } from "../../../util/cookieUtil";
+import { useNavigate } from "react-router-dom";
 
 const HomeTab = ({ project, projectImages, pdfs }) => {
   // console.log("Home Tab", projectImages[0].path)
+  const navigate = useNavigate();
   const { aboutstitle, aboutussubtitle, description, projectTitle } = project;
+
+  const downloadPDF = (path, name) => {
+
+   if (getCookie("clientInformation") !== undefined) {
+      const link = document.createElement('a');
+      link.download = name;
+      link.href = path;
+      link.click();
+    } else {
+      navigate(`/contact`);
+    }
+  };
+
   return (
     <div className="py-5">
       <Title title={projectTitle} cssClass="" />
@@ -13,11 +29,11 @@ const HomeTab = ({ project, projectImages, pdfs }) => {
       <p className="text-end">
         {pdfs.length > 0
           ? pdfs.map((pdf, i) => (
-              <span key={i} className="d-block my-3">
-                <a href={pdf.path} className="text-dark me-2" download>
+              <span key={i} className="d-block my-3" onClick={() => downloadPDF(pdf.path, pdf.originalname)}>
+                <span className="text-dark me-2" download>
                   {" "}
                   {pdf.originalname}
-                </a>
+                </span>
                 <svg
                   width="18"
                   height="23"

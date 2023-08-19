@@ -28,8 +28,6 @@ const Projects = () => {
   );
   const dispatch = useDispatch();
 
-  const backendURL = getBaseURL();
-
   useEffect(() => {
     if (clientProjects.length === 0) {
       dispatch(getClientProjects());
@@ -46,22 +44,6 @@ const Projects = () => {
       setOngoing(projectList.ongoing);
     }
   }, [clientProjects]);
-
-  // useEffect(() => {
-  //   fetch(`${backendURL}/api/project/client/getProjects`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       const projectList = formatData(data);
-  //       setCompleted(projectList.completed);
-  //       setFuture(projectList.future);
-  //       setOngoing(projectList.ongoing);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  // console.log(completed[0].imgs)
-  // console.log(future)
-  // console.log(ongoing[0].imgs[0].path)
 
   const formatData = (data) => {
     const project = data.projectList;

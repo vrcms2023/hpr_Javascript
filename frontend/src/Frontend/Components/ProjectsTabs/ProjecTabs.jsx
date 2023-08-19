@@ -91,6 +91,7 @@ const ProjectTabs = () => {
               className="form-select shadow-lg border border-1 rounded-0 border-success w-25"
               aria-label="Default select example"
               id="projectStatus"
+              value={projectid}
               onChange={(e) => getProjects(e.target.value)}
             >
               <option value="select">Select Project</option>
