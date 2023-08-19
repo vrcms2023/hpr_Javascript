@@ -10,9 +10,8 @@ const HomeTab = ({ project, projectImages, pdfs }) => {
   const { aboutstitle, aboutussubtitle, description, projectTitle } = project;
 
   const downloadPDF = (path, name) => {
-
-   if (getCookie("clientInformation") !== undefined) {
-      const link = document.createElement('a');
+    if (getCookie("clientInformation") !== undefined) {
+      const link = document.createElement("a");
       link.download = name;
       link.href = path;
       link.click();
@@ -29,7 +28,11 @@ const HomeTab = ({ project, projectImages, pdfs }) => {
       <p className="text-end">
         {pdfs.length > 0
           ? pdfs.map((pdf, i) => (
-              <span key={i} className="d-block my-3" onClick={() => downloadPDF(pdf.path, pdf.originalname)}>
+              <span
+                key={i}
+                className="d-block my-3"
+                onClick={() => downloadPDF(pdf.path, pdf.originalname)}
+              >
                 <span className="text-dark me-2" download>
                   {" "}
                   {pdf.originalname}

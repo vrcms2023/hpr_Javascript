@@ -298,7 +298,7 @@ const AddProject = () => {
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
       <div className="py-2">
-        {!id && !show  ? (
+        {!id && !show ? (
           <select
             className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
             aria-label="Default select example"

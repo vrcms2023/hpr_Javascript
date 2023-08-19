@@ -9,7 +9,6 @@ const ProtectedRoute = (props) => {
 
   useEffect(() => {
     const checkUserToken = () => {
-   
       const userToken = getCookie("userToken");
       if (!userToken || userToken === undefined) {
         setIsLoggedIn(false);
