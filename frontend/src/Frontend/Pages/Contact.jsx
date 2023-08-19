@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../Common/Title";
 import Alert from "../../Common/Alert";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Contact.css";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 import contactImg from "../../Images/contact.png";
-import { removeCookie, setCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie, setCookie } from "../../util/cookieUtil";
 
 const Contact = () => {
   const formObject = { firstName: "", email: "", phone: "", message: "" };

@@ -298,7 +298,7 @@ const AddProject = () => {
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
       <div className="py-2">
-        {!id ? (
+        {!id && !show ? (
           <select
             className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
             aria-label="Default select example"
@@ -321,7 +321,7 @@ const AddProject = () => {
         )}
       </div>
       <hr />
-      {projectType.length > 0 && !show ? (
+      {projectType.length == 0 && !show ? (
         <div className="row" id="projectTitle">
           <div> {errorMessage} </div>
           <div className="col-md-4 offset-md-4 my-5 ">

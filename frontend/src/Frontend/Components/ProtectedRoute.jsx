@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import UnauthorizedPage from "../../Admin/Pages/Login/UnauthorizedPage";
+import { getCookie } from "../../util/cookieUtil";
 
 const ProtectedRoute = (props) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [cookies] = useCookies(["token", "userName"]);
 
   useEffect(() => {
     const checkUserToken = () => {
-      const userToken = cookies.userToken;
+      const userToken = getCookie("userToken");
       if (!userToken || userToken === undefined) {
         setIsLoggedIn(false);
         return navigate("/login");
