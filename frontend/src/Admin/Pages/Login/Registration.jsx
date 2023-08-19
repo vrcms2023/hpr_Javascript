@@ -6,6 +6,7 @@ import Button from "../../../Common/Button";
 import Error from "../../Components/Error";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../../features/auth/authActions";
+import { toast } from "react-toastify";
 
 const Registration = () => {
   const [customError, setCustomError] = useState(null);
@@ -19,7 +20,10 @@ const Registration = () => {
 
   useEffect(() => {
     // redirect user to login page if registration was successful
-    if (success) navigate("/login");
+    if (success) {
+      toast.success("Register successfully");
+      navigate("/login");
+    }
   }, [navigate, success]);
 
   const submitForm = (data) => {

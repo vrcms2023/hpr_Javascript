@@ -57,13 +57,13 @@ const Dashboard = () => {
 
   const handleProjectDelete = (project, id) => {
     const deleteDashBoardProject = async () => {
-      const data = await axiosServiceApi.get(
+      const response = await axiosServiceApi.get(
         `/api/project/deleteDashboardProject/${id}`,
       );
-      if (data?.projectList?.length > 0) {
-        toast(`${project.projectCategoryName}  Deleted`);
-        const finalObj = formatData(data.projectList);
-        setProjects(finalObj);
+      if (response.data?.projectList?.length > 0) {
+        toast.success(`${project.projectTitle} project Deleted`);
+        const finalObj = formatData(response.data.projectList);
+        setProjectStatus(finalObj);
       }
     };
 

@@ -3,14 +3,10 @@ import Title from "../../Common/Title";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientProjects } from "../../features/project/clientProjectActions";
 
-
 import "./Projects.css";
 import ProjectItem from "../Components/projectItem";
 
-
-
 const Projects = () => {
-
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
   const [ongoing, setOngoing] = useState([]);

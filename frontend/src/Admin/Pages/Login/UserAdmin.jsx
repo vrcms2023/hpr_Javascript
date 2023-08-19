@@ -48,10 +48,10 @@ const UserAdmin = () => {
 
     if (response.status !== 200) {
       setErrorMessage(data.message);
-      toast("Unable to active user");
+      toast.error("Unable to active user");
     }
     if (response.status == 200) {
-      toast(`${user.userName} is status updated`);
+      toast.success(`${user.userName} is status updated`);
       getAllUserDetails();
     }
   };

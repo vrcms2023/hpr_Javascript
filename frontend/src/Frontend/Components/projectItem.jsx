@@ -3,7 +3,7 @@ import Title from "../../Common/Title";
 import { Link, useNavigate } from "react-router-dom";
 
 const ProjectItem = ({ projectList, projectType }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="container my-5 pb-3">
       <div className="row">
