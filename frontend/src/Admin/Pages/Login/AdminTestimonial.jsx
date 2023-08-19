@@ -274,7 +274,12 @@ export const AdminTestimonial = () => {
                             alt=" "
                           />
                         ) : (
-                          ""
+                          <img
+                            width={"100"}
+                            height={"100"}
+                            src="images/dummy-image-square.png"
+                            alt=""
+                          />
                         )}{" "}
                       </td>
                       <td className="valign-middle">

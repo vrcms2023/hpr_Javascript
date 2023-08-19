@@ -48,7 +48,7 @@ const ProjectItem = ({ projectList, projectType }) => {
                   {project.imgs.length > 0 ? (
                     <img src={project.imgs[0].path} alt="" />
                   ) : (
-                    <img src="uploads/dummy-image-square-600x600.webp" alt="" />
+                    <img src="images/dummy-image-square.png" alt="" />
                   )}
                 </div>
               </div>

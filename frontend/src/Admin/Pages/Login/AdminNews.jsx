@@ -205,7 +205,7 @@ export const AdminNews = () => {
             </div>
             <div className="mb-3">
               <FileUpload
-                title="News Images"
+                title="News Images (Upload multiple images)"
                 project={newProject}
                 updatedBy={userName}
                 category="news"
@@ -251,7 +251,7 @@ export const AdminNews = () => {
                       <td>{news.description}</td>
                       <td>
                         {" "}
-                        {news?.imageUrls ? (
+                        {news?.imageUrls.length > 0 ? (
                           <img
                             width={"100"}
                             height={"100"}
@@ -259,13 +259,18 @@ export const AdminNews = () => {
                             alt=" "
                           />
                         ) : (
-                          ""
+                          <img
+                            width={"100"}
+                            height={"100"}
+                            src="images/dummy-image-square.png"
+                            alt=""
+                          />
                         )}{" "}
                       </td>
                       <td>
                         <Link onClick={() => handleNewsEdit(event, news)}>
                           <i
-                            className="fa fa-pencil fs-4 text-secondary me-2"
+                            className="fa fa-pencil-square-o fs-4 text-muted me-4"
                             aria-hidden="true"
                           ></i>
                         </Link>

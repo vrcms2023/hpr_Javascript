@@ -2,7 +2,7 @@ import React from "react";
 
 const Amenities = ({ amenities }) => {
   // console.log(amenities)
-  const { amenitie, feature, googleMap } = amenities;
+  const { amenitie, feature } = amenities ? amenities : {};
   return (
     <div className="amenities container my-4">
       <div className="row">
