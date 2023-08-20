@@ -38,6 +38,7 @@ const AddProject = () => {
   const [projectStatus, setProjectStatus] = useState("");
   const [userName, setUserName] = useState("");
   const [projectTitleErrorMessage, setProjectTitleErrorMessage] = useState("");
+  const [publish, setPublish] = useState(false);
 
   const { id } = useParams();
 
@@ -139,6 +140,7 @@ const AddProject = () => {
         userID: getCookie("userId"),
         status: projectType[0].label,
         isActive: true,
+        publish: false,
       });
       if (response?.status == 200) {
         const project = response.data.project;
@@ -146,12 +148,13 @@ const AddProject = () => {
         setNewProject(project);
         setProjectStatus(project.projectCategoryName);
         setreadOnlyTitle(project.projectTitle);
+        setPublish(JSON.parse(project.publish));
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast.error("Unable to Process your request");
+      toast.error(error);
     }
   }
 
@@ -187,6 +190,7 @@ const AddProject = () => {
         };
         setAboutUs(aboutus);
         setPercentValue(Number(project.percentValue));
+        setPublish(project.publish ? JSON.parse(project.publish) : false);
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
@@ -287,8 +291,17 @@ const AddProject = () => {
     }
   }
 
-  const publishHandler = () => {
-    console.log("sdfdsfsdf");
+  const publishHandler = async () => {
+    const response = await axiosServiceApi.get(
+      `/api/project/updatePublisher/${id}`,
+    );
+    if (response.status === 200) {
+      const publisher = JSON.parse(response.data.project.publish);
+      setPublish(publisher);
+      toast.success(
+        `${readOnlyTitle} ${!publisher ? "published" : "unPublished"}`,
+      );
+    }
   };
 
   return (
@@ -403,12 +416,21 @@ const AddProject = () => {
               </h3>
             )}
             <div>
-              <Button
-                type="submit"
-                cssClass="btn btn-success"
-                label={"PUBLISH"}
-                handlerChange={publishHandler}
-              />
+              {publish ? (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-danger"
+                  label={"UNPUBLISH"}
+                  handlerChange={publishHandler}
+                />
+              ) : (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-success"
+                  label={"PUBLISH"}
+                  handlerChange={publishHandler}
+                />
+              )}
             </div>
 
             <div className="col-md-3 bg-light pb-3">

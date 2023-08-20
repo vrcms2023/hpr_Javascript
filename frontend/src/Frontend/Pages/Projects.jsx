@@ -5,6 +5,7 @@ import { getClientProjects } from "../../features/project/clientProjectActions";
 
 import "./Projects.css";
 import ProjectItem from "../Components/projectItem";
+import { dataFormatedByCatergoryName } from "../../util/dataFormatUtil";
 
 const Projects = () => {
   const [completed, setCompleted] = useState([]);
@@ -23,36 +24,13 @@ const Projects = () => {
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
-      const projectList = formatData(clientProjects);
+      dataFormatedByCatergoryName;
+      const projectList = dataFormatedByCatergoryName(clientProjects);
       setCompleted(projectList.completed);
       setFuture(projectList.future);
       setOngoing(projectList.ongoing);
     }
   }, [clientProjects]);
-
-  const formatData = (data) => {
-    const project = data.projectList;
-    const images = data.imageList;
-    const projList = [];
-
-    const list = project.reduce((acc, val, ind) => {
-      const imgs = [];
-      images.forEach((el, i) => {
-        if (el.projectID === val._id) {
-          imgs.push(el);
-        }
-      });
-      return acc.concat({ ...val, imgs });
-    }, []);
-
-    list.map((proj) => {
-      if (!projList[proj.projectCategoryValue]) {
-        projList[proj.projectCategoryValue] = [];
-      }
-      projList[proj.projectCategoryValue].push(proj);
-    });
-    return projList;
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);

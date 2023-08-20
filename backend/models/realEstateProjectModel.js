@@ -44,6 +44,10 @@ const realEstateProjectSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    publish: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: true,
