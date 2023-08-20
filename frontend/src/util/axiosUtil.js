@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getBaseURL } from "./ulrUtil";
 import { getCookie } from "./cookieUtil";
-import { toast } from "react-toastify";
 
 /**
  * Axios API call with Access token
@@ -47,7 +46,6 @@ const responseInterceptorResponseHanler = async (response) => {
 
 const responseInterceptorErrortHanler = async (error) => {
   if (error.response.status == 404) {
-    toast("Unable to Process your request");
     return Promise.reject(error.response.data.message);
   }
   return Promise.reject(error);

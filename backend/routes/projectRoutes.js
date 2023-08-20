@@ -13,8 +13,14 @@ router
   .route("/findById/:id")
   .get(protect, projectController.getSelectedProject);
 router
+  .route("/updatePublisher/:id")
+  .get(protect, projectController.updatePubliser);
+router
   .route("/deleteDashboardProject/:id")
   .get(protect, projectController.deleteSelectedProject);
+router
+  .route("/reStoreDashboardProject/:id")
+  .get(protect, projectController.reStoreSelectedProject);
 router.get("/client/getProjects", projectController.getClientProjects);
 router.get(
   "/client/getSelectedProject/:id",

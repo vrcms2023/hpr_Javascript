@@ -24,7 +24,12 @@ const AddProject = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [newProject, setNewProject] = useState({});
   const [readOnlyTitle, setreadOnlyTitle] = useState("");
-  const about = { aboutstitle: "", aboutussubtitle: "", description: "" };
+  const about = {
+    aboutstitle: "",
+    aboutussubtitle: "",
+    description: "",
+    imageDescription: "",
+  };
   const [aboutUs, setAboutUs] = useState(about);
   const specificationKeys = { title: "", feature: "" };
   const amenitieKeys = { amenitie: "", feature: "", googleMap: "" };
@@ -38,6 +43,7 @@ const AddProject = () => {
   const [projectStatus, setProjectStatus] = useState("");
   const [userName, setUserName] = useState("");
   const [projectTitleErrorMessage, setProjectTitleErrorMessage] = useState("");
+  const [projectPublish, setProjectPublish] = useState(false);
 
   const { id } = useParams();
 
@@ -120,6 +126,7 @@ const AddProject = () => {
       aboutstitle: aboutUs.aboutstitle,
       aboutussubtitle: aboutUs.aboutussubtitle,
       description: aboutUs.description,
+      imageDescription: aboutUs.imageDescription,
     };
   };
 
@@ -139,6 +146,7 @@ const AddProject = () => {
         userID: getCookie("userId"),
         status: projectType[0].label,
         isActive: true,
+        publish: false,
       });
       if (response?.status == 200) {
         const project = response.data.project;
@@ -146,12 +154,13 @@ const AddProject = () => {
         setNewProject(project);
         setProjectStatus(project.projectCategoryName);
         setreadOnlyTitle(project.projectTitle);
+        setProjectPublish(false);
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast.error("Unable to Process your request");
+      toast.error(error);
     }
   }
 
@@ -184,9 +193,13 @@ const AddProject = () => {
           aboutstitle: project.aboutstitle,
           aboutussubtitle: project.aboutussubtitle,
           description: project.description,
+          imageDescription: project.imageDescription,
         };
         setAboutUs(aboutus);
         setPercentValue(Number(project.percentValue));
+        setProjectPublish(
+          project.publish ? JSON.parse(project.publish) : false,
+        );
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
@@ -231,8 +244,7 @@ const AddProject = () => {
       if (response?.status == 200) {
         const project = response.data.project;
         toast.success(`${project.projectTitle} Project Update`);
-        setProjectName("");
-        setAboutUs({ about });
+        setProjectName(project.projectTitle);
       } else {
         setErrorMessage(response.data.message);
       }
@@ -254,9 +266,7 @@ const AddProject = () => {
           specifications: specifications,
         },
       );
-      if (response?.status == 200) {
-        setSpecifications([specificationKeys]);
-      } else {
+      if (response?.status !== 200) {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
@@ -277,9 +287,7 @@ const AddProject = () => {
           amenitieslist: amenities,
         },
       );
-      if (response?.status == 200) {
-        setAmenities(amenitieKeys);
-      } else {
+      if (!response?.status == 200) {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
@@ -287,8 +295,17 @@ const AddProject = () => {
     }
   }
 
-  const publishHandler = () => {
-    console.log("sdfdsfsdf");
+  const publishHandler = async () => {
+    const response = await axiosServiceApi.get(
+      `/api/project/updatePublisher/${id}`,
+    );
+    if (response.status === 200) {
+      const publisher = JSON.parse(response.data.project.publish);
+      setProjectPublish(publisher);
+      toast.success(
+        `${readOnlyTitle} ${!publisher ? "published" : "unPublished"}`,
+      );
+    }
   };
 
   return (
@@ -403,12 +420,21 @@ const AddProject = () => {
               </h3>
             )}
             <div>
-              <Button
-                type="submit"
-                cssClass="btn btn-success"
-                label={"PUBLISH"}
-                handlerChange={publishHandler}
-              />
+              {projectPublish ? (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-danger"
+                  label={"UNPUBLISH"}
+                  handlerChange={publishHandler}
+                />
+              ) : (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-success"
+                  label={"PUBLISH"}
+                  handlerChange={publishHandler}
+                />
+              )}
             </div>
 
             <div className="col-md-3 bg-light pb-3">
@@ -741,6 +767,20 @@ const AddProject = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-gallery-tab"
                 >
+                  <div className="mb-3">
+                    <label htmlFor="imageDescription" className="form-label  ">
+                      Project Image description
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="imageDescription"
+                      value={aboutUs.imageDescription}
+                      onChange={changeHandler}
+                      id="imageDescription"
+                    />
+                  </div>
+
                   <FileUpload
                     title="Add Images"
                     project={newProject}
@@ -758,11 +798,7 @@ const AddProject = () => {
                     category="images"
                     cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
                   />
-                  {/* <CatageoryImgC title="Future Projects" thumbDelete={thumbDelete}catategoryImgs={onFutureImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-success rounded-5" /> */}
-                  {/* <CatageoryImgC title="Completed Projects" thumbDelete={thumbDelete} catategoryImgs={onCompletedImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-secondary rounded-5" /> */}
                 </div>
-
-                {/* <div className="tab-pane fade" id="v-pills-cost" role="tabpanel" aria-labelledby="v-pills-cost-tab">COST</div> */}
               </div>
             </div>
           </div>

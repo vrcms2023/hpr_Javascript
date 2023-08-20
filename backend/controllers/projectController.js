@@ -7,10 +7,8 @@ import Amenities from "../models/amenitiesModel.js";
 
 const dashboardProject = async () => {
   const dashBoardFields =
-    "projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive percentValue";
-  return await RealEstateProjectModel.find({ isActive: true }).select(
-    dashBoardFields,
-  );
+    "projectCategoryID projectCategoryName projectCategoryValue projectTitle imageDescription isActive percentValue publish ";
+  return await RealEstateProjectModel.find().select(dashBoardFields);
 };
 
 const getDashboardProject = asyncHandler(async (req, res) => {
@@ -45,6 +43,7 @@ const addNewProject = asyncHandler(async (req, res) => {
     description: "",
     percentValue: "",
     isActive: true,
+    publish: false,
   });
 
   if (project) {
@@ -71,8 +70,11 @@ const updateProject = asyncHandler(async (req, res) => {
       projectCategoryName: project.projectCategoryName,
       projectCategoryValue: project.projectCategoryValue,
       percentValue: project.percentValue,
+      publish: project.publish,
+      imageDescription: project.imageDescription,
     },
   };
+
   const options = { returnNewDocument: true };
   const updateProject = await RealEstateProjectModel.findOneAndUpdate(
     query,
@@ -99,7 +101,26 @@ const getSelectedProject = asyncHandler(async (req, res) => {
 
 const deleteSelectedProject = asyncHandler(async (req, res) => {
   const query = { _id: req.params.id };
-  const update = { $set: { isActive: false } };
+  const update = { $set: { isActive: false, publish: false } };
+  const options = { returnNewDocument: true };
+
+  const updateProject = await RealEstateProjectModel.findOneAndUpdate(
+    query,
+    update,
+    options,
+  );
+  if (updateProject) {
+    const projectList = await dashboardProject();
+    res.status(200).json({ message: "Success", projectList: projectList });
+  } else {
+    res.status(404).json({ message: "Failed to find and update document" });
+    throw new Error("Failed to find and update document");
+  }
+});
+
+const reStoreSelectedProject = asyncHandler(async (req, res) => {
+  const query = { _id: req.params.id };
+  const update = { $set: { isActive: true, publish: false } };
   const options = { returnNewDocument: true };
 
   const updateProject = await RealEstateProjectModel.findOneAndUpdate(
@@ -117,7 +138,11 @@ const deleteSelectedProject = asyncHandler(async (req, res) => {
 });
 
 const getClientProjects = asyncHandler(async (req, res) => {
-  const projectList = await dashboardProject();
+  const dashBoardFields =
+    "projectCategoryID projectCategoryName projectCategoryValue projectTitle imageDescription isActive percentValue publish ";
+  const projectList = await RealEstateProjectModel.find({
+    publish: true,
+  }).select(dashBoardFields);
 
   let projectIDs = [];
   projectList.map((d, k) => {
@@ -153,6 +178,22 @@ const getClientSelectedProject = asyncHandler(async (req, res) => {
   });
 });
 
+const updatePubliser = asyncHandler(async (req, res) => {
+  const data = await RealEstateProjectModel.findById(req.params.id).select(
+    "publish",
+  );
+  if (data) {
+    const query = { _id: req.params.id };
+    const update = { $set: { publish: !data.publish, isActive: true } };
+    await RealEstateProjectModel.findOneAndUpdate(query, update);
+    const project = await RealEstateProjectModel.findById(req.params.id);
+    res.status(200).json({ message: "Success", project: project });
+  } else {
+    res.status(404).json({ message: "unable to publish the project" });
+    throw new Error("unable to publish the project");
+  }
+});
+
 export {
   getDashboardProject,
   addNewProject,
@@ -161,4 +202,6 @@ export {
   deleteSelectedProject,
   getClientProjects,
   getClientSelectedProject,
+  updatePubliser,
+  reStoreSelectedProject,
 };

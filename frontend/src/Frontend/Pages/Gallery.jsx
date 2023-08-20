@@ -33,9 +33,15 @@ const Gallery = ({ projectImages, projTab }) => {
     if (clientProjects?.projectList?.length > 0) {
       setAll(clientProjects.imageList);
       const projectList = formatData(clientProjects);
-      setCompleted(projectList.completed[0].imgs);
-      setFuture(projectList.future[0].imgs);
-      setOngoing(projectList.ongoing[0].imgs);
+      if (projectList?.completed?.length > 0) {
+        setCompleted(projectList.completed[0].imgs);
+      }
+      if (projectList?.future?.length > 0) {
+        setFuture(projectList?.future[0]?.imgs);
+      }
+      if (projectList?.ongoing?.length > 0) {
+        setOngoing(projectList?.ongoing[0]?.imgs);
+      }
     }
     if (projectImages?.length > 0) {
       setAll(projectImages);
