@@ -184,13 +184,9 @@ const updatePubliser = asyncHandler(async (req, res) => {
   if (data) {
     const query = { _id: req.params.id };
     const update = { $set: { publish: !data.publish, isActive: true } };
-    const options = { returnNewDocument: true };
-    const updateProject = await RealEstateProjectModel.findOneAndUpdate(
-      query,
-      update,
-      options,
-    );
-    res.status(200).json({ message: "Success", project: updateProject });
+    await RealEstateProjectModel.findOneAndUpdate(query, update);
+    const project = await RealEstateProjectModel.findById(req.params.id);
+    res.status(200).json({ message: "Success", project: project });
   } else {
     res.status(404).json({ message: "unable to publish the project" });
     throw new Error("unable to publish the project");

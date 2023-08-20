@@ -38,7 +38,7 @@ const AddProject = () => {
   const [projectStatus, setProjectStatus] = useState("");
   const [userName, setUserName] = useState("");
   const [projectTitleErrorMessage, setProjectTitleErrorMessage] = useState("");
-  const [publish, setPublish] = useState(false);
+  const [projectPublish, setProjectPublish] = useState(false);
 
   const { id } = useParams();
 
@@ -148,7 +148,7 @@ const AddProject = () => {
         setNewProject(project);
         setProjectStatus(project.projectCategoryName);
         setreadOnlyTitle(project.projectTitle);
-        setPublish(JSON.parse(project.publish));
+        setProjectPublish(false);
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
@@ -190,7 +190,9 @@ const AddProject = () => {
         };
         setAboutUs(aboutus);
         setPercentValue(Number(project.percentValue));
-        setPublish(project.publish ? JSON.parse(project.publish) : false);
+        setProjectPublish(
+          project.publish ? JSON.parse(project.publish) : false,
+        );
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
@@ -235,8 +237,8 @@ const AddProject = () => {
       if (response?.status == 200) {
         const project = response.data.project;
         toast.success(`${project.projectTitle} Project Update`);
-        setProjectName("");
-        setAboutUs({ about });
+        setProjectName(project.projectTitle);
+        setAboutUs(about);
       } else {
         setErrorMessage(response.data.message);
       }
@@ -297,7 +299,7 @@ const AddProject = () => {
     );
     if (response.status === 200) {
       const publisher = JSON.parse(response.data.project.publish);
-      setPublish(publisher);
+      setProjectPublish(publisher);
       toast.success(
         `${readOnlyTitle} ${!publisher ? "published" : "unPublished"}`,
       );
@@ -416,7 +418,7 @@ const AddProject = () => {
               </h3>
             )}
             <div>
-              {publish ? (
+              {projectPublish ? (
                 <Button
                   type="submit"
                   cssClass="btn btn-danger"
