@@ -16,7 +16,9 @@ import { getDashBoardProjects } from "../../../features/project/projectActions";
 const Dashboard = () => {
   const navigate = useNavigate();
   const { projects, error } = useSelector((state) => state.dashBoardProjects);
-  const [projectStatus, setProjectStatus] = useState("");
+  const [liveProjects, setLiveProject] = useState([]);
+  const [archiveProject, setArchiveProject] = useState([]);
+  const [pubishProject, setpubishProject] = useState([]);
   const dispatch = useDispatch();
   /**
    * Get Dash borad projects
@@ -27,27 +29,48 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (projects && projects?.projectList?.length > 0) {
-      const finalObj = formatData(projects.projectList);
-      setProjectStatus(finalObj);
+      updateProjects(projects.projectList);
     }
   }, [projects]);
+
+  const updateProjects = (projects) => {
+    const finalObj = formatData(projects);
+    setLiveProject(finalObj.liveProject);
+    setArchiveProject(finalObj.archiveProject);
+    setpubishProject(finalObj.publishedProject);
+  };
 
   /**
    * Format dashboard data
    */
   const formatData = (data) => {
-    const arrObj = [];
-    const projectArray = [];
-    let unique_values = [
-      ...new Set(data.map((element) => element.projectCategoryID)),
-    ];
-    unique_values.forEach((item) => {
-      arrObj[item] = data.filter((res) => res.projectCategoryID === item);
+    let publishedProject = data.filter((res) => res.publish);
+    let notPublished = data.filter((res) => !res.publish);
+    let liveProject = notPublished.filter((res) => res.isActive);
+    let archiveProject = notPublished.filter((res) => !res.isActive);
+
+    liveProject = getCategoryPorjectList(liveProject);
+    publishedProject = getCategoryPorjectList(publishedProject);
+    archiveProject = getCategoryPorjectList(archiveProject);
+
+    return {
+      liveProject,
+      archiveProject,
+      publishedProject,
+    };
+  };
+
+  const getCategoryPorjectList = (data) => {
+    const projList = [];
+
+    data.map((proj) => {
+      if (!projList[proj.projectCategoryValue]) {
+        projList[proj.projectCategoryValue] = [];
+      }
+      projList[proj.projectCategoryValue].push(proj);
     });
-    unique_values.forEach((item) => {
-      projectArray.push(arrObj[item]);
-    });
-    return projectArray;
+
+    return projList;
   };
 
   /**
@@ -57,13 +80,12 @@ const Dashboard = () => {
 
   const handleProjectDelete = (project, id) => {
     const deleteDashBoardProject = async () => {
-      const data = await axiosServiceApi.get(
+      const response = await axiosServiceApi.get(
         `/api/project/deleteDashboardProject/${id}`,
       );
-      if (data?.projectList?.length > 0) {
-        toast(`${project.projectCategoryName}  Deleted`);
-        const finalObj = formatData(data.projectList);
-        setProjects(finalObj);
+      if (response.data?.projectList?.length > 0) {
+        toast.success(`${project.projectTitle} project Deleted`);
+        updateProjects(response.data.projectList);
       }
     };
 
@@ -74,6 +96,36 @@ const Dashboard = () => {
             onClose={onClose}
             callback={deleteDashBoardProject}
             projectName={project.projectTitle}
+          />
+        );
+      },
+    });
+  };
+
+  /**
+   * Delete project form Dashboard
+   * @param {project id} id
+   */
+
+  const reStoreProject = (project, id) => {
+    const reStoreDashBoardProject = async () => {
+      const response = await axiosServiceApi.get(
+        `/api/project/reStoreDashboardProject/${id}`,
+      );
+      if (response.data?.projectList?.length > 0) {
+        toast.success(`${project.projectTitle} project restore successfully`);
+        updateProjects(response.data.projectList);
+      }
+    };
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteDialog
+            onClose={onClose}
+            callback={reStoreDashBoardProject}
+            projectName={project.projectTitle}
+            label={"restore"}
           />
         );
       },
@@ -107,20 +159,37 @@ const Dashboard = () => {
         </div>
       </div>
       {/* <hr /> */}
+      <div className="row p-5 pt-0">
+        <Title
+          title={"Published Projects"}
+          cssClass="text-start fw-bold pt-4 mb-3 fs-4 text-dark"
+        />
+        <Projects
+          project={pubishProject}
+          handleProjectDelete={handleProjectDelete}
+        />
+      </div>
 
       <div className="row p-5 pt-0">
-        {projectStatus &&
-          projectStatus.map((project, index) => (
-            <div className="col-md-4" key={index}>
-              <Projects
-                key={index}
-                title={project[0].projectCategoryName}
-                cssClass="text-success"
-                projects={project}
-                handleProjectDelete={handleProjectDelete}
-              />
-            </div>
-          ))}
+        <Title
+          title={"Live Projects"}
+          cssClass="text-start fw-bold pt-4 mb-3 fs-4 text-dark"
+        />
+        <Projects
+          project={liveProjects}
+          handleProjectDelete={handleProjectDelete}
+        />
+      </div>
+
+      <div className="row p-5 pt-0">
+        <Title
+          title={"Archive Projects"}
+          cssClass="text-start fw-bold pt-4 mb-3 fs-4 text-dark"
+        />
+        <Projects
+          project={archiveProject}
+          handleProjectDelete={reStoreProject}
+        />
       </div>
     </div>
   );

@@ -97,7 +97,7 @@ export const AdminTestimonial = () => {
         ...testimonial,
       });
       if (response?.status == 200) {
-        toast(
+        toast.success(
           `${testimonialState.title} news ${editState ? "Update" : "created"}`,
         );
         setEditState(false);
@@ -108,7 +108,7 @@ export const AdminTestimonial = () => {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to save the testimonial");
+      toast.error("Unable to save the testimonial");
     }
   };
 
@@ -143,10 +143,10 @@ export const AdminTestimonial = () => {
       );
       if (response.status !== 200) {
         setErrorMessage(data.message);
-        toast("Unable to Delete testimonial");
+        toast.error("Unable to Delete testimonial");
       }
       if (response.status == 200 && response?.data?.testimonial?.acknowledged) {
-        toast(`${testimonial.title} testimonial deleted`);
+        toast.success(`${testimonial.title} testimonial deleted`);
         setEditState(false);
         setTestimonialState(testimonialKeys);
         setTestimonialObject([]);
@@ -274,7 +274,12 @@ export const AdminTestimonial = () => {
                             alt=" "
                           />
                         ) : (
-                          ""
+                          <img
+                            width={"100"}
+                            height={"100"}
+                            src="images/dummy-image-square.png"
+                            alt=""
+                          />
                         )}{" "}
                       </td>
                       <td className="valign-middle">

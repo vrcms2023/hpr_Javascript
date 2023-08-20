@@ -2,7 +2,7 @@ import React from "react";
 import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
 
-const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
+const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
   return (
     <>
       <Title
@@ -18,6 +18,9 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
             <th scope="col" className="py-2 bg-light fw-normal text-dark">
               Status
             </th>
+            {/* <th scope="col" className="py-2 bg-light fw-normal text-dark">
+              publish
+            </th> */}
             <th
               scope="col"
               colSpan={2}
@@ -34,7 +37,7 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                 {/* <td className='align-middle fw-bold'>{project._id}</td> */}
                 <td className="align-middle">
                   {project.projectTitle}{" "}
-                  <span
+                  {/* <span
                     className={`badge text-dark bg-${
                       project.projectCategoryValue === "ongoing"
                         ? "warning"
@@ -46,39 +49,63 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
                     }`}
                   >
                     {project.status}
-                  </span>
+                  </span> */}
                 </td>
                 <td className="align-middle">
-                  <span
-                    className={`badge fw-normal ${
-                      project.percentValue === "0"
-                        ? "bg-info"
-                        : project.percentValue === "100"
-                        ? "bg-success"
-                        : "bg-warning"
-                    }`}
-                  >
-                    {project.percentValue} %
-                  </span>
+                  {project.percentValue ? (
+                    <span
+                      className={`badge fw-normal ${
+                        parseInt(project.percentValue) === 0
+                          ? "bg-info"
+                          : parseInt(project.percentValue) === 100
+                          ? "bg-success"
+                          : "bg-warning"
+                      }`}
+                    >
+                      {project.percentValue} %
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </td>
+                {/* <td>
+                  <input type="checkbox" checked={project.publish} />
+                </td> */}
                 <td className="align-middle">
-                  <Link to={`/editproject/${project._id}`}>
-                    <i
-                      className="fa fa-pencil-square-o fs-4 text-muted me-4"
-                      aria-hidden="true"
-                      title="Edit"
-                    ></i>
-                  </Link>
-                  <Link
-                    to=""
-                    onClick={() => handleProjectDelete(project, project._id)}
-                  >
-                    <i
-                      className="fa fa-trash-o fs-4 text-danger"
-                      aria-hidden="true"
-                      title="Delete"
-                    ></i>
-                  </Link>
+                  {project.isActive ? (
+                    <>
+                      <Link to={`/editproject/${project._id}`}>
+                        <i
+                          className="fa fa-pencil-square-o fs-4 text-muted me-4"
+                          aria-hidden="true"
+                          title="Edit"
+                        ></i>
+                      </Link>
+                      <Link
+                        to=""
+                        onClick={() =>
+                          handleProjectDelete(project, project._id)
+                        }
+                      >
+                        <i
+                          className="fa fa-trash-o fs-4 text-danger"
+                          aria-hidden="true"
+                          title="Delete"
+                        ></i>
+                      </Link>
+                    </>
+                  ) : (
+                    <Link
+                      to=""
+                      onClick={() => handleProjectDelete(project, project._id)}
+                    >
+                      <i
+                        className="fa fa-undo fs-4 text-danger"
+                        aria-hidden="true"
+                        title="Delete"
+                      ></i>
+                    </Link>
+                  )}
                 </td>
               </tr>
             ))
@@ -93,6 +120,49 @@ const Projects = ({ title, cssClass, projects, handleProjectDelete }) => {
           )}
         </tbody>
       </table>
+    </>
+  );
+};
+
+export const Projects = ({ project, handleProjectDelete }) => {
+  return (
+    <>
+      {project?.ongoing?.length > 0 ? (
+        <div className="col-md-4">
+          <ProjectItem
+            title={project.ongoing[0].projectCategoryName}
+            cssClass="text-success"
+            projects={project.ongoing}
+            handleProjectDelete={handleProjectDelete}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      {project?.future?.length > 0 ? (
+        <div className="col-md-4">
+          <ProjectItem
+            title={project.future[0].projectCategoryName}
+            cssClass="text-success"
+            projects={project.future}
+            handleProjectDelete={handleProjectDelete}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      {project?.completed?.length > 0 ? (
+        <div className="col-md-4">
+          <ProjectItem
+            title={project.completed[0].projectCategoryName}
+            cssClass="text-success"
+            projects={project.completed}
+            handleProjectDelete={handleProjectDelete}
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

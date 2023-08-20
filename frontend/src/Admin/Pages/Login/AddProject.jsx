@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import CatageoryImgC from "../../../Common/CatageoryImgC";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
+import Error from "../../Components/Error";
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -23,7 +24,12 @@ const AddProject = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [newProject, setNewProject] = useState({});
   const [readOnlyTitle, setreadOnlyTitle] = useState("");
-  const about = { aboutstitle: "", aboutussubtitle: "", description: "" };
+  const about = {
+    aboutstitle: "",
+    aboutussubtitle: "",
+    description: "",
+    imageDescription: "",
+  };
   const [aboutUs, setAboutUs] = useState(about);
   const specificationKeys = { title: "", feature: "" };
   const amenitieKeys = { amenitie: "", feature: "", googleMap: "" };
@@ -36,6 +42,9 @@ const AddProject = () => {
   const [imgGallery, setImgGallery] = useState([]);
   const [projectStatus, setProjectStatus] = useState("");
   const [userName, setUserName] = useState("");
+  const [projectTitleErrorMessage, setProjectTitleErrorMessage] = useState("");
+  const [projectPublish, setProjectPublish] = useState(false);
+
   const { id } = useParams();
 
   const [percentValue, setPercentValue] = useState("");
@@ -70,6 +79,7 @@ const AddProject = () => {
    * Select Porject type handler
    */
   const handleChange = (e) => {
+    setErrorMessage("");
     const value = e.target.value.toLowerCase();
     const obj = defaultProjectType.filter((obj) => {
       return obj.value === value;
@@ -77,7 +87,8 @@ const AddProject = () => {
     if (obj.length > 0) {
       setProjectType(obj);
     } else {
-      alert("select status");
+      setProjectType({});
+      setErrorMessage("Please select Project Type");
     }
   };
 
@@ -85,6 +96,7 @@ const AddProject = () => {
    *  Project input title handler
    */
   const titleInputHandleChange = (e) => {
+    setProjectTitleErrorMessage("");
     const title = e.target.value;
     setProjectName(title);
   };
@@ -114,6 +126,7 @@ const AddProject = () => {
       aboutstitle: aboutUs.aboutstitle,
       aboutussubtitle: aboutUs.aboutussubtitle,
       description: aboutUs.description,
+      imageDescription: aboutUs.imageDescription,
     };
   };
 
@@ -121,6 +134,10 @@ const AddProject = () => {
    * Add project handler
    */
   async function addNewProject(event) {
+    if (projectName === "") {
+      setProjectTitleErrorMessage("Please add a project name");
+      return;
+    }
     try {
       const response = await axiosServiceApi.post(`/api/project/addProject`, {
         ...getProjectStatus(),
@@ -129,19 +146,21 @@ const AddProject = () => {
         userID: getCookie("userId"),
         status: projectType[0].label,
         isActive: true,
+        publish: false,
       });
       if (response?.status == 200) {
         const project = response.data.project;
-        toast(`${project.projectTitle} Project created`);
+        toast.success(`${project.projectTitle} Project created`);
         setNewProject(project);
         setProjectStatus(project.projectCategoryName);
         setreadOnlyTitle(project.projectTitle);
+        setProjectPublish(false);
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error(error);
     }
   }
 
@@ -153,8 +172,8 @@ const AddProject = () => {
       const response = await axiosServiceApi.get(`/api/project/findById/${id}`);
 
       if (response.status !== 200) {
-        setErrorMessage(data.message);
-        toast("Unable to Process your request");
+        setErrorMessage(response.data.message);
+        toast.error("Unable to Process your request");
       }
       if (response.status == 200) {
         const project = response.data.project;
@@ -174,9 +193,13 @@ const AddProject = () => {
           aboutstitle: project.aboutstitle,
           aboutussubtitle: project.aboutussubtitle,
           description: project.description,
+          imageDescription: project.imageDescription,
         };
         setAboutUs(aboutus);
         setPercentValue(Number(project.percentValue));
+        setProjectPublish(
+          project.publish ? JSON.parse(project.publish) : false,
+        );
         setShow(true);
       } else {
         setErrorMessage(response.data.message);
@@ -189,9 +212,17 @@ const AddProject = () => {
 
   function saveProject() {
     updateProjectBasicDetails();
-    saveSpecifications();
-    saveAmenities();
-    navigate("/dashboard");
+    if (specifications[0].title !== "") {
+      saveSpecifications();
+    }
+    if (
+      amenities &&
+      (amenities.amenitie !== null ||
+        amenities.feature !== null ||
+        amenities.googleMap !== null)
+    ) {
+      saveAmenities();
+    }
   }
 
   /**
@@ -212,14 +243,13 @@ const AddProject = () => {
       );
       if (response?.status == 200) {
         const project = response.data.project;
-        toast(`${project.projectTitle} Project Update`);
-        setProjectName("");
-        setAboutUs({ about });
+        toast.success(`${project.projectTitle} Project Update`);
+        setProjectName(project.projectTitle);
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
 
@@ -236,13 +266,11 @@ const AddProject = () => {
           specifications: specifications,
         },
       );
-      if (response?.status == 200) {
-        setSpecifications([specificationKeys]);
-      } else {
+      if (response?.status !== 200) {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
 
@@ -259,15 +287,26 @@ const AddProject = () => {
           amenitieslist: amenities,
         },
       );
-      if (response?.status == 200) {
-        setAmenities(amenitieKeys);
-      } else {
+      if (!response?.status == 200) {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to Process your request");
+      toast.error("Unable to Process your request");
     }
   }
+
+  const publishHandler = async () => {
+    const response = await axiosServiceApi.get(
+      `/api/project/updatePublisher/${id}`,
+    );
+    if (response.status === 200) {
+      const publisher = JSON.parse(response.data.project.publish);
+      setProjectPublish(publisher);
+      toast.success(
+        `${readOnlyTitle} ${!publisher ? "published" : "unPublished"}`,
+      );
+    }
+  };
 
   return (
     <div className="pt-5" style={{ marginTop: "120px" }}>
@@ -298,7 +337,8 @@ const AddProject = () => {
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
       <div className="py-2">
-        {!id ? (
+        {errorMessage ? <Error>{errorMessage}</Error> : ""}
+        {!id && !show ? (
           <select
             className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
             aria-label="Default select example"
@@ -323,11 +363,15 @@ const AddProject = () => {
       <hr />
       {projectType.length > 0 && !show ? (
         <div className="row" id="projectTitle">
-          <div> {errorMessage} </div>
           <div className="col-md-4 offset-md-4 my-5 ">
             <div className="">
               {/* <label htmlFor="projectName" className="form-label text-center d-block fs-5 mb-3 fw-normal">Add project name</label> */}
               <div className="">
+                {projectTitleErrorMessage ? (
+                  <Error>{projectTitleErrorMessage}</Error>
+                ) : (
+                  ""
+                )}
                 <input
                   type="text"
                   className="form-control"
@@ -341,6 +385,13 @@ const AddProject = () => {
                   label="Save"
                   cssClass="btn btn-success mt-2 w-100"
                   handlerChange={addNewProject}
+                />
+                <Button
+                  label="Cancel"
+                  cssClass="btn btn-success mt-2 w-100"
+                  handlerChange={() => {
+                    navigate("/dashboard");
+                  }}
                 />
               </div>
               <small id="projectValidation" className="d-none error">
@@ -368,6 +419,23 @@ const AddProject = () => {
                 </span>
               </h3>
             )}
+            <div>
+              {projectPublish ? (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-danger"
+                  label={"UNPUBLISH"}
+                  handlerChange={publishHandler}
+                />
+              ) : (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-success"
+                  label={"PUBLISH"}
+                  handlerChange={publishHandler}
+                />
+              )}
+            </div>
 
             <div className="col-md-3 bg-light pb-3">
               <div
@@ -565,7 +633,7 @@ const AddProject = () => {
                   aria-labelledby="v-pills-profile-tab"
                 >
                   <div className="mb-3">
-                    <label className="form-label">Add PDF's</label>
+                    <label className="form-label">Add PDF's (Upload PDF)</label>
                     <FileUpload
                       project={newProject}
                       updatedBy={userName}
@@ -585,7 +653,9 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Add Plan</label>
+                    <label className="form-label">
+                      Add Plan (Upload image)
+                    </label>
                     <FileUpload
                       project={newProject}
                       updatedBy={userName}
@@ -605,7 +675,9 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Add Availability</label>
+                    <label className="form-label">
+                      Add Availability (Upload image / PDF)
+                    </label>
                     <FileUpload
                       project={newProject}
                       updatedBy={userName}
@@ -625,7 +697,9 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Add Price</label>
+                    <label className="form-label">
+                      Add Price (Upload image / PDF)
+                    </label>
                     <FileUpload
                       title=""
                       project={newProject}
@@ -647,7 +721,9 @@ const AddProject = () => {
 
                   {/* Add GOOGLE MAP  */}
                   <div className="mb-3">
-                    <label className="form-label">Add Google Map</label>
+                    <label className="form-label">
+                      Add Google Map (Embed a map - source url){" "}
+                    </label>
                     <Amenities
                       title=""
                       value={amenities?.googleMap}
@@ -691,6 +767,20 @@ const AddProject = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-gallery-tab"
                 >
+                  <div className="mb-3">
+                    <label htmlFor="imageDescription" className="form-label  ">
+                      Project Image description
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="imageDescription"
+                      value={aboutUs.imageDescription}
+                      onChange={changeHandler}
+                      id="imageDescription"
+                    />
+                  </div>
+
                   <FileUpload
                     title="Add Images"
                     project={newProject}
@@ -708,11 +798,7 @@ const AddProject = () => {
                     category="images"
                     cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
                   />
-                  {/* <CatageoryImgC title="Future Projects" thumbDelete={thumbDelete}catategoryImgs={onFutureImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-success rounded-5" /> */}
-                  {/* <CatageoryImgC title="Completed Projects" thumbDelete={thumbDelete} catategoryImgs={onCompletedImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-secondary rounded-5" /> */}
                 </div>
-
-                {/* <div className="tab-pane fade" id="v-pills-cost" role="tabpanel" aria-labelledby="v-pills-cost-tab">COST</div> */}
               </div>
             </div>
           </div>

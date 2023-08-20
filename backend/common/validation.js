@@ -40,6 +40,7 @@ const projectSchema = Joi.object({
   userID: Joi.string().required(),
   status: Joi.string().required(),
   isActive: Joi.boolean().required(),
+  publish: Joi.boolean().required(),
 });
 
 const porjectValidation = (data) => {

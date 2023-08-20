@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import AdminHeader from "./Admin/Components/Header/AdminHeader";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminTestimonial from "./Admin/pages/Login/AdminTestimonial";
+import AdminTestimonial from "./Admin/Pages/Login/AdminTestimonial";
 import Registration from "./Admin/Pages/Login/Registration";
 import AuthForm from "./Admin/Pages/Login/AuthForm";
 import AdminNews from "./Admin/Pages/Login/AdminNews";
@@ -124,7 +124,7 @@ function App() {
         </Routes>
         {loginState ? null : <Footer />}
       </BrowserRouter>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} theme="colored" />
     </>
   );
 }

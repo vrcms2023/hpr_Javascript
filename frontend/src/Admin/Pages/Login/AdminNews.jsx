@@ -11,6 +11,7 @@ import Title from "../../../Common/Title";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import { getCookie } from "../../../util/cookieUtil";
+import Error from "../../Components/Error";
 
 export const AdminNews = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const AdminNews = () => {
   }, []);
 
   const changeHandler = (e) => {
+    setErrorMessage("");
     setnewsState({ ...newsState, [e.target.name]: e.target.value });
   };
 
@@ -36,7 +38,7 @@ export const AdminNews = () => {
   const getNewList = async () => {
     const response = await axiosServiceApi.get(`/api/appnews/getNewsList`);
     if (response?.status == 200 && response.data?.appNews?.length > 0) {
-      const listReverseOrder = response.data.appNews;
+      //const listReverseOrder = response.data.appNews;
       setNewsList(response.data.appNews.reverse());
     } else {
       setNewsList([]);
@@ -48,15 +50,15 @@ export const AdminNews = () => {
   }, []);
 
   const saveProject = async () => {
-    // if (newsState.newstitle === "") {
-    //   setErrorMessage("Please add title");
-    //   return;
-    // }
+    if (newsState.newstitle === "") {
+      setErrorMessage("Please add title");
+      return;
+    }
 
-    // if (newsState.description === "") {
-    //   setErrorMessage("Please add description");
-    //   return;
-    // }
+    if (newsState.description === "") {
+      setErrorMessage("Please add description");
+      return;
+    }
 
     const news = {
       projectID: newProject._id,
@@ -84,7 +86,7 @@ export const AdminNews = () => {
         ...news,
       });
       if (response?.status == 200) {
-        toast(
+        toast.success(
           `${newsState.newstitle} news ${editState ? "Update" : "created"}`,
         );
         setEditState(false);
@@ -95,7 +97,7 @@ export const AdminNews = () => {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      toast("Unable to save the news");
+      toast.error("Unable to save the news");
     }
   };
 
@@ -131,10 +133,10 @@ export const AdminNews = () => {
 
       if (response.status !== 200) {
         setErrorMessage(data.message);
-        toast("Unable to Delete news");
+        toast.error("Unable to Delete news", "success");
       }
       if (response.status == 200 && response?.data?.appNews?.acknowledged) {
-        toast(`${newsState.newstitle} news deleted`);
+        toast.success(`${news.newstitle} news deleted`);
         setEditState(false);
         setnewsState(newsKeys);
         setNewsObject([]);
@@ -203,7 +205,7 @@ export const AdminNews = () => {
             </div>
             <div className="mb-3">
               <FileUpload
-                title="News Images"
+                title="News Images (Upload multiple images)"
                 project={newProject}
                 updatedBy={userName}
                 category="news"
@@ -249,7 +251,7 @@ export const AdminNews = () => {
                       <td>{news.description}</td>
                       <td>
                         {" "}
-                        {news?.imageUrls ? (
+                        {news?.imageUrls.length > 0 ? (
                           <img
                             width={"100"}
                             height={"100"}
@@ -257,13 +259,18 @@ export const AdminNews = () => {
                             alt=" "
                           />
                         ) : (
-                          ""
+                          <img
+                            width={"100"}
+                            height={"100"}
+                            src="images/dummy-image-square.png"
+                            alt=""
+                          />
                         )}{" "}
                       </td>
                       <td>
                         <Link onClick={() => handleNewsEdit(event, news)}>
                           <i
-                            className="fa fa-pencil fs-4 text-secondary me-2"
+                            className="fa fa-pencil-square-o fs-4 text-muted me-4"
                             aria-hidden="true"
                           ></i>
                         </Link>

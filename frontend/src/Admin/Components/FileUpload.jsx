@@ -8,6 +8,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { getBaseURL } from "../../util/ulrUtil";
+import { toast } from "react-toastify";
 
 registerPlugin(
   FilePondPluginFileValidateType,
@@ -45,6 +46,7 @@ const FileUpload = ({
         contentType: imageResponse.contentType,
       };
       gallerysetState([...galleryState, img]);
+      toast.success(`${imageResponse.originalname} update successfully`);
       setFiles([]);
     }
   };
@@ -57,7 +59,7 @@ const FileUpload = ({
 
   return (
     <>
-      <Title title={title} cssClass="fs-5 fw-bold" />
+      <Title title={title} cssClass="fs-6 fw-bold" />
       <div className="border border-3 mb-4 shadow-lg">
         {/* <label htmlFor="addImages" className="form-label  ">Add Image's</label> */}
         {/* <input className="form-control" type="file" id="addImages" multiple />  */}
