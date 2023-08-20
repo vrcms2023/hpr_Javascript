@@ -55,21 +55,21 @@ const Projects = () => {
         </div>
       </div>
 
-      {ongoing.length > 0 ? (
+      {ongoing?.length > 0 ? (
         <ProjectItem projectList={ongoing} projectType={ongoing} />
       ) : (
         ""
       )}
 
       {/* Completed Projects */}
-      {completed.length > 0 ? (
+      {completed?.length > 0 ? (
         <ProjectItem projectList={completed} projectType={completed} />
       ) : (
         ""
       )}
 
       {/* future Projects */}
-      {future.length > 0 ? (
+      {future?.length > 0 ? (
         <ProjectItem projectList={future} projectType={future} />
       ) : (
         ""

@@ -24,7 +24,12 @@ const AddProject = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [newProject, setNewProject] = useState({});
   const [readOnlyTitle, setreadOnlyTitle] = useState("");
-  const about = { aboutstitle: "", aboutussubtitle: "", description: "" };
+  const about = {
+    aboutstitle: "",
+    aboutussubtitle: "",
+    description: "",
+    imageDescription: "",
+  };
   const [aboutUs, setAboutUs] = useState(about);
   const specificationKeys = { title: "", feature: "" };
   const amenitieKeys = { amenitie: "", feature: "", googleMap: "" };
@@ -121,6 +126,7 @@ const AddProject = () => {
       aboutstitle: aboutUs.aboutstitle,
       aboutussubtitle: aboutUs.aboutussubtitle,
       description: aboutUs.description,
+      imageDescription: aboutUs.imageDescription,
     };
   };
 
@@ -187,6 +193,7 @@ const AddProject = () => {
           aboutstitle: project.aboutstitle,
           aboutussubtitle: project.aboutussubtitle,
           description: project.description,
+          imageDescription: project.imageDescription,
         };
         setAboutUs(aboutus);
         setPercentValue(Number(project.percentValue));
@@ -238,7 +245,6 @@ const AddProject = () => {
         const project = response.data.project;
         toast.success(`${project.projectTitle} Project Update`);
         setProjectName(project.projectTitle);
-        setAboutUs(about);
       } else {
         setErrorMessage(response.data.message);
       }
@@ -260,9 +266,7 @@ const AddProject = () => {
           specifications: specifications,
         },
       );
-      if (response?.status == 200) {
-        setSpecifications([specificationKeys]);
-      } else {
+      if (response?.status !== 200) {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
@@ -283,9 +287,7 @@ const AddProject = () => {
           amenitieslist: amenities,
         },
       );
-      if (response?.status == 200) {
-        setAmenities(amenitieKeys);
-      } else {
+      if (!response?.status == 200) {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
@@ -765,6 +767,20 @@ const AddProject = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-gallery-tab"
                 >
+                  <div className="mb-3">
+                    <label htmlFor="imageDescription" className="form-label  ">
+                      Project Image description
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="imageDescription"
+                      value={aboutUs.imageDescription}
+                      onChange={changeHandler}
+                      id="imageDescription"
+                    />
+                  </div>
+
                   <FileUpload
                     title="Add Images"
                     project={newProject}
@@ -782,11 +798,7 @@ const AddProject = () => {
                     category="images"
                     cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
                   />
-                  {/* <CatageoryImgC title="Future Projects" thumbDelete={thumbDelete}catategoryImgs={onFutureImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-success rounded-5" /> */}
-                  {/* <CatageoryImgC title="Completed Projects" thumbDelete={thumbDelete} catategoryImgs={onCompletedImgs} cssClass="thumb75 mb-5 shadow-lg border border-5 border-secondary rounded-5" /> */}
                 </div>
-
-                {/* <div className="tab-pane fade" id="v-pills-cost" role="tabpanel" aria-labelledby="v-pills-cost-tab">COST</div> */}
               </div>
             </div>
           </div>

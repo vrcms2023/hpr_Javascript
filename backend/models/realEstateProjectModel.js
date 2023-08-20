@@ -40,6 +40,9 @@ const realEstateProjectSchema = mongoose.Schema(
     percentValue: {
       type: String,
     },
+    imageDescription: {
+      type: String,
+    },
     isActive: {
       type: Boolean,
       required: true,

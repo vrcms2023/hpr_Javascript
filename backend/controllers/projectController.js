@@ -7,7 +7,7 @@ import Amenities from "../models/amenitiesModel.js";
 
 const dashboardProject = async () => {
   const dashBoardFields =
-    "projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive percentValue publish ";
+    "projectCategoryID projectCategoryName projectCategoryValue projectTitle imageDescription isActive percentValue publish ";
   return await RealEstateProjectModel.find().select(dashBoardFields);
 };
 
@@ -71,6 +71,7 @@ const updateProject = asyncHandler(async (req, res) => {
       projectCategoryValue: project.projectCategoryValue,
       percentValue: project.percentValue,
       publish: project.publish,
+      imageDescription: project.imageDescription,
     },
   };
 
@@ -138,7 +139,7 @@ const reStoreSelectedProject = asyncHandler(async (req, res) => {
 
 const getClientProjects = asyncHandler(async (req, res) => {
   const dashBoardFields =
-    "projectCategoryID projectCategoryName projectCategoryValue projectTitle isActive percentValue publish ";
+    "projectCategoryID projectCategoryName projectCategoryValue projectTitle imageDescription isActive percentValue publish ";
   const projectList = await RealEstateProjectModel.find({
     publish: true,
   }).select(dashBoardFields);

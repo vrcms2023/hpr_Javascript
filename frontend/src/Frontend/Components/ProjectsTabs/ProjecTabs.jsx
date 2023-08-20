@@ -53,7 +53,7 @@ const ProjectTabs = () => {
       filtersImgPdfs(projectData.imageData, "plan");
       filtersImgPdfs(projectData.imageData, "avl");
       setProjectHome(projectData.project);
-      setSpecifications(projectData.specificationData[0].specifications);
+      setSpecifications(projectData?.specificationData[0]?.specifications);
     }
   };
 
@@ -135,91 +135,122 @@ const ProjectTabs = () => {
                 >
                   HOME
                 </button>
+                {projectImages?.length > 0 ? (
+                  <button
+                    className="nav-link"
+                    id="nav-gallery-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-gallery"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-gallery"
+                    aria-selected="false"
+                  >
+                    GALLERY
+                  </button>
+                ) : (
+                  ""
+                )}
+                {specifications?.length > 0 ? (
+                  <button
+                    className="nav-link"
+                    id="nav-specifications-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-specifications"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-specifications"
+                    aria-selected="false"
+                  >
+                    SPECIFICATIONS
+                  </button>
+                ) : (
+                  ""
+                )}
+                {avlImg?.length > 0 ? (
+                  <button
+                    className="nav-link"
+                    id="nav-availability-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-availability"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-availability"
+                    aria-selected="false"
+                  >
+                    AVAILABILITY
+                  </button>
+                ) : (
+                  ""
+                )}
 
-                <button
-                  className="nav-link"
-                  id="nav-gallery-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-gallery"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-gallery"
-                  aria-selected="false"
-                >
-                  GALLERY
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-specifications-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-specifications"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-specifications"
-                  aria-selected="false"
-                >
-                  SPECIFICATIONS
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-availability-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-availability"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-availability"
-                  aria-selected="false"
-                >
-                  AVAILABILITY
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-cost-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-cost"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-cost"
-                  aria-selected="false"
-                >
-                  COST
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-plan-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-plan"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-plan"
-                  aria-selected="false"
-                >
-                  PLAN
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-location-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-location"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-location"
-                  aria-selected="false"
-                >
-                  LOCATION
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-amenities-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-amenities"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-amenities"
-                  aria-selected="false"
-                >
-                  AMENITIES
-                </button>
+                {priceImg?.length > 0 ? (
+                  <button
+                    className="nav-link"
+                    id="nav-cost-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-cost"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-cost"
+                    aria-selected="false"
+                  >
+                    COST
+                  </button>
+                ) : (
+                  ""
+                )}
+
+                {planImg?.length > 0 ? (
+                  <button
+                    className="nav-link"
+                    id="nav-plan-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-plan"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-plan"
+                    aria-selected="false"
+                  >
+                    PLAN
+                  </button>
+                ) : (
+                  ""
+                )}
+
+                {amenities?.googleMap ? (
+                  <button
+                    className="nav-link"
+                    id="nav-location-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-location"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-location"
+                    aria-selected="false"
+                  >
+                    LOCATION
+                  </button>
+                ) : (
+                  ""
+                )}
+
+                {amenities?.amenitie || amenities?.feature ? (
+                  <button
+                    className="nav-link"
+                    id="nav-amenities-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-amenities"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-amenities"
+                    aria-selected="false"
+                  >
+                    AMENITIES
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
             </nav>
 
@@ -236,62 +267,92 @@ const ProjectTabs = () => {
                   pdfs={pdfs}
                 />
               </div>
-              <div
-                className="tab-pane fade"
-                id="nav-gallery"
-                role="tabpanel"
-                aria-labelledby="nav-gallery-tab"
-              >
-                <Gallery projectImages={projectImages} projTab="gallery" />
-              </div>
-              <div
-                className="tab-pane fade"
-                id="nav-specifications"
-                role="tabpanel"
-                aria-labelledby="nav-specifications-tab"
-              >
-                <Spefifications specifications={specifications} />
-              </div>
-              <div
-                className="tab-pane fade"
-                id="nav-availability"
-                role="tabpanel"
-                aria-labelledby="nav-availability-tab"
-              >
-                <Cost data={avlImg} />
-              </div>
-              <div
-                className="tab-pane fade"
-                id="nav-cost"
-                role="tabpanel"
-                aria-labelledby="nav-cost-tab"
-              >
-                <Cost data={priceImg} />
-              </div>
-              <div
-                className="tab-pane fade"
-                id="nav-plan"
-                role="tabpanel"
-                aria-labelledby="nav-plan-tab"
-              >
-                <Cost data={planImg} />
-              </div>
-              <div
-                className="tab-pane fade"
-                id="nav-location"
-                role="tabpanel"
-                aria-labelledby="nav-location-tab"
-              >
-                <Location amenities={amenities} />
-              </div>
-              <div
-                className="tab-pane fade"
-                id="nav-amenities"
-                role="tabpanel"
-                aria-labelledby="nav-amenities-tab"
-              >
-                <Amenities amenities={amenities} />
-              </div>
+              {projectImages?.length > 0 ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-gallery"
+                  role="tabpanel"
+                  aria-labelledby="nav-gallery-tab"
+                >
+                  <Gallery projectImages={projectImages} projTab="gallery" />
+                </div>
+              ) : (
+                ""
+              )}
+
+              {specifications?.length > 0 ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-specifications"
+                  role="tabpanel"
+                  aria-labelledby="nav-specifications-tab"
+                >
+                  <Spefifications specifications={specifications} />
+                </div>
+              ) : (
+                ""
+              )}
+
+              {avlImg?.length > 0 ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-availability"
+                  role="tabpanel"
+                  aria-labelledby="nav-availability-tab"
+                >
+                  <Cost data={avlImg} />
+                </div>
+              ) : (
+                ""
+              )}
+              {priceImg?.length > 0 ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-cost"
+                  role="tabpanel"
+                  aria-labelledby="nav-cost-tab"
+                >
+                  <Cost data={priceImg} />
+                </div>
+              ) : (
+                ""
+              )}
+              {planImg?.length > 0 ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-plan"
+                  role="tabpanel"
+                  aria-labelledby="nav-plan-tab"
+                >
+                  <Cost data={planImg} />
+                </div>
+              ) : (
+                ""
+              )}
+              {amenities?.googleMap ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-location"
+                  role="tabpanel"
+                  aria-labelledby="nav-location-tab"
+                >
+                  <Location amenities={amenities} />
+                </div>
+              ) : (
+                ""
+              )}
+              {amenities?.amenitie || amenities?.feature ? (
+                <div
+                  className="tab-pane fade"
+                  id="nav-amenities"
+                  role="tabpanel"
+                  aria-labelledby="nav-amenities-tab"
+                >
+                  <Amenities amenities={amenities} />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
