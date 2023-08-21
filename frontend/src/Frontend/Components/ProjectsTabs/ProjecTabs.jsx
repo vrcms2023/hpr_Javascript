@@ -11,6 +11,8 @@ import Spefifications from "./Spefifications";
 import Location from "./Location";
 import Cost from "./Cost";
 import Button from "../../../Common/Button";
+import moment from "moment";
+import { getImagesByDate } from "../../../util/dataFormatUtil";
 
 const ProjectTabs = () => {
   const location = useLocation();
@@ -44,24 +46,30 @@ const ProjectTabs = () => {
       const projectData = response.data;
       setProjectTitle(projectData.project.projectTitle);
       setprojectid(projectData.project._id);
-      // setSelectedProject("response", response.data);
-      // console.log("Response Data images", response.data.imageData)
-      setAmenities(projectData.amenitie);
-      filtersImgPdfs(projectData.imageData, "images");
-      filtersImgPdfs(projectData.imageData, "pdfs");
-      filtersImgPdfs(projectData.imageData, "price");
-      filtersImgPdfs(projectData.imageData, "plan");
-      filtersImgPdfs(projectData.imageData, "avl");
       setProjectHome(projectData.project);
+      setAmenities(projectData.amenitie);
+      filtersImgPdfs(projectData, "images");
+      filtersImgPdfs(projectData, "pdfs");
+      filtersImgPdfs(projectData, "price");
+      filtersImgPdfs(projectData, "plan");
+      filtersImgPdfs(projectData.imageData, "avl");
       setSpecifications(projectData?.specificationData[0]?.specifications);
     }
   };
 
-  const filtersImgPdfs = (data, type) => {
+  const filtersImgPdfs = (proj, type) => {
+    const data = proj.imageData;
     if (type === "images") {
       // const imgs = data.filter( item => item.contentType === "jpg" || item.contentType === "jpeg" || item.contentType === "png");
       const imgs = data.filter((item) => item.category === "images");
-      setProjectImages(imgs);
+      const sortImages = getImagesByDate(imgs);
+      const project = [
+        {
+          ...proj.project,
+          imgs: sortImages,
+        },
+      ];
+      setProjectImages(project);
     }
     if (type === "pdfs") {
       const pdfs = data.filter((item) => item.category === "PDF");
@@ -274,7 +282,7 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-gallery-tab"
                 >
-                  <Gallery projectImages={projectImages} projTab="gallery" />
+                  <Gallery projectImages={projectImages} />
                 </div>
               ) : (
                 ""

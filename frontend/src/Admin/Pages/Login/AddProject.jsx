@@ -560,13 +560,13 @@ const AddProject = () => {
                         Project % Completed
                       </label>
                       <select
-                        value={percentValue}
+                        defaultValue={"Select Status"}
                         className="form-select mb-3 w-100"
                         aria-label="Default select example"
                         id="projectStatus"
                         onChange={(e) => handleSelectChange(e)}
                       >
-                        <option>Select Status</option>
+                        <option value={"Select Status"}>Select Status</option>
                         {options.map((option, index) => (
                           <option key={index} value={option}>
                             {option}
@@ -771,8 +771,9 @@ const AddProject = () => {
                     <label htmlFor="imageDescription" className="form-label  ">
                       Project Image description
                     </label>
-                    <input
-                      type="text"
+                    <textarea
+                      rows={4}
+                      cols={40}
                       className="form-control"
                       name="imageDescription"
                       value={aboutUs.imageDescription}

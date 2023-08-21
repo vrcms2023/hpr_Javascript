@@ -5,7 +5,7 @@ import Header from "./Common/Header/Header";
 import Home from "./Frontend/Pages/Home";
 import About from "./Frontend/Pages/About";
 import Projects from "./Frontend/Pages/Projects";
-import Gallery from "./Frontend/Pages/Gallery";
+import ProjectGallery from "./Frontend/Pages/ProjectGallery";
 import Contact from "./Frontend/Pages/Contact";
 import Login from "./Admin/Pages/Login/Login";
 import Dashboard from "./Admin/Pages/Login/Dashboard";
@@ -49,7 +49,7 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/projects" element={<Projects />} />
           <Route exact path="/projectDetails" element={<ProjectTabs />} />
-          <Route exact path="/gallery" element={<Gallery />} />
+          <Route exact path="/gallery" element={<ProjectGallery />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/news" element={<NewsAndUpdates />} />
           <Route exact path="/login" element={<Login />} />
