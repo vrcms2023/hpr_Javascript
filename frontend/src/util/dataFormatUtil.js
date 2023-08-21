@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const dataFormatedByCatergoryName = (data) => {
   const project = data.projectList;
   const images = data.imageList;
@@ -20,4 +22,12 @@ export const dataFormatedByCatergoryName = (data) => {
     projList[proj.projectCategoryValue].push(proj);
   });
   return projList;
+};
+
+export const getImagesByDate = (img) => {
+  const sortedImageArray = img.sort(
+    (a, b) =>
+      new moment(b.updatedAt).valueOf() - new moment(a.updatedAt).valueOf(),
+  );
+  return sortedImageArray;
 };

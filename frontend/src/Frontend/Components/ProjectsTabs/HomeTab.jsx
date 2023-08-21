@@ -1,11 +1,10 @@
 import React from "react";
 import Title from "../../../Common/Title";
 import HomeImg from "../../../Images/project1.png";
-import { getCookie, removeCookie, setCookie } from "../../../util/cookieUtil";
+import { getCookie } from "../../../util/cookieUtil";
 import { useNavigate } from "react-router-dom";
 
 const HomeTab = ({ project, projectImages, pdfs }) => {
-  // console.log("Home Tab", projectImages[0].path)
   const navigate = useNavigate();
   const { aboutstitle, aboutussubtitle, description, projectTitle } = project;
 
