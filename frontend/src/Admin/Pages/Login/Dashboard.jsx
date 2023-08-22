@@ -167,6 +167,7 @@ const Dashboard = () => {
         <Projects
           project={pubishProject}
           handleProjectDelete={handleProjectDelete}
+          published={true}
         />
       </div>
 
@@ -178,6 +179,7 @@ const Dashboard = () => {
         <Projects
           project={liveProjects}
           handleProjectDelete={handleProjectDelete}
+          published={false}
         />
       </div>
 
@@ -189,6 +191,7 @@ const Dashboard = () => {
         <Projects
           project={archiveProject}
           handleProjectDelete={reStoreProject}
+          published={false}
         />
       </div>
     </div>

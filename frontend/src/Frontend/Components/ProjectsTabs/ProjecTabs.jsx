@@ -31,8 +31,6 @@ const ProjectTabs = () => {
   const [avlImg, setAvlImg] = useState([]);
   const [projectTitle, setProjectTitle] = useState("");
 
-  // console.log("projects", projects)
-
   useEffect(() => {
     getProjects(projectid);
   }, []);

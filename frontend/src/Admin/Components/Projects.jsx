@@ -2,13 +2,20 @@ import React from "react";
 import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
 
-const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
+const ProjectItem = ({
+  title,
+  cssClass,
+  projects,
+  handleProjectDelete,
+  published,
+}) => {
   return (
     <>
       <Title
         title={title}
         cssClass="text-start fw-bold pt-4 mb-3 fs-6 text-dark"
       />
+
       <table className={`table table-hover border `}>
         <thead>
           <tr className="">
@@ -124,7 +131,7 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
   );
 };
 
-export const Projects = ({ project, handleProjectDelete }) => {
+export const Projects = ({ project, handleProjectDelete, published }) => {
   return (
     <>
       {project?.ongoing?.length > 0 ? (
@@ -134,6 +141,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
             cssClass="text-success"
             projects={project.ongoing}
             handleProjectDelete={handleProjectDelete}
+            published={published}
           />
         </div>
       ) : (
@@ -146,6 +154,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
             cssClass="text-success"
             projects={project.future}
             handleProjectDelete={handleProjectDelete}
+            published={published}
           />
         </div>
       ) : (
@@ -158,6 +167,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
             cssClass="text-success"
             projects={project.completed}
             handleProjectDelete={handleProjectDelete}
+            published={published}
           />
         </div>
       ) : (
