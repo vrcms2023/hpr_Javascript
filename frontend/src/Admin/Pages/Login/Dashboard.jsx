@@ -137,7 +137,7 @@ const Dashboard = () => {
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}
-      <div className="row px-5">
+      <div className="row px-5 mb-3">
         <div className="text-end d-flex justify-content-between align-items-center">
           <Title title="Dashboard" cssClass="text-center blue-500 fs-4" />
           <div>
@@ -159,33 +159,37 @@ const Dashboard = () => {
         </div>
       </div>
       {/* <hr /> */}
-      <div className="row p-5 pt-0">
+      <div className="row p-5 py-4">
         <Title
-          title={"Published Projects"}
-          cssClass="text-start fw-bold pt-4 mb-3 fs-4 text-dark"
+          title={"Published projects"}
+          cssClass="text-center fw-bolder mb-2 fs-5 text-uppercase green-900"
         />
+        <hr className="border-dark" />
         <Projects
           project={pubishProject}
           handleProjectDelete={handleProjectDelete}
         />
       </div>
 
+      {/* Saved / Ready to publish */}
       <div className="row p-5 pt-0">
         <Title
-          title={"Live Projects"}
-          cssClass="text-start fw-bold pt-4 mb-3 fs-4 text-dark"
+          title={"Saved / Ready to publish"}
+          cssClass="text-center fw-bolder pt-4 text-uppercase  mb-2 fs-5 green-900"
         />
+        <hr className="border-dark" />
         <Projects
           project={liveProjects}
           handleProjectDelete={handleProjectDelete}
         />
       </div>
 
-      <div className="row p-5 pt-0">
+      <div className="row p-5 py-3 bg-gray-light">
         <Title
-          title={"Archive Projects"}
-          cssClass="text-start fw-bold pt-4 mb-3 fs-4 text-dark"
+          title={"Archive projects"}
+          cssClass="text-center fw-bolder pt-4 text-uppercase  mb-2 fs-4 gray-900"
         />
+        <hr className="border-dark" />
         <Projects
           project={archiveProject}
           handleProjectDelete={reStoreProject}
