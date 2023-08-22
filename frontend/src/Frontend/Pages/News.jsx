@@ -3,7 +3,6 @@ import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
 
 const News = ({ item, dateFormat, articleHandler }) => {
-  // console.log("News", item)
   return (
     <div
       className="col-md-4 border border-5 border-white p-4 bg-light shadow-lg"
