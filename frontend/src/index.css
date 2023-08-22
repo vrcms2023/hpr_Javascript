@@ -129,6 +129,41 @@ body {
   background-color: #f3f3f3;
 }
 
+.bg-green-900 {
+  background-color: #165d3d;
+}
+.bg-green-700 {
+  background-color: #698845;
+}
+.bg-green-500 {
+  background-color: #a8c849;
+}
+
+.bg-blue-900 {
+  background-color: #295a93;
+}
+
+.bg-blue-700 {
+  background-color: #017db9;
+}
+
+.bg-blue-500,
 .blueBg-500 {
   background-color: #0098da;
+}
+
+.bg-blue-300 {
+  background-color: #92d0ec;
+}
+
+.bg-blue-222 {
+  background-color: #222222;
+}
+
+.bg-gray-444 {
+  background-color: #444444;
+}
+
+.bg-gray-light {
+  background-color: #e9e9e9;
 }

@@ -7,7 +7,7 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
     <>
       <Title
         title={title}
-        cssClass="text-start fw-bold pt-4 mb-3 fs-6 text-dark"
+        cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark"
       />
       <table className={`table table-hover border `}>
         <thead>
@@ -100,9 +100,9 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
                       onClick={() => handleProjectDelete(project, project._id)}
                     >
                       <i
-                        className="fa fa-undo fs-4 text-danger"
+                        className="fa fa-undo fs-5 fw-bormal text-warning"
                         aria-hidden="true"
-                        title="Delete"
+                        title="Revert"
                       ></i>
                     </Link>
                   )}
