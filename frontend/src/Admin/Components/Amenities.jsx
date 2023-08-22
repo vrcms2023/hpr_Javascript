@@ -23,14 +23,14 @@ export const AmenitiesList = ({ project, amenities, setAmenities }) => {
   return (
     <>
       <Amenities
-        title="Add Features"
+        title="Add Features (Press Enter after every feature) "
         value={amenities?.feature}
         amenities={amenities}
         setAmenities={setAmenities}
         name="feature"
       />
       <Amenities
-        title="Add Amenities"
+        title="Add Amenities (Press Enter after every amenitie)"
         value={amenities?.amenitie}
         amenities={amenities}
         setAmenities={setAmenities}
