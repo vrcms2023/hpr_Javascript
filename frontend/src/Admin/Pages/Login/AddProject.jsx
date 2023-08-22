@@ -309,12 +309,12 @@ const AddProject = () => {
   };
 
   return (
-    <div className="pt-5" style={{ marginTop: "120px" }}>
+    <div className="pt-5" style={{ marginTop: "100px" }}>
       <div className="row px-5">
-        <div className="text-end d-flex justify-content-between">
+        <div className="text-end d-flex justify-content-between align-items-center">
           <Title
             title={`${id ? "Edit Project" : "Add Project"}`}
-            cssClass="text-center blue-500 fs-4"
+            cssClass="text-center blue-500 fs-4 m-0"
           />
           <div>
             <Button
@@ -336,31 +336,34 @@ const AddProject = () => {
 
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
-      <div className="py-2">
+      <>
         {errorMessage ? <Error>{errorMessage}</Error> : ""}
         {!id && !show ? (
-          <select
-            className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
-            aria-label="Default select example"
-            id="projectStatus"
-            onChange={(e) => handleChange(e)}
-          >
-            <option>Select Project Type</option>
-            {defaultProjectType?.length
-              ? defaultProjectType?.map((option, index) => {
-                  return (
-                    <option key={option._id} value={option.value}>
-                      {option.label}
-                    </option>
-                  );
-                })
-              : ""}
-          </select>
+          <div className="py-2">
+            <select
+              className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
+              aria-label="Default select example"
+              id="projectStatus"
+              onChange={(e) => handleChange(e)}
+            >
+              <option>Select Project Type</option>
+              {defaultProjectType?.length
+                ? defaultProjectType?.map((option, index) => {
+                    return (
+                      <option key={option._id} value={option.value}>
+                        {option.label}
+                      </option>
+                    );
+                  })
+                : ""}
+            </select>
+            <hr />
+          </div>
         ) : (
           ""
         )}
-      </div>
-      <hr />
+      </>
+
       {projectType.length > 0 && !show ? (
         <div className="row" id="projectTitle">
           <div className="col-md-4 offset-md-4 my-5 ">
@@ -381,18 +384,20 @@ const AddProject = () => {
                   id="projectName"
                   placeholder="Add project name"
                 />
-                <Button
-                  label="Save"
-                  cssClass="btn btn-success mt-2 w-100"
-                  handlerChange={addNewProject}
-                />
-                <Button
-                  label="Cancel"
-                  cssClass="btn btn-success mt-2 w-100"
-                  handlerChange={() => {
-                    navigate("/dashboard");
-                  }}
-                />
+                <div className="d-flex">
+                  <Button
+                    label="Cancel"
+                    cssClass="btn btn-secondary mt-2 me-2 w-100"
+                    handlerChange={() => {
+                      navigate("/dashboard");
+                    }}
+                  />
+                  <Button
+                    label="Save"
+                    cssClass="btn btn-success mt-2 ms-2 w-100"
+                    handlerChange={addNewProject}
+                  />
+                </div>
               </div>
               <small id="projectValidation" className="d-none error">
                 Project name should not be empty.
@@ -407,34 +412,35 @@ const AddProject = () => {
       {show ? (
         <>
           <div className="row bg-light px-5 mt-3 shadow-lg">
-            {readOnlyTitle && (
-              <h3 className="my-4 text-success">
-                {readOnlyTitle}{" "}
-                <span
-                  className="badge bg-warning text-dark"
-                  style={{ fontSize: ".8rem" }}
-                >
-                  {" "}
-                  {projectStatus.toUpperCase()} PROJECT
-                </span>
-              </h3>
-            )}
-            <div>
-              {projectPublish ? (
-                <Button
-                  type="submit"
-                  cssClass="btn btn-danger"
-                  label={"UNPUBLISH"}
-                  handlerChange={publishHandler}
-                />
-              ) : (
-                <Button
-                  type="submit"
-                  cssClass="btn btn-success"
-                  label={"PUBLISH"}
-                  handlerChange={publishHandler}
-                />
+            <div className="d-flex justify-content-between align-items-center">
+              {readOnlyTitle && (
+                <h3 className="my-4 text-success fs-4">
+                  {readOnlyTitle}{" "}
+                  <span
+                    className="badge bg-warning text-dark"
+                    style={{ fontSize: ".7rem" }}
+                  >
+                    {projectStatus.toUpperCase()}
+                  </span>
+                </h3>
               )}
+              <>
+                {projectPublish ? (
+                  <Button
+                    type="submit"
+                    cssClass="btn btn-sm btn-danger"
+                    label={"UNPUBLISH"}
+                    handlerChange={publishHandler}
+                  />
+                ) : (
+                  <Button
+                    type="submit"
+                    cssClass="btn btn-sm btn-success"
+                    label={"PUBLISH"}
+                    handlerChange={publishHandler}
+                  />
+                )}
+              </>
             </div>
 
             <div className="col-md-3 bg-light pb-3">
@@ -490,7 +496,7 @@ const AddProject = () => {
                   aria-controls="v-pills-settings"
                   aria-selected="false"
                 >
-                  Amenities
+                  Features / Amenities
                 </button>
 
                 <button
@@ -811,14 +817,14 @@ const AddProject = () => {
                 label="Cancel"
                 handlerChange={() => navigate("/dashboard")}
               />
-              <Button
+              {/* <Button
                 type="submit"
-                cssClass="btn btn btn-outline-secondary mx-2"
+                cssClass="btn btn btn-outline-secondary "
                 label="Reset"
-              />
+              /> */}
               <Button
                 type="submit"
-                cssClass="btn btn-success"
+                cssClass="btn btn-success mx-2"
                 label={id ? "Update Project" : "Save Project"}
                 handlerChange={saveProject}
               />

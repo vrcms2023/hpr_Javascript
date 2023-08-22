@@ -10,7 +10,7 @@ const Specifications = ({
   setSpecifications,
 }) => {
   const handleClick = () => {
-    setSpecifications([...specifications, { title: "", feature: "" }]);
+    setSpecifications([{ title: "", feature: "" }, ...specifications]);
   };
 
   const handleChange = (e, i) => {
@@ -21,6 +21,17 @@ const Specifications = ({
   };
 
   const handleDelete = (i) => {
+    // confirmAlert({
+    //   customUI: ({ onClose }) => {
+    //     return (
+    //       <DeleteDialog
+    //         onClose={onClose}
+    //         callback={deleteSelectedNews}
+    //         projectName={news.newstitle}
+    //       />
+    //     );
+    //   },
+    // });
     const deleteVal = [...specifications];
     deleteVal.splice(i, 1);
     setSpecifications(deleteVal);
@@ -38,7 +49,8 @@ const Specifications = ({
         response?.status == 200 &&
         response.data?.specification !== undefined
       ) {
-        setSpecifications(response?.data?.specification?.specifications);
+        const orderReverse = response?.data?.specification?.specifications;
+        setSpecifications(orderReverse.reverse());
       }
     };
     if (project?._id) {
@@ -48,8 +60,8 @@ const Specifications = ({
 
   return (
     <div>
-      <Title title={title} cssClass="fs-5 fw-bold" />
-      <div className="border border-3 p-5 py-3 shadow-lg">
+      <div className="d-flex justify-content-between align-items-center">
+        <Title title={title} cssClass="fs-5 fw-bold" />
         {specifications.length > 0 && (
           <Button
             type="submit"
@@ -58,13 +70,15 @@ const Specifications = ({
             handlerChange={handleClick}
           />
         )}
-
+      </div>
+      <hr />
+      <div className="">
         <table className="table m-0">
           <tbody>
             {specifications?.length > 0 ? (
               specifications.map((val, i) => (
                 <tr key={i}>
-                  <td className="border border-1 p-4 bg-transparent">
+                  <td className="border-bottom  py-5 bg-transparent">
                     <input
                       type="text"
                       className="form-control mb-2"
@@ -83,7 +97,7 @@ const Specifications = ({
                       onChange={(e) => handleChange(e, i)}
                     ></textarea>
                   </td>
-                  <td className="align-middle text-center border border-3 bg-transparent">
+                  <td className="align-middle text-center border-bottom bg-transparent">
                     <i
                       className="fa fa-trash-o fs-3 text-danger"
                       aria-hidden="true"
