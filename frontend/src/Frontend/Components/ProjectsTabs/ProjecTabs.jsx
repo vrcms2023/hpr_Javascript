@@ -26,7 +26,11 @@ const ProjectTabs = () => {
   const [projectHome, setProjectHome] = useState({});
   const [specifications, setSpecifications] = useState([]);
   const [pdfs, setPdfs] = useState([]);
-  const [priceImg, setPriceImg] = useState([]);
+
+  const [pricePdfImg, setPricePdfImg] = useState([]);
+  const [pricePdfs, setPricePdfs] = useState([]);
+  const [priceImgs, setPriceImgs] = useState([]);
+
   const [planImg, setPlanImg] = useState([]);
   const [avlImg, setAvlImg] = useState([]);
   const [projectTitle, setProjectTitle] = useState("");
@@ -40,6 +44,7 @@ const ProjectTabs = () => {
     const response = await axiosClientServiceApi.get(
       `/api/project/client/getSelectedProject/${projectid}`,
     );
+    console.log(response, "response");
     if (response?.status == 200) {
       const projectData = response.data;
       setProjectTitle(projectData.project.projectTitle);
@@ -57,6 +62,25 @@ const ProjectTabs = () => {
 
   const filtersImgPdfs = (proj, type) => {
     const data = proj.imageData;
+    if (type === "price") {
+      const filteredPricePdfImgs = data.filter(
+        (item) => item.category === "price",
+      );
+      const images = filteredPricePdfImgs.filter(
+        (item) =>
+          item.contentType === "jpg" ||
+          item.contentType === "jpeg" ||
+          item.contentType === "png",
+      );
+      setPriceImgs(images);
+      const pdfs = filteredPricePdfImgs.filter(
+        (item) => item.contentType === "pdf",
+      );
+      setPricePdfs(pdfs);
+      console.log(pdfs, images);
+      // setPricePdfImg(filteredPricePdfImgs);
+    }
+
     if (type === "images") {
       // const imgs = data.filter( item => item.contentType === "jpg" || item.contentType === "jpeg" || item.contentType === "png");
       const imgs = data.filter((item) => item.category === "images");
@@ -74,10 +98,10 @@ const ProjectTabs = () => {
       setPdfs(pdfs);
     }
 
-    if (type === "price") {
-      const priceImgs = data.filter((item) => item.category === "price");
-      setPriceImg(priceImgs);
-    }
+    // if (type === "price") {
+    //   const priceImgs = data.filter((item) => item.category === "price");
+    //   setPriceImg(priceImgs);
+    // }
 
     if (type === "plan") {
       const planImgs = data.filter((item) => item.category === "Plans");
@@ -94,15 +118,18 @@ const ProjectTabs = () => {
     <div className="container mt-5 pt-5">
       <div className="row p-0 pt-4 projectTabs">
         <div className="col-md-12">
-          <Button
-            type=""
-            cssClass={"loadMore"}
-            label="Back to projects"
-            handlerChange={() => {
-              navigate("/projects");
-            }}
-          />
-          <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
+          <div className="text-end">
+            <Button
+              type=""
+              cssClass={"btn btn-success"}
+              label="Back to projects"
+              handlerChange={() => {
+                navigate("/projects");
+              }}
+            />
+          </div>
+
+          <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
             <Title
               title={projectHome.projectCategoryName}
               subTitle={projectTitle}
@@ -190,7 +217,7 @@ const ProjectTabs = () => {
                   ""
                 )}
 
-                {priceImg?.length > 0 ? (
+                {pricePdfs?.length > 0 || priceImgs.length > 0 ? (
                   <button
                     className="nav-link"
                     id="nav-cost-tab"
@@ -306,19 +333,20 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-availability-tab"
                 >
-                  <Cost data={avlImg} />
+                  {/* <Cost data={avlImg} />
+                  <Cost images={avlImg} pdfs={pricePdfs} /> */}
                 </div>
               ) : (
                 ""
               )}
-              {priceImg?.length > 0 ? (
+              {pricePdfs?.length > 0 || priceImgs.length > 0 ? (
                 <div
                   className="tab-pane fade"
                   id="nav-cost"
                   role="tabpanel"
                   aria-labelledby="nav-cost-tab"
                 >
-                  <Cost data={priceImg} />
+                  <Cost images={priceImgs} pdfs={pricePdfs} />
                 </div>
               ) : (
                 ""
@@ -330,7 +358,7 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-plan-tab"
                 >
-                  <Cost data={planImg} />
+                  {/* <Cost data={planImg} /> */}
                 </div>
               ) : (
                 ""
