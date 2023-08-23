@@ -7,9 +7,14 @@ import ModelBg from "../../Common/ModelBg";
 import "./NewsAndUpdates.css";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import News from "./News";
+import { removeActiveClass } from "../../util/ulrUtil";
 
 const NewsAndUpdates = () => {
   const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
 
   useEffect(() => {
     const getNews = async () => {

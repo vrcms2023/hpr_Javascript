@@ -29,26 +29,31 @@ const Gallery = ({ projectImages, type }) => {
   // console.log("projectImages", projectImages)
   return (
     <>
-            {projectImages?.length > 0
-              ? projectImages.map((project) => (
-                  <div 
-                  className={`gallery projectTabs ${type === 'applicationgallery' ? 'p-5 py-3 border-bottom' : 'p-0 pt-4' }`}
-                  key={project._id}>
-                     {type !== "" && type === "applicationgallery" ? (
-                        <h3 className="">{project.projectTitle}</h3>
-                      ) : (
-                        ""
-                      )}
-                      <p className="fs-6 text-dark">{project.imageDescription}</p>
-                      <GalleryImgThumb
-                        imgs={project.imgs}
-                        imageDescription={project.imageDescription}
-                        findThumbHandler={findThumbHandler}
-                        projectID={project._id}
-                      />
-                  </div>
-                ))
-              : null}
+      {projectImages?.length > 0
+        ? projectImages.map((project) => (
+            <div
+              className={`gallery projectTabs ${
+                type === "applicationgallery"
+                  ? "p-5 py-3 border-bottom"
+                  : "p-0 pt-4"
+              }`}
+              key={project._id}
+            >
+              {type !== "" && type === "applicationgallery" ? (
+                <h3 className="">{project.projectTitle}</h3>
+              ) : (
+                ""
+              )}
+              <p className="fs-6 text-dark">{project.imageDescription}</p>
+              <GalleryImgThumb
+                imgs={project.imgs}
+                imageDescription={project.imageDescription}
+                findThumbHandler={findThumbHandler}
+                projectID={project._id}
+              />
+            </div>
+          ))
+        : null}
 
       {showModal && (
         <DynamicCarousel

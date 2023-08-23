@@ -3,6 +3,9 @@ import Title from "../../Common/Title";
 import Button from "../../Common/Button";
 import { axiosServiceApi } from "../../util/axiosUtil";
 
+import { confirmAlert } from "react-confirm-alert";
+import DeleteDialog from "../../Common/DeleteDialog";
+
 const Specifications = ({
   title,
   project,
@@ -21,20 +24,24 @@ const Specifications = ({
   };
 
   const handleDelete = (i) => {
-    // confirmAlert({
-    //   customUI: ({ onClose }) => {
-    //     return (
-    //       <DeleteDialog
-    //         onClose={onClose}
-    //         callback={deleteSelectedNews}
-    //         projectName={news.newstitle}
-    //       />
-    //     );
-    //   },
-    // });
-    const deleteVal = [...specifications];
-    deleteVal.splice(i, 1);
-    setSpecifications(deleteVal);
+    const selectedSpecification = [...specifications][i];
+    const deleteSpecifications = () => {
+      const deleteVal = [...specifications];
+      deleteVal.splice(i, 1);
+      setSpecifications(deleteVal);
+    };
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteDialog
+            onClose={onClose}
+            callback={deleteSpecifications}
+            projectName={selectedSpecification.title}
+          />
+        );
+      },
+    });
   };
 
   /**

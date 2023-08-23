@@ -37,6 +37,13 @@ const ProjectTabs = () => {
     getProjects(projectid);
   }, []);
 
+  useEffect(() => {
+    const id = document.getElementById("projectLink");
+    if (id) {
+      id.classList.add("active");
+    }
+  });
+
   const getProjects = async (projectid) => {
     // const {value} = e.target
     const response = await axiosClientServiceApi.get(

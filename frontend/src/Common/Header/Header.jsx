@@ -47,6 +47,7 @@ const Header = () => {
             </li>
             <li className="nav-item dropdown">
               <NavLink
+                id="projectLink"
                 to="/projects"
                 className={({ isActive }) =>
                   isActive ? "nav-Link active" : "nav-Link"

@@ -5,6 +5,7 @@ import "./Gallery.css";
 import { getClientProjects } from "../../features/project/clientProjectActions";
 
 import Gallery from "./Gallery";
+import { removeActiveClass } from "../../util/ulrUtil";
 
 const ProjectGallery = () => {
   const [all, setAll] = useState([]);
@@ -15,6 +16,9 @@ const ProjectGallery = () => {
   const { clientProjects, error } = useSelector(
     (state) => state.clientProjects,
   );
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
 
   const dispatch = useDispatch();
 

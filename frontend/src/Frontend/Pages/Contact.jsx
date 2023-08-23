@@ -8,6 +8,7 @@ import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 import contactImg from "../../Images/contact.png";
 import { getCookie, removeCookie, setCookie } from "../../util/cookieUtil";
+import { removeActiveClass } from "../../util/ulrUtil";
 
 const Contact = () => {
   const formObject = { firstName: "", email: "", phone: "", message: "" };
@@ -16,6 +17,10 @@ const Contact = () => {
   const [show, setShow] = useState(false);
   const [formerror, setFormerror] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
