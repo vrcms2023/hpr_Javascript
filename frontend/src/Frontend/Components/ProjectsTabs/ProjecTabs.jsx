@@ -11,8 +11,6 @@ import Spefifications from "./Spefifications";
 import Location from "./Location";
 import Cost from "./Cost";
 import Button from "../../../Common/Button";
-import moment from "moment";
-import { getImagesByDate } from "../../../util/dataFormatUtil";
 
 const ProjectTabs = () => {
   const location = useLocation();
@@ -44,7 +42,6 @@ const ProjectTabs = () => {
     const response = await axiosClientServiceApi.get(
       `/api/project/client/getSelectedProject/${projectid}`,
     );
-    // console.log(response, "response");
     if (response?.status == 200) {
       const projectData = response.data;
       setProjectTitle(projectData.project.projectTitle);
@@ -55,20 +52,20 @@ const ProjectTabs = () => {
       filtersImgPdfs(projectData, "pdfs");
       filtersImgPdfs(projectData, "price");
       filtersImgPdfs(projectData, "plan");
-      filtersImgPdfs(projectData.imageData, "avl");
+      filtersImgPdfs(projectData, "avl");
       setSpecifications(projectData?.specificationData[0]?.specifications);
     }
   };
 
   const filtersImgPdfs = (proj, type) => {
     const data = proj.imageData;
+
     if (type === "images") {
       const imgs = data.filter((item) => item.category === "images");
-      const sortImages = getImagesByDate(imgs);
       const project = [
         {
           ...proj.project,
-          imgs: sortImages,
+          imgs: imgs,
         },
       ];
       setProjectImages(project);
@@ -309,7 +306,10 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-gallery-tab"
                 >
-                  <Gallery projectImages={projectImages} />
+                  <Gallery
+                    projectImages={projectImages}
+                    type="projectgallery"
+                  />
                 </div>
               ) : (
                 ""
