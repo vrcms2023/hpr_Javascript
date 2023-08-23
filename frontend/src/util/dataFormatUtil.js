@@ -25,9 +25,17 @@ export const dataFormatedByCatergoryName = (data) => {
 };
 
 export const getImagesByDate = (img) => {
+  const imgByDate = [];
   const sortedImageArray = img.sort(
     (a, b) =>
       new moment(b.updatedAt).valueOf() - new moment(a.updatedAt).valueOf(),
   );
-  return sortedImageArray;
+  sortedImageArray.map((img) => {
+    const dt = new moment(img.updatedAt).format("YYYY/DD/MM");
+    if (!imgByDate[dt]) {
+      imgByDate[dt] = [];
+    }
+    imgByDate[dt].push(img);
+  });
+  return imgByDate;
 };
