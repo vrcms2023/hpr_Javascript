@@ -40,11 +40,13 @@ const Gallery = ({ projectImages, type }) => {
               key={project._id}
             >
               {type !== "" && type === "applicationgallery" ? (
-                <h3 className="">{project.projectTitle}</h3>
+                <h3 className="text-start">{project.projectTitle}</h3>
               ) : (
                 ""
               )}
-              <p className="fs-6 text-dark">{project.imageDescription}</p>
+              <p className="fs-6 text-dark text-start">
+                {project.imageDescription}
+              </p>
               <GalleryImgThumb
                 imgs={project.imgs}
                 imageDescription={project.imageDescription}
