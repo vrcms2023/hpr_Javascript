@@ -177,5 +177,24 @@ body {
 }
 
 .headerBottomMargin {
-  margin-top: 80px;
+  margin-top: 80px !important;
+}
+
+.banner {
+  background-size: cover;
+  height: 400px;
+}
+.newBanner {
+  background-image: url("Images/project-banner.jpg");
+  background-position: top center;
+}
+
+@media (max-width: 768px) {
+  .banner {
+    height: 200px !important;
+  }
+}
+
+.noImg {
+  object-fit: cover;
 }
