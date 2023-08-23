@@ -29,7 +29,8 @@ const HomeTab = ({ project, projectImages, pdfs }) => {
           ? pdfs.map((pdf, i) => (
               <span
                 key={i}
-                className="d-block my-3"
+                className="d-block my-3 cursorPointer" 
+                
                 onClick={() => downloadPDF(pdf.path, pdf.originalname)}
               >
                 <span className="text-dark me-2" download>
