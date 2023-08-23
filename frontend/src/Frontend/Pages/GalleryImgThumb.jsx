@@ -11,23 +11,22 @@ const GalleryImgThumb = ({
 
   return (
     <>
-      <h6>{imageDescription}</h6>
-      {/* <h4>Work status as on date {getFormate(imgs[0].updatedAt)}</h4> */}
       {imagesByDate !== null
         ? Object.keys(imagesByDate).map((dt) => (
-            <div key={dt}>
-              <div>
-                <span>Work status as on date {dt}</span>
-              </div>
+            <div key={dt} className="mb-5">
+              <h4 className="green-700 fs-5 mt-2 mb-0">
+                Work status as on date {dt}
+              </h4>
+              <>
               {imagesByDate[dt].map((img) => (
-                <div key={img._id}>
                   <img
                     src={img.path}
+                    key={img._id}
                     alt=" "
                     onClick={() => findThumbHandler(projectID, img._id)}
                   />
-                </div>
               ))}
+              </>
             </div>
           ))
         : null}

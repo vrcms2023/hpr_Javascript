@@ -13,10 +13,15 @@
   border-radius: 10px;
 }
 
+.dcarousel .carousel-item {
+  background-color: #e1e1e1;
+}
+
 .dcarousel .carousel-item img {
-  object-fit: cover;
-  width: 100%;
-  height: 500px;
+  object-fit: fill;
+  width: auto;
+  height: 600px;
+  margin: 0 auto;
 }
 
 .dcarousel .closeCarousel {
