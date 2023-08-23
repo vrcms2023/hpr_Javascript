@@ -11,9 +11,14 @@ import imgFuture from "../../Images/future.png";
 
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import Testimonials from "../Components/Testimonials";
+import { removeActiveClass } from "../../util/ulrUtil";
 
 const Home = () => {
   const [testimonis, setTestmonis] = useState([]);
+
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
 
   useEffect(() => {
     const getTestimonial = async () => {

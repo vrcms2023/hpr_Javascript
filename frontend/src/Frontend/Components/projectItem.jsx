@@ -34,7 +34,7 @@ const ProjectItem = ({ projectList, projectType }) => {
                     <button
                       className="btn btn-primary btn-sm"
                       onClick={() =>
-                        navigate("/projectDetails", {
+                        navigate("/project-details", {
                           state: {
                             selectedPorject: projectType,
                             projectid: project._id,

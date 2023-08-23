@@ -18,14 +18,14 @@ const GalleryImgThumb = ({
                 Work status as on date {dt}
               </h4>
               <>
-              {imagesByDate[dt].map((img) => (
+                {imagesByDate[dt].map((img) => (
                   <img
                     src={img.path}
                     key={img._id}
                     alt=" "
                     onClick={() => findThumbHandler(projectID, img._id)}
                   />
-              ))}
+                ))}
               </>
             </div>
           ))

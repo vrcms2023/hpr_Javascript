@@ -27,6 +27,7 @@ import AuthForm from "./Admin/Pages/Login/AuthForm";
 import AdminNews from "./Admin/Pages/Login/AdminNews";
 import ProjectTabs from "./Frontend/Components/ProjectsTabs/ProjecTabs";
 import { getCookie } from "./util/cookieUtil";
+import { removeActiveClass } from "./util/ulrUtil";
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -40,6 +41,10 @@ function App() {
     }
   }, [userInfo]);
 
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
+
   return (
     <>
       <BrowserRouter>
@@ -48,7 +53,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/projects" element={<Projects />} />
-          <Route exact path="/projectDetails" element={<ProjectTabs />} />
+          <Route exact path="/project-details" element={<ProjectTabs />} />
           <Route exact path="/gallery" element={<ProjectGallery />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/news" element={<NewsAndUpdates />} />

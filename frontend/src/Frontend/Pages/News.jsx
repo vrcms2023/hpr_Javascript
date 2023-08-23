@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
+import { removeActiveClass } from "../../util/ulrUtil";
 
 const News = ({ item, dateFormat, articleHandler }) => {
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
   return (
     <div
       className="col-md-4 border border-5 border-white p-4 bg-light shadow-lg"
