@@ -26,16 +26,17 @@ const Gallery = ({ projectImages }) => {
     window.scrollTo(0, 0);
   }, []);
 
+  // console.log("projectImages", projectImages)
   return (
     <>
-      <div className="py-5 mt-5">
+      <div className="px-5">
         <div>
-          <ul className="list-unstyled gallery d-flex justify-content-center align-items-center flex-wrap">
+          <div className="list-unstyled gallery d-flex justify-content-center align-items-center flex-wrap">
             {projectImages?.length > 0
               ? projectImages.map((project) => (
                   <div className="row p-0 pt-4 projectTabs" key={project._id}>
                     <div className="col-md-12">
-                      <div>{project.projectTitle}</div>
+                      {/* <div>{project.projectTitle}</div> */}
                       <GalleryImgThumb
                         imgs={project.imgs}
                         imageDescription={project.imageDescription}
@@ -46,7 +47,7 @@ const Gallery = ({ projectImages }) => {
                   </div>
                 ))
               : null}
-          </ul>
+          </div>
         </div>
       </div>
 

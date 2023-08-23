@@ -12,19 +12,24 @@ const GalleryImgThumb = ({
     return moment(dt).format("YYYY/DD/MM");
   };
   const imagesByDate = getImagesByDate(imgs);
+
+  // console.log(imagesByDate, "imagesByDate")
   return (
     <>
+      <h6>{imageDescription}</h6>
+      {/* <h4>Work status as on date {getFormate(imgs[0].updatedAt)}</h4> */}
       {imagesByDate.length > 0
         ? imagesByDate.map((img) => (
-            <li key={img._id}>
+            <div key={img._id}>
+              <div>
+                <span>Work status as on date {getFormate(img.updatedAt)}</span>
+              </div>
               <img
                 src={img.path}
                 alt=" "
                 onClick={() => findThumbHandler(projectID, img._id)}
               />
-              <span>{imageDescription}</span>
-              <span>{getFormate(img.updatedAt)}</span>
-            </li>
+            </div>
           ))
         : null}
     </>
