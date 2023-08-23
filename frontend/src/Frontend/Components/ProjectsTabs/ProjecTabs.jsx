@@ -26,14 +26,14 @@ const ProjectTabs = () => {
   const [projectHome, setProjectHome] = useState({});
   const [specifications, setSpecifications] = useState([]);
   const [pdfs, setPdfs] = useState([]);
+  const [planImg, setPlanImg] = useState([]);
+  const [projectTitle, setProjectTitle] = useState("");
 
-  const [pricePdfImg, setPricePdfImg] = useState([]);
   const [pricePdfs, setPricePdfs] = useState([]);
   const [priceImgs, setPriceImgs] = useState([]);
 
-  const [planImg, setPlanImg] = useState([]);
-  const [avlImg, setAvlImg] = useState([]);
-  const [projectTitle, setProjectTitle] = useState("");
+  const [avlPdfs, setAvlPdfs] = useState([]);
+  const [avlImgs, setAvlImgs] = useState([]);
 
   useEffect(() => {
     getProjects(projectid);
@@ -44,7 +44,7 @@ const ProjectTabs = () => {
     const response = await axiosClientServiceApi.get(
       `/api/project/client/getSelectedProject/${projectid}`,
     );
-    console.log(response, "response");
+    // console.log(response, "response");
     if (response?.status == 200) {
       const projectData = response.data;
       setProjectTitle(projectData.project.projectTitle);
@@ -62,27 +62,7 @@ const ProjectTabs = () => {
 
   const filtersImgPdfs = (proj, type) => {
     const data = proj.imageData;
-    if (type === "price") {
-      const filteredPricePdfImgs = data.filter(
-        (item) => item.category === "price",
-      );
-      const images = filteredPricePdfImgs.filter(
-        (item) =>
-          item.contentType === "jpg" ||
-          item.contentType === "jpeg" ||
-          item.contentType === "png",
-      );
-      setPriceImgs(images);
-      const pdfs = filteredPricePdfImgs.filter(
-        (item) => item.contentType === "pdf",
-      );
-      setPricePdfs(pdfs);
-      console.log(pdfs, images);
-      // setPricePdfImg(filteredPricePdfImgs);
-    }
-
     if (type === "images") {
-      // const imgs = data.filter( item => item.contentType === "jpg" || item.contentType === "jpeg" || item.contentType === "png");
       const imgs = data.filter((item) => item.category === "images");
       const sortImages = getImagesByDate(imgs);
       const project = [
@@ -98,20 +78,42 @@ const ProjectTabs = () => {
       setPdfs(pdfs);
     }
 
-    // if (type === "price") {
-    //   const priceImgs = data.filter((item) => item.category === "price");
-    //   setPriceImg(priceImgs);
-    // }
-
     if (type === "plan") {
       const planImgs = data.filter((item) => item.category === "Plans");
       setPlanImg(planImgs);
     }
 
+    if (type === "price") {
+      const filteredPricePdfImgs = data.filter(
+        (item) => item.category === "price",
+      );
+      const images = filterImages(filteredPricePdfImgs);
+      setPriceImgs(images);
+      const pdfs = filterPdfs(filteredPricePdfImgs);
+      setPricePdfs(pdfs);
+    }
+
     if (type === "avl") {
       const avlImgs = data.filter((item) => item.category === "availability");
-      setAvlImg(avlImgs);
+      const images = filterImages(avlImgs);
+      setAvlImgs(images);
+
+      const pdfs = filterPdfs(avlImgs);
+      setAvlPdfs(pdfs);
     }
+  };
+
+  const filterImages = (data) => {
+    return data.filter(
+      (item) =>
+        item.contentType === "jpg" ||
+        item.contentType === "jpeg" ||
+        item.contentType === "png",
+    );
+  };
+
+  const filterPdfs = (data) => {
+    return data.filter((item) => item.contentType === "pdf");
   };
 
   return (
@@ -200,7 +202,7 @@ const ProjectTabs = () => {
                 ) : (
                   ""
                 )}
-                {avlImg?.length > 0 ? (
+                {avlImgs?.length > 0 || avlPdfs?.length > 0 ? (
                   <button
                     className="nav-link"
                     id="nav-availability-tab"
@@ -326,15 +328,14 @@ const ProjectTabs = () => {
                 ""
               )}
 
-              {avlImg?.length > 0 ? (
+              {avlImgs?.length > 0 || avlPdfs?.length > 0 ? (
                 <div
                   className="tab-pane fade"
                   id="nav-availability"
                   role="tabpanel"
                   aria-labelledby="nav-availability-tab"
                 >
-                  {/* <Cost data={avlImg} />
-                  <Cost images={avlImg} pdfs={pricePdfs} /> */}
+                  <Cost images={avlImgs} pdfs={avlPdfs} />
                 </div>
               ) : (
                 ""
