@@ -84,7 +84,7 @@ const ProjectGallery = () => {
   return (
     <>
       <div className="py-5 mt-5">
-        <div className="text-center pb-2 mt-5">
+        <div className="text-center pb-2 mt-5 galleryTab">
           {/* <Button
                 type=""
                 cssClass={`loadMore me-2 ${
