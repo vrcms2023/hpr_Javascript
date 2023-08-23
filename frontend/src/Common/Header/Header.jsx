@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 
 import Logo from "../../../src/Images/hpr-infra-logo.png";
+
 import "./Styles.css";
 
 const Header = () => {
+  const navigate = useNavigate()
 
   var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
   var collapseList = collapseElementList.map(function (collapseEl) {
