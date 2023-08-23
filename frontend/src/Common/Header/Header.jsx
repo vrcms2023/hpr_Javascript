@@ -6,12 +6,14 @@ import Logo from "../../../src/Images/hpr-infra-logo.png";
 import "./Styles.css";
 
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+  var collapseElementList = [].slice.call(
+    document.querySelectorAll(".collapse"),
+  );
   var collapseList = collapseElementList.map(function (collapseEl) {
-    return new bootstrap.Collapse(collapseEl)
-  })
+    return new bootstrap.Collapse(collapseEl);
+  });
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -30,11 +32,14 @@ const Header = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse show" id="navbarSupportedContent">
+        <div
+          className="collapse navbar-collapse show"
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <NavLink
-                to="/" 
+                to="/"
                 className={useCallback(({ isActive }) =>
                   isActive ? "nav-Link active" : "nav-Link",
                 )}
@@ -44,7 +49,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <NavLink
-                to="/about" 
+                to="/about"
                 className={({ isActive }) =>
                   isActive ? "nav-Link active" : "nav-Link"
                 }
@@ -84,7 +89,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <NavLink
-                to="/contact"              
+                to="/contact"
                 className={({ isActive }) =>
                   isActive ? "nav-Link active" : "nav-Link"
                 }

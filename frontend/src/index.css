@@ -175,3 +175,7 @@ body {
 .collapsing {
   transition: none !important;
 }
+
+.headerBottomMargin {
+  margin-top: 80px;
+}

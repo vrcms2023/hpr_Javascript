@@ -84,7 +84,7 @@ const Contact = () => {
   }, []);
 
   return (
-    <div className="container-fluid">
+    <div className="headerBottomMargin">
       <div className="row">
         <div className="col-md-12">
           <img src={contactImg} alt="Quick Contact" className="w-100" />
@@ -93,12 +93,12 @@ const Contact = () => {
 
       {/* Introduction */}
       <div className="row py-3 introGrayBg">
-        <div className="col-md-8 offset-md-2 py-4">
+        <div className="col-md-8 offset-md-2 px-4 py-2 py-md-4">
           <Title
             title="Share your views"
             cssClass="mb-2 fw-normal fs-2 text-center green-700"
           />
-          <p className="text-center lh-md">
+          <p className="text-center lh-md m-0">
             We believe that construction is a man made wonder. The thought of
             bringing imagination to real life structures excites us, each day
             the passion in us grows as we contribute to this industry.
@@ -107,7 +107,7 @@ const Contact = () => {
       </div>
 
       <div className="row">
-        <div className="col-md-4 text-white d-flex justify-content-start align-items-start blueBg-500 p-5">
+        <div className="col-md-4 text-white d-flex justify-content-start align-items-start blueBg-500 p-5 py-3 p-md-5">
           <div className="address`">
             <Title title="Address" cssClass="" />
             <Title
@@ -147,7 +147,7 @@ const Contact = () => {
             />
           )}
           <form
-            className="my-2 py-0 py-md-5 contactForm"
+            className="my-2 py-3 py-md-5 contactForm"
             onSubmit={onFormSubmit}
           >
             <Title title="Quick contact" cssClass="text-black fw-bold mb-4" />
