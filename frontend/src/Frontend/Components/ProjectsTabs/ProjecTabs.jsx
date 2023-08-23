@@ -61,7 +61,7 @@ const ProjectTabs = () => {
     const data = proj.imageData;
 
     if (type === "images") {
-      const imgs = data.filter((item) => item.category === "images");
+      const imgs = filterCategory(data, "images");
       const project = [
         {
           ...proj.project,
@@ -71,19 +71,17 @@ const ProjectTabs = () => {
       setProjectImages(project);
     }
     if (type === "pdfs") {
-      const pdfs = data.filter((item) => item.category === "PDF");
+      const pdfs = filterCategory(data, "PDF");
       setPdfs(pdfs);
     }
 
     if (type === "plan") {
-      const planImgs = data.filter((item) => item.category === "Plans");
+      const planImgs = filterCategory(data, "Plans");
       setPlanImg(planImgs);
     }
 
     if (type === "price") {
-      const filteredPricePdfImgs = data.filter(
-        (item) => item.category === "price",
-      );
+      const filteredPricePdfImgs = filterCategory(data, "price");
       const images = filterImages(filteredPricePdfImgs);
       setPriceImgs(images);
       const pdfs = filterPdfs(filteredPricePdfImgs);
@@ -91,7 +89,7 @@ const ProjectTabs = () => {
     }
 
     if (type === "avl") {
-      const avlImgs = data.filter((item) => item.category === "availability");
+      const avlImgs = filterCategory(data, "availability");
       const images = filterImages(avlImgs);
       setAvlImgs(images);
 
@@ -100,6 +98,9 @@ const ProjectTabs = () => {
     }
   };
 
+  const filterCategory = (data, type) => {
+    return data.filter((item) => item.category === type);
+  };
   const filterImages = (data) => {
     return data.filter(
       (item) =>
@@ -359,7 +360,7 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-plan-tab"
                 >
-                  {/* <Cost data={planImg} /> */}
+                  <Cost images={planImg} pdfs={[]} />
                 </div>
               ) : (
                 ""
