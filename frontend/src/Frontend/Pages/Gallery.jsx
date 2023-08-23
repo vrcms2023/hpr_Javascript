@@ -5,7 +5,7 @@ import GalleryImgThumb from "./GalleryImgThumb";
 import ModelBg from "../../Common/ModelBg";
 import DynamicCarousel from "../Components/DynamicCarousel";
 
-const Gallery = ({ projectImages }) => {
+const Gallery = ({ projectImages, type }) => {
   const [showModal, setShowModal] = useState(false);
   const [img, setImg] = useState(null);
   const [selectedProject, setSelectedProject] = useState({});
@@ -36,7 +36,12 @@ const Gallery = ({ projectImages }) => {
               ? projectImages.map((project) => (
                   <div className="row p-0 pt-4 projectTabs" key={project._id}>
                     <div className="col-md-12">
-                      {/* <div>{project.projectTitle}</div> */}
+                      {type !== "" && type === "applicationgallery" ? (
+                        <div>{project.projectTitle}</div>
+                      ) : (
+                        ""
+                      )}
+
                       <GalleryImgThumb
                         imgs={project.imgs}
                         imageDescription={project.imageDescription}

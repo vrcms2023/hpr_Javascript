@@ -42,7 +42,7 @@ const ProjectTabs = () => {
     const response = await axiosClientServiceApi.get(
       `/api/project/client/getSelectedProject/${projectid}`,
     );
-    console.log(response, "response");
+
     if (response?.status == 200) {
       const projectData = response.data;
       setProjectTitle(projectData.project.projectTitle);
@@ -53,7 +53,7 @@ const ProjectTabs = () => {
       filtersImgPdfs(projectData, "pdfs");
       filtersImgPdfs(projectData, "price");
       filtersImgPdfs(projectData, "plan");
-      filtersImgPdfs(projectData.imageData, "avl");
+      filtersImgPdfs(projectData, "avl");
       setSpecifications(projectData?.specificationData[0]?.specifications);
     }
   };
@@ -75,7 +75,6 @@ const ProjectTabs = () => {
         (item) => item.contentType === "pdf",
       );
       setPricePdfs(pdfs);
-      console.log(pdfs, images);
     }
 
     if (type === "images") {
@@ -93,11 +92,6 @@ const ProjectTabs = () => {
       const pdfs = data.filter((item) => item.category === "PDF");
       setPdfs(pdfs);
     }
-
-    // if (type === "price") {
-    //   const priceImgs = data.filter((item) => item.category === "price");
-    //   setPriceImg(priceImgs);
-    // }
 
     if (type === "plan") {
       const planImgs = data.filter((item) => item.category === "Plans");
@@ -303,7 +297,10 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-gallery-tab"
                 >
-                  <Gallery projectImages={projectImages} />
+                  <Gallery
+                    projectImages={projectImages}
+                    type="projectgallery"
+                  />
                 </div>
               ) : (
                 ""

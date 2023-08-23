@@ -116,7 +116,7 @@ const ProjectGallery = () => {
         </div>
         <hr />
         <div>
-          <Gallery projectImages={all} />
+          <Gallery projectImages={all} type="applicationgallery" />
         </div>
       </div>
     </>
