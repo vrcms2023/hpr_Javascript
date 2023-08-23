@@ -4,17 +4,17 @@ const Cost = ({ images, pdfs }) => {
   let imgs;
   let pdf;
   if (images.length > 0) {
-    imgs = images.map((img, i) => (
+    imgs = images.map((item, i) => (
       <div className="my-5 text-center zoomImg" key={i}>
-        <img src={img.path} alt="" className="w-50" />
+        <img src={item.path} alt="" className="w-50" />
       </div>
     ));
   }
 
-  if (images.length > 0) {
-    pdf = pdfs.map((pdf, i) => (
+  if (pdfs.length > 0) {
+    pdf = pdfs.map((item, i) => (
       <div className="my-5 text-center zoomImg" key={i}>
-        {pdf.path}
+        {item.path}
       </div>
     ));
   }
