@@ -1,4 +1,3 @@
-import moment from "moment";
 import React from "react";
 import { getImagesByDate } from "../../util/dataFormatUtil";
 
@@ -8,27 +7,27 @@ const GalleryImgThumb = ({
   findThumbHandler,
   projectID,
 }) => {
-  const getFormate = (dt) => {
-    return moment(dt).format("YYYY/DD/MM");
-  };
   const imagesByDate = getImagesByDate(imgs);
 
-  // console.log(imagesByDate, "imagesByDate")
   return (
     <>
       <h6>{imageDescription}</h6>
       {/* <h4>Work status as on date {getFormate(imgs[0].updatedAt)}</h4> */}
-      {imagesByDate.length > 0
-        ? imagesByDate.map((img) => (
-            <div key={img._id}>
+      {imagesByDate !== null
+        ? Object.keys(imagesByDate).map((dt) => (
+            <div key={dt}>
               <div>
-                <span>Work status as on date {getFormate(img.updatedAt)}</span>
+                <span>Work status as on date {dt}</span>
               </div>
-              <img
-                src={img.path}
-                alt=" "
-                onClick={() => findThumbHandler(projectID, img._id)}
-              />
+              {imagesByDate[dt].map((img) => (
+                <div key={img._id}>
+                  <img
+                    src={img.path}
+                    alt=" "
+                    onClick={() => findThumbHandler(projectID, img._id)}
+                  />
+                </div>
+              ))}
             </div>
           ))
         : null}

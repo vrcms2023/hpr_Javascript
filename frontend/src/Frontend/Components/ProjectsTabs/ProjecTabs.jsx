@@ -11,8 +11,6 @@ import Spefifications from "./Spefifications";
 import Location from "./Location";
 import Cost from "./Cost";
 import Button from "../../../Common/Button";
-import moment from "moment";
-import { getImagesByDate } from "../../../util/dataFormatUtil";
 
 const ProjectTabs = () => {
   const location = useLocation();
@@ -78,17 +76,15 @@ const ProjectTabs = () => {
       );
       setPricePdfs(pdfs);
       console.log(pdfs, images);
-      // setPricePdfImg(filteredPricePdfImgs);
     }
 
     if (type === "images") {
       // const imgs = data.filter( item => item.contentType === "jpg" || item.contentType === "jpeg" || item.contentType === "png");
       const imgs = data.filter((item) => item.category === "images");
-      const sortImages = getImagesByDate(imgs);
       const project = [
         {
           ...proj.project,
-          imgs: sortImages,
+          imgs: imgs,
         },
       ];
       setProjectImages(project);
