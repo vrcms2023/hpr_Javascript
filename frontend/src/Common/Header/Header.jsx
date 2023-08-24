@@ -8,12 +8,12 @@ import "./Styles.css";
 const Header = () => {
   const navigate = useNavigate();
 
-  var collapseElementList = [].slice.call(
-    document.querySelectorAll(".collapse"),
-  );
-  var collapseList = collapseElementList.map(function (collapseEl) {
-    return new bootstrap.Collapse(collapseEl);
-  });
+  // var collapseElementList = [].slice.call(
+  //   document.querySelectorAll(".collapse"),
+  // );
+  // var collapseList = collapseElementList.map(function (collapseEl) {
+  //   return new bootstrap.Collapse(collapseEl);
+  // });
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -32,10 +32,7 @@ const Header = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div
-          className="collapse navbar-collapse show"
-          id="navbarSupportedContent"
-        >
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <NavLink

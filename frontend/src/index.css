@@ -182,11 +182,19 @@ body {
 
 .banner {
   background-size: cover;
+  background-position: top center;
   height: 400px;
 }
 .newBanner {
   background-image: url("Images/project-banner.jpg");
-  background-position: top center;
+}
+
+.projectBanner {
+  background-image: url("Images/Banner_13.jpg");
+}
+
+.aboutBanner {
+  background-image: url("Images/Banner_12.jpg");
 }
 
 @media (max-width: 768px) {
