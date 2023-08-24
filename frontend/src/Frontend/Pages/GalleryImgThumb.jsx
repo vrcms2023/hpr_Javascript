@@ -1,5 +1,6 @@
 import React from "react";
 import { getImagesByDate } from "../../util/dataFormatUtil";
+import "./Gallery.css";
 
 const GalleryImgThumb = ({
   imgs,
@@ -13,7 +14,7 @@ const GalleryImgThumb = ({
     <>
       {imagesByDate !== null
         ? Object.keys(imagesByDate).map((dt) => (
-            <div key={dt} className="mb-5">
+            <div key={dt} className="mb-5 galleryThumbs">
               <h4 className="green-700 fs-5 mt-2 mb-0">
                 Work status as on date {dt}
               </h4>

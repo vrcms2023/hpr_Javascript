@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../Common/Title";
+import BriefIntro from "../../Common/BriefIntro";
 import Alert from "../../Common/Alert";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -90,26 +91,14 @@ const Contact = () => {
 
   return (
     <div className="headerBottomMargin">
-      <div className="row">
-        <div className="col-md-12">
-          <img src={contactImg} alt="Quick Contact" className="w-100" />
-        </div>
-      </div>
+      <div className="banner contactBanner"> </div>
 
       {/* Introduction */}
-      <div className="row py-3 introGrayBg">
-        <div className="col-md-8 offset-md-2 px-4 py-2 py-md-4">
-          <Title
-            title="Share your views"
-            cssClass="mb-2 fw-normal fs-2 text-center green-700"
-          />
-          <p className="text-center lh-md m-0">
-            We believe that construction is a man made wonder. The thought of
-            bringing imagination to real life structures excites us, each day
-            the passion in us grows as we contribute to this industry.
-          </p>
-        </div>
-      </div>
+      <BriefIntro title="Share your views">
+        We believe that construction is a man made wonder. The thought of
+        bringing imagination to real life structures excites us, each day the
+        passion in us grows as we contribute to this industry.
+      </BriefIntro>
 
       <div className="row">
         <div className="col-md-4 text-white d-flex justify-content-start align-items-start blueBg-500 p-5 py-3 p-md-5">

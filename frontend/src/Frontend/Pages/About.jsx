@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Title from "../../Common/Title";
+import BriefIntro from "../../Common/BriefIntro";
 
 import Img1 from "../../Images/project1.png";
 import Img2 from "../../Images/future.png";
@@ -19,24 +20,16 @@ const About = () => {
 
   return (
     <>
-      <div className="row p-0 pt-5">
-        <div className="col-md-12 banner aboutBanner"></div>
+      <div className="headerBottomMargin">
+        <div className="banner aboutBanner"></div>
       </div>
 
       {/* Introduction */}
-      <div className="row py-3 introGrayBg">
-        <div className="col-md-8 offset-md-2 px-4 py-2 py-md-4">
-          <Title
-            title="Welcome To HPR Infra"
-            cssClass="mb-2 fw-normal fs-2 text-center green-700"
-          />
-          <p className="text-center lh-md m-0">
-            We believe that construction is a man made wonder. The thought of
-            bringing imagination to real life structures excites us, each day
-            the passion in us grows as we contribute to this industry.
-          </p>
-        </div>
-      </div>
+      <BriefIntro title="Welcome To HPR Infra">
+        We believe that construction is a man made wonder. The thought of
+        bringing imagination to real life structures excites us, each day the
+        passion in us grows as we contribute to this industry.
+      </BriefIntro>
 
       <div className="container  my-md-5 py-md-4">
         <div className="row shadow-lg">
