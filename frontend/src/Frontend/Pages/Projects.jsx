@@ -38,16 +38,17 @@ const Projects = () => {
   return (
     <>
       <div className="row p-0 pt-5">
-        <div className="col-md-12 banner"></div>
+        <div className="col-md-12 banner projectBanner"></div>
       </div>
 
+      {/* Introduction */}
       <div className="row py-3 introGrayBg">
-        <div className="col-md-8 offset-md-2 py-4">
+        <div className="col-md-8 offset-md-2 px-4 py-2 py-md-4">
           <Title
             title="Welcome To HPR Infra Projects"
             cssClass="mb-2 fw-normal fs-2 text-center green-700"
           />
-          <p className="text-center lh-md">
+          <p className="text-center lh-md m-0">
             We believe that construction is a man made wonder. The thought of
             bringing imagination to real life structures excites us, each day
             the passion in us grows as we contribute to this industry.

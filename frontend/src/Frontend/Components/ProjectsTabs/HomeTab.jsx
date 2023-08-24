@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomeTab = ({ project, projectImages, pdfs }) => {
   const navigate = useNavigate();
+  // console.log("home tab", projectImages[0].imgs[0])
   const { aboutstitle, aboutussubtitle, description, projectTitle } = project;
 
   const downloadPDF = (path, name) => {
@@ -55,7 +56,9 @@ const HomeTab = ({ project, projectImages, pdfs }) => {
 
       <div className="text-center my-5">
         <img
-          src={projectImages.length > 0 ? projectImages[0].path : HomeImg}
+          src={
+            projectImages.length > 0 ? projectImages[0].imgs[0].path : HomeImg
+          }
           className="rounded img-fluid w-50"
           alt="..."
         />
