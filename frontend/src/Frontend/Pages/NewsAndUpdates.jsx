@@ -53,8 +53,8 @@ const NewsAndUpdates = () => {
 
   return (
     <>
-      <div className="row headerBottomMargin">
-        <div className="col-md-12 banner newBanner"></div>
+      <div className="headerBottomMargin">
+        <div className=" banner newBanner"></div>
       </div>
       <div className="container my-4 newsAndUpdates">
         <div className="row">
