@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import "./App.css";
 import Footer from "./Common/Footer/Footer";
 import Header from "./Common/Header/Header";
@@ -31,9 +30,6 @@ import { getCookie } from "./util/cookieUtil";
 import { removeActiveClass } from "./util/ulrUtil";
 
 function App() {
-  // const location = useLocation()
-
-  console.log(window.location.pathname.split("/"));
   const { userInfo } = useSelector((state) => state.auth);
   const [loginState, setLoginState] = useState("");
 
