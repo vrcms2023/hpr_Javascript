@@ -40,57 +40,55 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div className="row">
-        <div className="bg-light d-flex justify-content-center align-items-center">
-          <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
-            <p className="fw-bold">{error && <Error>{error}</Error>}</p>
-            <Title
-              title="Admin login"
-              cssClass="text-center text-dark mb-4 fw-bold fs-4"
+      <div className="bg-light d-flex justify-content-center align-items-center">
+        <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
+          <p className="fw-bold">{error && <Error>{error}</Error>}</p>
+          <Title
+            title="Admin login"
+            cssClass="text-center text-dark mb-4 fw-bold fs-4"
+          />
+          <div className="mb-3">
+            <label
+              htmlFor="userName"
+              className="form-label text-dark fw-normal"
+            >
+              Email
+            </label>
+            <input
+              type="text"
+              {...register("email")}
+              name="email"
+              className="form-control bg-light"
+              id="userName"
+              aria-describedby="emailHelp"
             />
-            <div className="mb-3">
-              <label
-                htmlFor="userName"
-                className="form-label text-dark fw-normal"
-              >
-                Email
-              </label>
-              <input
-                type="text"
-                {...register("email")}
-                name="email"
-                className="form-control bg-light"
-                id="userName"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            <div className="mb-3">
-              <label
-                htmlFor="signPassord"
-                className="form-label text-dark fw-normal"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                {...register("password")}
-                name="password"
-                className="form-control bg-light"
-                id="signPassord"
-              />
-            </div>
+            {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+          </div>
+          <div className="mb-3">
+            <label
+              htmlFor="signPassord"
+              className="form-label text-dark fw-normal"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              {...register("password")}
+              name="password"
+              className="form-control bg-light"
+              id="signPassord"
+            />
+          </div>
 
-            <div className="d-grid gap-2 mt-4">
-              <Button
-                type="submit"
-                cssClass="btn btn-lg btn-primary"
-                handlerChange={loginHandler}
-                label="Login"
-              />
-            </div>
-          </form>
-        </div>
+          <div className="d-grid gap-2 mt-4">
+            <Button
+              type="submit"
+              cssClass="btn btn-lg btn-primary"
+              handlerChange={loginHandler}
+              label="Login"
+            />
+          </div>
+        </form>
       </div>
     </div>
   );
