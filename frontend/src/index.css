@@ -226,7 +226,7 @@ body {
 
 .carousel-caption {
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .carousel-caption h1 {

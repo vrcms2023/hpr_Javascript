@@ -40,7 +40,7 @@ const Carousel = () => {
             className="d-block w-100"
             alt="..."
           />
-          <div class="carousel-caption d-none d-md-block">
+          <div className="carousel-caption d-none d-md-block">
             <h1 className="text-white fw-bold">HPR INFRA</h1>
             <p className="text-light fw-normal fs-5">Cognitive Capabilities.</p>
           </div>
@@ -52,7 +52,7 @@ const Carousel = () => {
             className="d-block w-100"
             alt="..."
           />
-          <div class="carousel-caption d-none d-md-block">
+          <div className="carousel-caption d-none d-md-block">
             <h1 className="text-white fw-bold">HPR INFRA</h1>
             <p className="text-light fw-normal fs-5">Cognitive Capabilities.</p>
           </div>
@@ -64,7 +64,7 @@ const Carousel = () => {
             className="d-block w-100"
             alt="..."
           />
-          <div class="carousel-caption d-none d-md-block">
+          <div className="carousel-caption d-none d-md-block">
             <h1 className="text-white fw-bold">HPR INFRA</h1>
             <p className="text-light fw-normal fs-5">Cognitive Capabilities.</p>
           </div>
