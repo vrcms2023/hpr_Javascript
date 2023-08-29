@@ -21,7 +21,7 @@ const __dirname = path.resolve();
 // Deployment configuration
 //configure env file in dev mode
 dotenv.config();
-
+console.log("process.env.NODE_ENV =",process.env.NODE_ENV)
 // configure env file in production
 if (process.env.NODE_ENV === undefined) {
   dotenv.config({ path: "../.env" });
