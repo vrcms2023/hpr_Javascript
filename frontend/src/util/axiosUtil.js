@@ -14,7 +14,6 @@ export const axiosServiceApi = axios.create({
 });
 
 export const axiosClientServiceApi = axios.create({
-  baseURL: getBaseURL(),
   headers: {
     Accept: "application/json",
     "Content-type": "application/json",
