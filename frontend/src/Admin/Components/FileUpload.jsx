@@ -74,7 +74,7 @@ const FileUpload = ({
           disabled={disabledFile}
           credits={false}
           acceptedFileTypes={extTypes}
-          server={`/api/imageUpload/fileUploader/${project?._id}/${updatedBy}/${category}`}
+          server={`${backendURL}/api/imageUpload/fileUploader/${project?._id}/${updatedBy}/${category}`}
           labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
           labelInvalidField="invalid files"
         />
