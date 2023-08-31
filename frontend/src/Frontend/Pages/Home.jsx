@@ -26,6 +26,7 @@ const Home = () => {
         `/api/testimonial/client/getTestimonial`,
       );
       if (response?.status == 200) {
+        console.log("testimonials", response.data.testimonial)
         setTestmonis(response.data.testimonial);
       }
     };
@@ -56,7 +57,7 @@ const Home = () => {
       </div>
 
       {/* Project Cards */}
-      <div className="row homeProjectsBg">
+      <div className="row my-5 homeProjectsBg">
         <div className="col-md-12 d-flex justify-content-center align-items-center">
           <div className="container">
             <div className="row">
@@ -169,7 +170,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="row mt-5 homeSections">
+      <div className="row homeSections">
         <div className="col-md-6 ourCulture">
           <Title
             title="Our Culture"

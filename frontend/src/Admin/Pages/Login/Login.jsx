@@ -42,7 +42,7 @@ const Login = () => {
     <div className="login">
       <div className="bg-light d-flex justify-content-center align-items-center">
         <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
-          <p className="fw-bold">{error && <Error>{error}</Error>}</p>
+          {error ? <p className="fw-bold">{error && <Error>{error}</Error>}</p> : "" }
           <Title
             title="Admin login"
             cssClass="text-center text-dark mb-4 fw-bold fs-4"
