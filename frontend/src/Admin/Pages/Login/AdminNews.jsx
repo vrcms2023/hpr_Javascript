@@ -157,12 +157,12 @@ export const AdminNews = () => {
   };
 
   return (
-    <div className="pt-5" style={{ marginTop: "100px" }}>
+    <div className="container-fluid pt-5" style={{ marginTop: "100px" }}>
       <div className="row px-3">
         <div className="text-end d-flex justify-content-between">
           <Title
             title={"News And Update"}
-            cssClass="blue-500 fs-4"
+            cssClass="text-center blue-500 fs-4"
           />
           <Button
             type="submit"

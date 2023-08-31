@@ -20,6 +20,9 @@ const Dashboard = () => {
   const [archiveProject, setArchiveProject] = useState([]);
   const [pubishProject, setpubishProject] = useState([]);
   const dispatch = useDispatch();
+
+  console.log("liveProjects", liveProjects, liveProjects.length)
+  // console.log("archiveProject", archiveProject)
   /**
    * Get Dash borad projects
    */
@@ -133,7 +136,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="" style={{ marginTop: "150px" }}>
+    <div className="container-fluid" style={{ marginTop: "150px" }}>
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}
