@@ -12,7 +12,7 @@ const Testimonials = ({ testimonis }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const lastIndex = testimonis.length - 1;
+    const lastIndex = testimonis?.length - 1;
     if (index < 0) {
       setIndex(lastIndex);
     }
@@ -31,7 +31,7 @@ const Testimonials = ({ testimonis }) => {
     };
   }, [index]);
 
-  const test = testimonis.map((item, indexPeople) => {
+  const test = testimonis?.map((item, indexPeople) => {
     const { imageUrl, title, description } = item;
     let position = "nextSlide";
     if (indexPeople === index) {
