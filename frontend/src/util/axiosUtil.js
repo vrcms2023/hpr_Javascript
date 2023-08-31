@@ -6,7 +6,6 @@ import { getCookie } from "./cookieUtil";
  * Axios API call with Access token
  */
 export const axiosServiceApi = axios.create({
-  baseURL: getBaseURL(),
   headers: {
     Accept: "application/json",
     "Content-type": "application/json",
@@ -14,7 +13,6 @@ export const axiosServiceApi = axios.create({
 });
 
 export const axiosClientServiceApi = axios.create({
-  baseURL: getBaseURL(),
   headers: {
     Accept: "application/json",
     "Content-type": "application/json",

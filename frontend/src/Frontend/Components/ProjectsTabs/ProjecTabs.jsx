@@ -26,6 +26,7 @@ const ProjectTabs = () => {
   const [pdfs, setPdfs] = useState([]);
   const [planImg, setPlanImg] = useState([]);
   const [projectTitle, setProjectTitle] = useState("");
+  const [isProjectImg, setIsProjectImg] = useState(false)
 
   const [pricePdfs, setPricePdfs] = useState([]);
   const [priceImgs, setPriceImgs] = useState([]);
@@ -75,6 +76,7 @@ const ProjectTabs = () => {
           imgs: imgs,
         },
       ];
+      setIsProjectImg(imgs.length > 0 ? true:false)
       setProjectImages(project);
     }
     if (type === "pdfs") {
@@ -175,7 +177,7 @@ const ProjectTabs = () => {
                 >
                   HOME
                 </button>
-                {projectImages?.length > 0 ? (
+                {isProjectImg ? (
                   <button
                     className="nav-link"
                     id="nav-gallery-tab"
@@ -305,9 +307,10 @@ const ProjectTabs = () => {
                   project={projectHome}
                   projectImages={projectImages}
                   pdfs={pdfs}
+                  isProjectImg={isProjectImg}
                 />
               </div>
-              {projectImages?.length > 0 ? (
+              {isProjectImg ? (
                 <div
                   className="tab-pane fade"
                   id="nav-gallery"

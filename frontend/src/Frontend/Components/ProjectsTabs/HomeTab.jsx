@@ -4,7 +4,7 @@ import HomeImg from "../../../Images/project1.png";
 import { getCookie } from "../../../util/cookieUtil";
 import { useNavigate } from "react-router-dom";
 
-const HomeTab = ({ project, projectImages, pdfs }) => {
+const HomeTab = ({ project, projectImages, pdfs, isProjectImg }) => {
   const navigate = useNavigate();
   // console.log("home tab", projectImages[0].imgs[0])
   const { aboutstitle, aboutussubtitle, description, projectTitle } = project;
@@ -57,7 +57,7 @@ const HomeTab = ({ project, projectImages, pdfs }) => {
       <div className="text-center my-5">
         <img
           src={
-            projectImages.length > 0 ? projectImages[0].imgs[0].path : HomeImg
+            isProjectImg ? projectImages[0].imgs[0].path : HomeImg
           }
           className="rounded img-fluid w-50"
           alt="..."
