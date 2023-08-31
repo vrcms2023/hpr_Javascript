@@ -168,7 +168,7 @@ export const AdminTestimonial = () => {
 
   return (
     <div className="pt-5" style={{ marginTop: "120px" }}>
-      <div className="row px-5">
+      <div className="row px-3 px-md-3">
         <div className="text-end d-flex justify-content-between">
           <Title title={"Testimonial"} cssClass="text-center blue-500 fs-4" />
           <Button
@@ -180,8 +180,8 @@ export const AdminTestimonial = () => {
         </div>
       </div>
 
-      <div className="row px-5 mt-4">
-        <div className="col-12 col-md-3">
+      <div className="row px-3 px-md-3 mt-4">
+        <div className="col-12 col-md-5 col-lg-4">
           <div className="border border-1 p-4 mb-4 bg-light shadow-lg">
             {errorMessage && <Error>{errorMessage}</Error>}
             <div className="mb-3">
@@ -247,10 +247,10 @@ export const AdminTestimonial = () => {
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-9">
+        <div className="col-12 col-md-7 col-lg-8">
           {testimonialList.length > 0 ? (
-            <div className="row px-2">
-              <table className="table table-responsive table-hover border align-middle">
+            <div className="row px-2 table-responsive">
+              <table className="table table-hover border align-middle">
                 <thead>
                   <tr>
                     <th>News Title</th>
