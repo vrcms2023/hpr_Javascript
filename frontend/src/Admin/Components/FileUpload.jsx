@@ -46,7 +46,6 @@ const FileUpload = ({
         contentType: imageResponse.contentType,
       };
       gallerysetState([...galleryState, img]);
-      toast.success(`${imageResponse.originalname} update successfully`);
       setFiles([]);
     }
   };
