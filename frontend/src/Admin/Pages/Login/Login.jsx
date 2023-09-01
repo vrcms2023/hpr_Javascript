@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div className="bg-light d-flex justify-content-center align-items-center">
+      <div className="bg-white d-flex justify-content-center align-items-center">
         <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
           {error ? (
             <p className="fw-bold">{error && <Error>{error}</Error>}</p>
