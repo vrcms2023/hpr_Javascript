@@ -8,7 +8,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { getBaseURL } from "../../util/ulrUtil";
-import { toast } from "react-toastify";
+
 
 registerPlugin(
   FilePondPluginFileValidateType,
@@ -74,7 +74,7 @@ const FileUpload = ({
           disabled={disabledFile}
           credits={false}
           acceptedFileTypes={extTypes}
-          server={`/api/imageUpload/fileUploader/${project?._id}/${updatedBy}/${category}`}
+          server={`${backendURL}/api/imageUpload/fileUploader/${project?._id}/${updatedBy}/${category}`}
           labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
           labelInvalidField="invalid files"
         />
