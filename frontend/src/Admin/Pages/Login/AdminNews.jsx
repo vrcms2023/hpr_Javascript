@@ -33,6 +33,11 @@ export const AdminNews = () => {
     setnewsState({ ...newsState, [e.target.name]: e.target.value });
   };
 
+  const cancelHandler = () => {
+    setnewsState(newsKeys);
+    setEditState(false);
+  }
+
   const [newsList, setNewsList] = useState([]);
 
   const getNewList = async () => {
@@ -156,6 +161,8 @@ export const AdminNews = () => {
     });
   };
 
+ 
+
   return (
     <div className="container-fluid pt-5" style={{ marginTop: "100px" }}>
       <div className="row px-3">
@@ -223,9 +230,15 @@ export const AdminNews = () => {
               />
             </div>
             <div className="text-center">
+              {editState ? <Button
+                type="submit"
+                cssClass="btn btn-secondary me-3"
+                label="Cancel"
+                handlerChange={cancelHandler}
+              /> : ""}
               <Button
                 type="submit"
-                cssClass="btn btn-primary w-100"
+                cssClass="btn btn-primary"
                 label={editState ? "Update News" : "Save News"}
                 handlerChange={saveProject}
               />
