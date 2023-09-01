@@ -90,8 +90,10 @@ const Contact = () => {
   }, []);
 
   return (
+    <>
     <div className="headerBottomMargin">
-      <div className="banner contactBanner"> </div>
+      <div className="banner contactBanner"></div>
+      </div>
 
       {/* Introduction */}
       <BriefIntro title="Share your views">
@@ -99,7 +101,7 @@ const Contact = () => {
         bringing imagination to real life structures excites us, each day the
         passion in us grows as we contribute to this industry.
       </BriefIntro>
-
+      <div className="container-fluid">
       <div className="row">
         <div className="col-md-4 text-white d-flex justify-content-start align-items-start blueBg-500 p-5 py-3 p-md-5">
           <div className="address`">
@@ -268,7 +270,8 @@ const Contact = () => {
           ></iframe>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 export default Contact;
