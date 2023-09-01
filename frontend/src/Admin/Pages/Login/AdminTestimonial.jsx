@@ -39,6 +39,11 @@ export const AdminTestimonial = () => {
     });
   };
 
+  const cancelHandler = () => {
+    setTestimonialState(testimonialKeys);
+    setEditState(false);
+  }
+
   const [testimonialList, setTestimonialList] = useState([]);
 
   const getTestimonialList = async () => {
@@ -238,9 +243,15 @@ export const AdminTestimonial = () => {
               />
             </div>
             <div className="text-center">
+            <Button
+                type="submit"
+                cssClass="btn btn-secondary me-3"
+                label="Cancel"
+                handlerChange={cancelHandler}
+              />
               <Button
                 type="submit"
-                cssClass="btn btn-primary w-100"
+                cssClass="btn btn-primary"
                 label={editState ? "Update Testimonial" : "Save Testimonial"}
                 handlerChange={saveTestimonial}
               />
