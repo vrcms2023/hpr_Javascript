@@ -26,7 +26,7 @@ const ProjectTabs = () => {
   const [pdfs, setPdfs] = useState([]);
   const [planImg, setPlanImg] = useState([]);
   const [projectTitle, setProjectTitle] = useState("");
-  const [isProjectImg, setIsProjectImg] = useState(false)
+  const [isProjectImg, setIsProjectImg] = useState(false);
 
   const [pricePdfs, setPricePdfs] = useState([]);
   const [priceImgs, setPriceImgs] = useState([]);
@@ -76,7 +76,7 @@ const ProjectTabs = () => {
           imgs: imgs,
         },
       ];
-      setIsProjectImg(imgs.length > 0 ? true:false)
+      setIsProjectImg(imgs.length > 0 ? true : false);
       setProjectImages(project);
     }
     if (type === "pdfs") {

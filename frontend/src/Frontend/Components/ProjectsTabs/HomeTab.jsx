@@ -56,9 +56,7 @@ const HomeTab = ({ project, projectImages, pdfs, isProjectImg }) => {
 
       <div className="text-center my-5">
         <img
-          src={
-            isProjectImg ? projectImages[0].imgs[0].path : HomeImg
-          }
+          src={isProjectImg ? projectImages[0].imgs[0].path : HomeImg}
           className="rounded img-fluid w-50"
           alt="..."
         />

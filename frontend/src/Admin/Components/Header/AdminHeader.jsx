@@ -13,8 +13,9 @@ const Header = () => {
   const [loginState, setLoginState] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const pathList = ['/login', '/register']
-  const isHideMenu = pathList.indexOf(window.location.pathname) >= 0 ? true : false
+  const pathList = ["/login", "/register"];
+  const isHideMenu =
+    pathList.indexOf(window.location.pathname) >= 0 ? true : false;
 
   useEffect(() => {
     if (userInfo || getCookie("userToken")) {
@@ -55,10 +56,10 @@ const Header = () => {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {loginState ? (
-              <AdminMenu userName={userName} logOutHandler={logOutHandler}/>
+              <AdminMenu userName={userName} logOutHandler={logOutHandler} />
             ) : !isHideMenu ? (
-              <ClientMenu/>
-            ) : null }
+              <ClientMenu />
+            ) : null}
           </div>
         </div>
       </nav>
@@ -66,7 +67,7 @@ const Header = () => {
   );
 };
 
-export const AdminMenu = ({userName,logOutHandler}) => {
+export const AdminMenu = ({ userName, logOutHandler }) => {
   return (
     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
       <li className="text-dark text-capitalize d-flex justify-content-center align-items-center">
@@ -115,73 +116,74 @@ export const AdminMenu = ({userName,logOutHandler}) => {
                   )}
                 </li> */}
     </ul>
-  )
-}
+  );
+};
 export const ClientMenu = () => {
   return (
     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-    <li className="nav-item">
-      <NavLink
-        to="/"
-        className={useCallback(({ isActive }) =>
-          isActive ? "nav-Link active" : "nav-Link",
-        )}
-      >
-        Home
-      </NavLink>
-    </li>
-    <li className="nav-item">
-      <NavLink
-        to="/about"
-        className={({ isActive }) =>
-          isActive ? "nav-Link active" : "nav-Link"
-        }
-      >
-        About Us
-      </NavLink>
-    </li>
-    <li className="nav-item dropdown">
-      <NavLink
-        id="projectLink"
-        to="/projects"
-        className={({ isActive }) =>
-          isActive ? "nav-Link active" : "nav-Link"
-        }
-      >
-        Projects
-      </NavLink>
-    </li>
-    <li className="nav-item">
-      <NavLink
-        to="/gallery"
-        className={({ isActive }) =>
-          isActive ? "nav-Link active" : "nav-Link"
-        }
-      >
-        Gallery
-      </NavLink>
-    </li>
-    <li className="nav-item">
-      <NavLink
-        to="/news"
-        className={({ isActive }) =>
-          isActive ? "nav-Link active" : "nav-Link"
-        }
-      >
-        News & Updates
-      </NavLink>
-    </li>
-    <li className="nav-item">
-      <NavLink
-        to="/contact"
-        className={({ isActive }) =>
-          isActive ? "nav-Link active" : "nav-Link"
-        }
-      >
-        Contact Us
-      </NavLink>
-    </li>
-  </ul>
-  )}
+      <li className="nav-item">
+        <NavLink
+          to="/"
+          className={useCallback(({ isActive }) =>
+            isActive ? "nav-Link active" : "nav-Link",
+          )}
+        >
+          Home
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive ? "nav-Link active" : "nav-Link"
+          }
+        >
+          About Us
+        </NavLink>
+      </li>
+      <li className="nav-item dropdown">
+        <NavLink
+          id="projectLink"
+          to="/projects"
+          className={({ isActive }) =>
+            isActive ? "nav-Link active" : "nav-Link"
+          }
+        >
+          Projects
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink
+          to="/gallery"
+          className={({ isActive }) =>
+            isActive ? "nav-Link active" : "nav-Link"
+          }
+        >
+          Gallery
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink
+          to="/news"
+          className={({ isActive }) =>
+            isActive ? "nav-Link active" : "nav-Link"
+          }
+        >
+          News & Updates
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            isActive ? "nav-Link active" : "nav-Link"
+          }
+        >
+          Contact Us
+        </NavLink>
+      </li>
+    </ul>
+  );
+};
 
 export default Header;

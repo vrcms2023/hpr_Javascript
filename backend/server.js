@@ -21,7 +21,7 @@ const __dirname = path.resolve();
 // Deployment configuration
 //configure env file in dev mode
 dotenv.config();
-console.log("process.env.NODE_ENV =",process.env.NODE_ENV)
+console.log("process.env.NODE_ENV =", process.env.NODE_ENV);
 // configure env file in production
 if (process.env.NODE_ENV === undefined) {
   dotenv.config({ path: "../.env" });
@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html")),
   );
 }
-app.use(express.static(path.join(__dirname,"/frontend/public")))
+app.use(express.static(path.join(__dirname, "/frontend/public")));
 // Middleware
 app.use(notFound);
 app.use(errorHandler);

@@ -2,7 +2,6 @@ import axios from "axios";
 import { getBaseURL } from "./ulrUtil";
 import { getCookie } from "./cookieUtil";
 
-
 axios.defaults.baseURL = getBaseURL();
 /**
  * Axios API call with Access token

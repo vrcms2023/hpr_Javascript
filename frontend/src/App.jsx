@@ -18,7 +18,12 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useSearchParams,
+} from "react-router-dom";
 import AdminTestimonial from "./Admin/Pages/Login/AdminTestimonial";
 import Registration from "./Admin/Pages/Login/Registration";
 import AuthForm from "./Admin/Pages/Login/AuthForm";
@@ -30,8 +35,9 @@ import { removeActiveClass } from "./util/ulrUtil";
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
   const [loginState, setLoginState] = useState("");
-  const pathList = ['/login', '/register']
-  const isHideMenu = pathList.indexOf(window.location.pathname) >= 0 ? true : false
+  const pathList = ["/login", "/register"];
+  const isHideMenu =
+    pathList.indexOf(window.location.pathname) >= 0 ? true : false;
 
   useEffect(() => {
     if (userInfo || getCookie("userToken")) {
@@ -48,7 +54,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header /> 
+        <Header />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />

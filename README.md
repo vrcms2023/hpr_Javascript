@@ -29,4 +29,5 @@ Create 'uploads' new folder under frontend/public directory
   # Run frontend only
   npm run client
 ```
+
 #file update
