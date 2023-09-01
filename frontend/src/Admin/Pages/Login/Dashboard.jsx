@@ -19,6 +19,9 @@ const Dashboard = () => {
   const [liveProjects, setLiveProject] = useState([]);
   const [archiveProject, setArchiveProject] = useState([]);
   const [pubishProject, setpubishProject] = useState([]);
+  const [publishProjecstStatus, setPublishProjectsStatus]= useState(false)
+  const [liveProjectsStatus, setliveProjectsStatus]= useState(false)
+  const [archiveProjectsStatus, setArchiveProjectStatus]= useState(false)
   const dispatch = useDispatch();
 
   console.log("liveProjects", liveProjects, liveProjects.length)
@@ -41,7 +44,14 @@ const Dashboard = () => {
     setLiveProject(finalObj.liveProject);
     setArchiveProject(finalObj.archiveProject);
     setpubishProject(finalObj.publishedProject);
+    GetProjectsListStatus(finalObj.liveProject, setliveProjectsStatus)
+    GetProjectsListStatus(finalObj.liveProject, setPublishProjectsStatus)
+    GetProjectsListStatus(finalObj.liveProject, setArchiveProjectStatus)
   };
+
+  const GetProjectsListStatus =(list, setObjectState) => {
+    setObjectState(list.completed.length > 0 && list.future.length > 0 && list.ongoing.length > 0 ? true : false)
+  }
 
   /**
    * Format dashboard data
@@ -162,19 +172,24 @@ const Dashboard = () => {
         </div>
       </div>
       {/* <hr /> */}
+     
       <div className="row p-5 py-4">
         <Title
           title={"Published projects"}
           cssClass="text-center fw-bolder mb-2 fs-5 text-uppercase green-900"
         />
         <hr className="border-dark" />
-        <Projects
-          project={pubishProject}
-          handleProjectDelete={handleProjectDelete}
-        />
+        {publishProjecstStatus ? (
+          <Projects
+            project={pubishProject}
+            handleProjectDelete={handleProjectDelete}
+          />
+        ) :"Add new Project and publish " }
       </div>
+     
 
       {/* Saved / Ready to publish */}
+      {liveProjectsStatus ? (
       <div className="row p-5 pt-0">
         <Title
           title={"Saved / Ready to publish"}
@@ -185,8 +200,9 @@ const Dashboard = () => {
           project={liveProjects}
           handleProjectDelete={handleProjectDelete}
         />
-      </div>
+      </div>) :""}
 
+      {archiveProjectsStatus ? (
       <div className="row p-5 py-3 bg-gray-light">
         <Title
           title={"Archive projects"}
@@ -198,6 +214,7 @@ const Dashboard = () => {
           handleProjectDelete={reStoreProject}
         />
       </div>
+      ) :""}
     </div>
   );
 };

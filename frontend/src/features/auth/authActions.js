@@ -1,8 +1,6 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getBaseURL } from "../../util/ulrUtil";
+import { axiosClientServiceApi } from "../../util/axiosUtil";
 
-const backendURL = getBaseURL();
 
 export const userLogin = createAsyncThunk(
   "auth/login",
@@ -14,8 +12,9 @@ export const userLogin = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
+     
 
-      const { data } = await axios.post(
+      const { data } = await axiosClientServiceApi.post(
         `/api/user/login`,
         { email, password },
         config,
@@ -49,7 +48,7 @@ export const registerUser = createAsyncThunk(
         },
       };
 
-      await axios.post(
+      await axiosClientServiceApi.post(
         `/api/user/register`,
         { userName, email, password, confirmPassword },
         config,

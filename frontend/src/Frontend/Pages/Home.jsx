@@ -26,7 +26,6 @@ const Home = () => {
         `/api/testimonial/client/getTestimonial`,
       );
       if (response?.status == 200) {
-        console.log("testimonials", response.data.testimonial)
         setTestmonis(response.data.testimonial);
       }
     };

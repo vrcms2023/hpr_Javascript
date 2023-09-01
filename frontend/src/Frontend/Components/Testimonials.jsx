@@ -12,23 +12,28 @@ const Testimonials = ({ testimonis }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const lastIndex = testimonis?.length - 1;
-    if (index < 0) {
-      setIndex(lastIndex);
-    }
-
-    if (index > lastIndex) {
-      setIndex(0);
+    if(testimonis.length >1){
+      const lastIndex = testimonis?.length - 1;
+      if (index < 0) {
+        setIndex(lastIndex);
+      }
+  
+      if (index > lastIndex) {
+        setIndex(0);
+      }
     }
   }, [index]);
+  
 
   useEffect(() => {
+    if(testimonis.length >1){
     let slider = setInterval(() => {
       setIndex(index + 1);
     }, 5000);
     return () => {
       clearInterval(slider);
     };
+  }
   }, [index]);
 
   const test = testimonis?.map((item, indexPeople) => {

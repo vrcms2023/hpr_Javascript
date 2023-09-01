@@ -33,6 +33,16 @@ const addNewProject = asyncHandler(async (req, res) => {
       .json({ message: validationError.details[0].message });
   }
 
+  const isProjectAvailable = await RealEstateProjectModel.find({
+    projectTitle: bodyObject.projectTitle,
+  })
+
+  console.log("isProjectAvailable== ",isProjectAvailable)
+  if(isProjectAvailable.length > 0){
+    return res.status(202).json({ message: `${bodyObject.projectTitle} is already register` });
+  }
+
+
   const project = await RealEstateProjectModel.create({
     projectCategoryID: bodyObject.projectCategoryID,
     projectCategoryName: bodyObject.projectCategoryName,

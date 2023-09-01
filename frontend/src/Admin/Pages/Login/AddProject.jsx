@@ -148,6 +148,9 @@ const AddProject = () => {
         isActive: true,
         publish: false,
       });
+      if (response?.status == 202 ) {
+        setErrorMessage(response.data.message);
+      }
       if (response?.status == 200) {
         const project = response.data.project;
         toast.success(`${project.projectTitle} Project created`);

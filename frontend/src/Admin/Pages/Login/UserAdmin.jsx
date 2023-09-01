@@ -80,6 +80,7 @@ const UserAdmin = () => {
               <tr>
                 <th>UserName</th>
                 <th>Email</th>
+                <th>Admin type</th>
                 <th colSpan={2}>isActive</th>
               </tr>
             </thead>
@@ -88,6 +89,7 @@ const UserAdmin = () => {
                 <tr key={user._id}>
                   <td>{user.userName}</td>
                   <td>{user.email}</td>
+                  <td>{user.isSuperAdmin ? 'Super Admin': 'Admin'}</td>
                   <td>{user.isActive.toString()} </td>
                   <td>
                     {user._id !== userId ? (
