@@ -20,24 +20,24 @@ const MainPage = () => {
       />
       <ul className="list-group mainLinks">
         <li className="list-group-item list-group-item-action text-center border-secondary py-4">
-          <Link to="/dashboard" className="blue-500 text-decoration-none fs-3">
+          <Link to="/dashboard" className="blue-500 text-decoration-none fs-4">
             Dashboard
           </Link>
         </li>
         <li className="list-group-item list-group-item-action text-center border-secondary py-4">
-          <Link to="/addproject" className="text-decoration-none blue-500 fs-3">
+          <Link to="/addproject" className="text-decoration-none blue-500 fs-4">
             Add Project
           </Link>
         </li>
         <li className="list-group-item list-group-item-action text-center border-secondary py-4">
-          <Link to="/adminNews" className="blue-500 text-decoration-none fs-3">
+          <Link to="/adminNews" className="blue-500 text-decoration-none fs-4">
             New & Updates
           </Link>
         </li>
         <li className="list-group-item list-group-item-action text-center border-secondary py-4">
           <Link
             to="/testimonial"
-            className="blue-500 text-decoration-none fs-3"
+            className="blue-500 text-decoration-none fs-4"
           >
             Testimonials
           </Link>
@@ -47,7 +47,7 @@ const MainPage = () => {
           <li className="list-group-item list-group-item-action text-center border-secondary py-4">
             <Link
               to="/userAdmin"
-              className="blue-500 text-decoration-none fs-3"
+              className="blue-500 text-decoration-none fs-4"
             >
               User Administration
             </Link>
