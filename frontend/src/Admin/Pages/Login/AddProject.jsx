@@ -313,11 +313,11 @@ const AddProject = () => {
 
   return (
     <div className="container-fluid pt-5" style={{ marginTop: "100px" }}>
-      <div className="row px-5">
-        <div className="text-end d-flex justify-content-between align-items-center">
+      <div className="row px-3 px-lg-5">
+        <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
             title={`${id ? "Edit Project" : "Add Project"}`}
-            cssClass="text-center blue-500 fs-4 m-0"
+            cssClass="text-center blue-500 fs-4 mb-3 mb-md-0"
           />
           <div>
             <Button
@@ -344,7 +344,7 @@ const AddProject = () => {
         {!id && !show ? (
           <div className="py-2">
             <select
-              className="form-select shadow-lg border border-2 border-success w-25 m-auto d-block"
+              className="form-select shadow-lg border border-2 border-success w-75 m-auto d-block"
               aria-label="Default select example"
               id="projectStatus"
               onChange={(e) => handleChange(e)}
@@ -414,7 +414,7 @@ const AddProject = () => {
 
       {show ? (
         <>
-          <div className="row bg-light px-5 mt-3 shadow-lg">
+          <div className="row bg-light px-3 px-lg-5 mt-3 shadow-lg">
             <div className="d-flex justify-content-between align-items-center">
               {readOnlyTitle && (
                 <h3 className="my-4 text-success fs-4">
@@ -519,7 +519,7 @@ const AddProject = () => {
                 <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-availability" type="button" role="tab" aria-controls="v-pills-availability" aria-selected="false">Availability</button> */}
               </div>
             </div>
-            <div className="col-md-9 shadow-lg p-5 mb-5">
+            <div className="col-md-9 shadow-lg px-3 py-4 p-md-5 mb-5">
               <div className="tab-content" id="v-pills-tabContent">
                 <div
                   className="tab-pane fade show active"

@@ -246,12 +246,16 @@ export const AdminTestimonial = () => {
               />
             </div>
             <div className="text-center">
-              <Button
-                type="submit"
-                cssClass="btn btn-secondary me-3"
-                label="Cancel"
-                handlerChange={cancelHandler}
-              />
+            {editState ? (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-secondary me-3"
+                  label="Cancel"
+                  handlerChange={cancelHandler}
+                />
+              ) : (
+                ""
+              )}
               <Button
                 type="submit"
                 cssClass="btn btn-primary"
@@ -289,8 +293,8 @@ export const AdminTestimonial = () => {
                           />
                         ) : (
                           <img
-                            width={"100"}
-                            height={"100"}
+                            width={"60"}
+                            height={"60"}
                             src="images/dummy-image-square.png"
                             alt=""
                           />

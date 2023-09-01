@@ -268,15 +268,15 @@ export const AdminNews = () => {
                         {" "}
                         {news?.imageUrls.length > 0 ? (
                           <img
-                            width={"100"}
-                            height={"100"}
+                            width={"60"}
+                            height={"60"}
                             src={`${news.imageUrls[0]}`}
                             alt=" "
                           />
                         ) : (
                           <img
-                            width={"100"}
-                            height={"100"}
+                            width={"60"}
+                            height={"60"}
                             src="images/dummy-image-square.png"
                             alt=""
                           />
@@ -285,7 +285,7 @@ export const AdminNews = () => {
                       <td>
                         <Link onClick={() => handleNewsEdit(event, news)}>
                           <i
-                            className="fa fa-pencil-square-o fs-4 text-muted me-4"
+                            className="fa fa-pencil-square-o fs-4 text-muted me-3"
                             aria-hidden="true"
                           ></i>
                         </Link>
