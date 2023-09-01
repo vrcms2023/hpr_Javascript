@@ -58,7 +58,7 @@ const UserAdmin = () => {
 
   return (
     <div className="container-fluid pt-5" style={{ marginTop: "120px" }}>
-      <div className="row px-5">
+      <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between">
           <Title
             title={"Application Pages"}
@@ -73,9 +73,9 @@ const UserAdmin = () => {
         </div>
       </div>
 
-      <div className="row px-5 py-4">
+      <div className="row px-3 px-lg-5 py-4 table-responsive">
         {isSuperAdmin ? (
-          <table className="table table-striped table-responsive table-hover">
+          <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th>UserName</th>

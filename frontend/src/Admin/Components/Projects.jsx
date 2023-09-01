@@ -128,7 +128,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
   return (
     <>
       {project?.ongoing?.length > 0 ? (
-        <div className="col-md-4">
+        <div className="col-md-6 col-lg-4">
           <ProjectItem
             title={project.ongoing[0].projectCategoryName}
             cssClass="text-success"
@@ -140,7 +140,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
         ""
       )}
       {project?.future?.length > 0 ? (
-        <div className="col-md-4">
+        <div className="col-md-6 col-lg-4">
           <ProjectItem
             title={project.future[0].projectCategoryName}
             cssClass="text-success"
@@ -152,7 +152,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
         ""
       )}
       {project?.completed?.length > 0 ? (
-        <div className="col-md-4">
+        <div className="col-md-6 col-lg-4">
           <ProjectItem
             title={project.completed[0].projectCategoryName}
             cssClass="text-success"

@@ -262,21 +262,21 @@ export const AdminNews = () => {
                 <tbody>
                   {newsList?.map((news) => (
                     <tr key={news._id}>
-                      <td>{news.newstitle}</td>
-                      <td>{news.description}</td>
+                      <td className="description"><span className="m-0">{news.newstitle}</span></td>
+                      <td className="description"><p className="m-0">{news.description}</p></td>
                       <td>
                         {" "}
                         {news?.imageUrls.length > 0 ? (
                           <img
-                            width={"100"}
-                            height={"100"}
+                            width={"60"}
+                            height={"60"}
                             src={`${news.imageUrls[0]}`}
                             alt=" "
                           />
                         ) : (
                           <img
-                            width={"100"}
-                            height={"100"}
+                            width={"60"}
+                            height={"60"}
                             src="images/dummy-image-square.png"
                             alt=""
                           />
@@ -285,7 +285,7 @@ export const AdminNews = () => {
                       <td>
                         <Link onClick={() => handleNewsEdit(event, news)}>
                           <i
-                            className="fa fa-pencil-square-o fs-4 text-muted me-4"
+                            className="fa fa-pencil-square-o fs-4 text-muted me-3"
                             aria-hidden="true"
                           ></i>
                         </Link>

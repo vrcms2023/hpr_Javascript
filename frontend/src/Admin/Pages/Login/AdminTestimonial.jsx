@@ -13,6 +13,8 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import { getCookie } from "../../../util/cookieUtil";
 
+import './AdminCommon.css';
+
 export const AdminTestimonial = () => {
   const navigate = useNavigate();
   const [testimonialObject, setTestimonialObject] = useState([]);
@@ -32,6 +34,7 @@ export const AdminTestimonial = () => {
   }, []);
 
   const changeHandler = (e) => {
+
     setErrorMessage("");
     setTestimonialState({
       ...testimonialState,
@@ -243,12 +246,16 @@ export const AdminTestimonial = () => {
               />
             </div>
             <div className="text-center">
-              <Button
-                type="submit"
-                cssClass="btn btn-secondary me-3"
-                label="Cancel"
-                handlerChange={cancelHandler}
-              />
+            {editState ? (
+                <Button
+                  type="submit"
+                  cssClass="btn btn-secondary me-3"
+                  label="Cancel"
+                  handlerChange={cancelHandler}
+                />
+              ) : (
+                ""
+              )}
               <Button
                 type="submit"
                 cssClass="btn btn-primary"
@@ -273,8 +280,8 @@ export const AdminTestimonial = () => {
                 <tbody>
                   {testimonialList?.reverse().map((testimonial) => (
                     <tr key={testimonial._id}>
-                      <td>{testimonial.title}</td>
-                      <td>{testimonial.description}</td>
+                      <td className="description"><span className="m-0">{testimonial.title}</span></td>
+                      <td className="description"><p className="m-0">{testimonial.description}</p></td>
                       <td>
                         {" "}
                         {testimonial?.imageUrl ? (
@@ -286,8 +293,8 @@ export const AdminTestimonial = () => {
                           />
                         ) : (
                           <img
-                            width={"100"}
-                            height={"100"}
+                            width={"60"}
+                            height={"60"}
                             src="images/dummy-image-square.png"
                             alt=""
                           />
