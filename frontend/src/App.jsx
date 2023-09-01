@@ -14,6 +14,7 @@ import ProtectedRoute from "./Frontend/Components/ProtectedRoute";
 import UserAdmin from "./Admin/Pages/Login/UserAdmin";
 import MainPage from "./Admin/Pages/Login/MainPage";
 import NewsAndUpdates from "./Frontend/Pages/NewsAndUpdates";
+import PageNotFound from "./Frontend/Pages/PageNotFound";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -66,6 +67,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Registration />} />
           <Route exact path="/authForm" element={<AuthForm />} />
+          <Route path="*" element={<PageNotFound />} />
           <Route
             exact
             path="/main"
