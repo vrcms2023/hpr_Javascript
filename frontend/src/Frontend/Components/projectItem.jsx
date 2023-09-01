@@ -55,7 +55,7 @@ const ProjectItem = ({ projectList, projectType }) => {
             ))
           : ""}
       </div>
-      {projectList.length > 3 ? (
+      {/* {projectList.length > 3 ? (
         <div className="row mt-3">
           <div className="col-md-12 text-center py-3">
             <Link to="" className="loadMore">
@@ -75,7 +75,7 @@ const ProjectItem = ({ projectList, projectType }) => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 };
