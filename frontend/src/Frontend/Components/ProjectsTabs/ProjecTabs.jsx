@@ -16,8 +16,8 @@ const ProjectTabs = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [projects, setProjects] = useState(location.state.selectedPorject);
-  const [projectid, setprojectid] = useState(location.state.projectid);
+  const [projects, setProjects] = useState(location?.state?.selectedPorject);
+  const [projectid, setprojectid] = useState(location?.state?.projectid);
   // const [selectedProject, setSelectedProject] = useState(null)
   const [amenities, setAmenities] = useState({});
   const [projectImages, setProjectImages] = useState([]);
@@ -33,6 +33,7 @@ const ProjectTabs = () => {
 
   const [avlPdfs, setAvlPdfs] = useState([]);
   const [avlImgs, setAvlImgs] = useState([]);
+
 
   useEffect(() => {
     getProjects(projectid);
@@ -152,7 +153,7 @@ const ProjectTabs = () => {
               onChange={(e) => getProjects(e.target.value)}
             >
               <option value="select">Select Project</option>
-              {projects.length > 0
+              {projects?.length > 0
                 ? projects.map((project) => (
                     <option value={project._id} key={project._id}>
                       {project.projectTitle}

@@ -51,9 +51,9 @@ const Dashboard = () => {
 
   const GetProjectsListStatus = (list, setObjectState) => {
     setObjectState(
-      list.completed.length > 0 &&
-        list.future.length > 0 &&
-        list.ongoing.length > 0
+      list?.completed?.length > 0 ||
+        list?.future?.length > 0 ||
+        list?.ongoing?.length > 0
         ? true
         : false,
     );
