@@ -262,8 +262,12 @@ export const AdminNews = () => {
                 <tbody>
                   {newsList?.map((news) => (
                     <tr key={news._id}>
-                      <td className="description"><span className="m-0">{news.newstitle}</span></td>
-                      <td className="description"><p className="m-0">{news.description}</p></td>
+                      <td className="description">
+                        <span className="m-0">{news.newstitle}</span>
+                      </td>
+                      <td className="description">
+                        <p className="m-0">{news.description}</p>
+                      </td>
                       <td>
                         {" "}
                         {news?.imageUrls.length > 0 ? (

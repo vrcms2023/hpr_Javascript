@@ -10,6 +10,7 @@ import { removeAllCookies, removeCookie, setCookie } from "../../../util/cookieU
 
 import "./Login.css";
 import { toast } from "react-toastify";
+import { hideHandBurgerIcon } from "../../../util/ulrUtil";
 
 const Login = () => {
   const { userInfo, error } = useSelector((state) => state.auth);
@@ -44,7 +45,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div className="bg-white d-flex justify-content-center align-items-center">
+      <div className="bg-white d-flex justify-content-center align-items-center flex-column">
         <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
           {error ? (
             <p className="fw-bold">{error && <Error>{error}</Error>}</p>
@@ -97,6 +98,9 @@ const Login = () => {
             />
           </div>
         </form>
+        <button className="btn btn-secondary" onClick={() => navigate("/")}>
+          Back to HPR Infra website
+        </button>
       </div>
     </div>
   );

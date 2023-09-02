@@ -13,7 +13,7 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import { getCookie } from "../../../util/cookieUtil";
 
-import './AdminCommon.css';
+import "./AdminCommon.css";
 
 export const AdminTestimonial = () => {
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ export const AdminTestimonial = () => {
   }, []);
 
   const changeHandler = (e) => {
-
     setErrorMessage("");
     setTestimonialState({
       ...testimonialState,
@@ -246,7 +245,7 @@ export const AdminTestimonial = () => {
               />
             </div>
             <div className="text-center">
-            {editState ? (
+              {editState ? (
                 <Button
                   type="submit"
                   cssClass="btn btn-secondary me-3"
@@ -280,8 +279,12 @@ export const AdminTestimonial = () => {
                 <tbody>
                   {testimonialList?.reverse().map((testimonial) => (
                     <tr key={testimonial._id}>
-                      <td className="description"><span className="m-0">{testimonial.title}</span></td>
-                      <td className="description"><p className="m-0">{testimonial.description}</p></td>
+                      <td className="description">
+                        <span className="m-0">{testimonial.title}</span>
+                      </td>
+                      <td className="description">
+                        <p className="m-0">{testimonial.description}</p>
+                      </td>
                       <td>
                         {" "}
                         {testimonial?.imageUrl ? (
