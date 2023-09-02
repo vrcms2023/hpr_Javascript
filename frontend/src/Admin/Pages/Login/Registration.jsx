@@ -7,6 +7,7 @@ import Error from "../../Components/Error";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../../features/auth/authActions";
 import { toast } from "react-toastify";
+import { removeAllCookies } from "../../../util/cookieUtil";
 
 const Registration = () => {
   const [customError, setCustomError] = useState(null);
@@ -25,6 +26,10 @@ const Registration = () => {
       navigate("/login");
     }
   }, [navigate, success]);
+
+  useEffect(() => {
+    removeAllCookies()
+},[])
 
   const submitForm = (data) => {
     // check if passwords match
