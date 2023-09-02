@@ -24,7 +24,6 @@ const Dashboard = () => {
   const [archiveProjectsStatus, setArchiveProjectStatus] = useState(false);
   const dispatch = useDispatch();
 
-  console.log("liveProjects", liveProjects, liveProjects.length);
   // console.log("archiveProject", archiveProject)
   /**
    * Get Dash borad projects
@@ -45,8 +44,8 @@ const Dashboard = () => {
     setArchiveProject(finalObj.archiveProject);
     setpubishProject(finalObj.publishedProject);
     GetProjectsListStatus(finalObj.liveProject, setliveProjectsStatus);
-    GetProjectsListStatus(finalObj.liveProject, setPublishProjectsStatus);
-    GetProjectsListStatus(finalObj.liveProject, setArchiveProjectStatus);
+    GetProjectsListStatus(finalObj.publishedProject, setPublishProjectsStatus);
+    GetProjectsListStatus(finalObj.archiveProject, setArchiveProjectStatus);
   };
 
   const GetProjectsListStatus = (list, setObjectState) => {

@@ -277,7 +277,7 @@ export const AdminTestimonial = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {testimonialList?.reverse().map((testimonial) => (
+                  {testimonialList?.map((testimonial) => (
                     <tr key={testimonial._id}>
                       <td className="description">
                         <span className="m-0">{testimonial.title}</span>

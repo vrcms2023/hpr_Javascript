@@ -28,8 +28,8 @@ const Registration = () => {
   }, [navigate, success]);
 
   useEffect(() => {
-    removeAllCookies()
-},[])
+    removeAllCookies();
+  }, []);
 
   const submitForm = (data) => {
     // check if passwords match

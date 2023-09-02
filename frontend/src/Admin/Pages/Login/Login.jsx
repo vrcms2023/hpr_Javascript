@@ -6,11 +6,14 @@ import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
 import { useNavigate } from "react-router-dom";
 import Error from "../../Components/Error";
-import { removeAllCookies, removeCookie, setCookie } from "../../../util/cookieUtil";
+import {
+  removeAllCookies,
+  removeCookie,
+  setCookie,
+} from "../../../util/cookieUtil";
 
 import "./Login.css";
 import { toast } from "react-toastify";
-import { hideHandBurgerIcon } from "../../../util/ulrUtil";
 
 const Login = () => {
   const { userInfo, error } = useSelector((state) => state.auth);
@@ -34,8 +37,8 @@ const Login = () => {
   }, [navigate, userInfo]);
 
   useEffect(() => {
-      removeAllCookies();
-  },[])
+    removeAllCookies();
+  }, []);
 
   const submitForm = (data) => {
     dispatch(userLogin(data));

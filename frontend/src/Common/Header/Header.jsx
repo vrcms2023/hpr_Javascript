@@ -34,8 +34,6 @@ const Header = () => {
   const burgetHide = ["/login", "/register", "/authForm"];
   const isHideBurgetIcon = hideHandBurgerIcon(burgetHide);
 
-  console.log(isHideBurgetIcon, "isHideBurgetIcon");
-
   useEffect(() => {
     if (userInfo || getCookie("userToken")) {
       setLoginState(true);
