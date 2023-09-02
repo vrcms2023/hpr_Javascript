@@ -34,7 +34,6 @@ const ProjectTabs = () => {
   const [avlPdfs, setAvlPdfs] = useState([]);
   const [avlImgs, setAvlImgs] = useState([]);
 
-
   useEffect(() => {
     getProjects(projectid);
   }, []);

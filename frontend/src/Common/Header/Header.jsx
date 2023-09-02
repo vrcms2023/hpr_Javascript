@@ -6,7 +6,9 @@ import { getCookie, removeAllCookies } from "../../util/cookieUtil";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
+
 import "./Styles.css";
+import { hideHandBurgerIcon } from "../../util/ulrUtil";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,9 +16,25 @@ const Header = () => {
   const [loginState, setLoginState] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const pathList = ["/login", "/register"];
-  const isHideMenu =
-    pathList.indexOf(window.location.pathname) >= 0 ? true : false;
+
+  const pathList = [
+    "/login",
+    "/register",
+    "/authForm",
+    "/main",
+    "/dashboard",
+    "/addproject",
+    "/editproject/",
+    "/adminnews",
+    "/testimonial",
+    "/userAdmin",
+  ];
+  const isHideMenu = hideHandBurgerIcon(pathList);
+
+  const burgetHide = ["/login", "/register", "/authForm"];
+  const isHideBurgetIcon = hideHandBurgerIcon(burgetHide);
+
+  console.log(isHideBurgetIcon, "isHideBurgetIcon");
 
   useEffect(() => {
     if (userInfo || getCookie("userToken")) {
@@ -50,21 +68,24 @@ const Header = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container">
-          <Link to="/" className="navbar-brand logo">
+          <Link to={isHideMenu ? "#" : "/"} className="navbar-brand logo">
             <img src={Logo} alt="" />
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
+          {!isHideBurgetIcon ? (
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          ) : (
+            ""
+          )}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {loginState ? (
               <AdminMenu userName={userName} logOutHandler={logOutHandler} />

@@ -44,9 +44,14 @@ const Model = ({ obj, closeModel, privacy, flag }) => {
               {obj.imageUrls.length > 0 ? (
                 <div className="text-center">
                   <h5 className="text-dark  ">Images</h5>
-                  <hr className="m-0 mb-3" />
+                  <hr className="m-0" />
                   {obj.imageUrls.map((img, i) => (
-                    <img src={img} key={i} alt="" className={`m-2 newsImg`} />
+                    <img
+                      src={img}
+                      key={i}
+                      alt=""
+                      className={`me-2 mt-2 newsImg`}
+                    />
                   ))}
                 </div>
               ) : null}

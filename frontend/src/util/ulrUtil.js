@@ -10,3 +10,7 @@ export function removeActiveClass() {
     id.classList.remove("active");
   }
 }
+
+export function hideHandBurgerIcon(pathList) {
+  return pathList.indexOf(window.location.pathname) >= 0 ? true : false;
+}

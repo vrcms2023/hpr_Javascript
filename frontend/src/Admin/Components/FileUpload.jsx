@@ -9,7 +9,6 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { getBaseURL } from "../../util/ulrUtil";
 
-
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
